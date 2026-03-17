@@ -1,12 +1,12 @@
+import EventCard from "../components/EventCard"
+import EventForm from "../components/EventForm"
+
 export function CreateEvent() {
-    function handleOnClick() {
-        console.log("Button Clicked");
-    }
-    return <>
-        <div>
-            <b>CREATE AN EVENT</b>
-            <br/>
-            <button className="bg-amber-500" onClick={handleOnClick}>Create an event</button>
-        </div>
-    </>
+  return (
+    <div>
+        <EventForm/>
+        <EventCard title="Car Show" description="Weekly meet-up, for car enthusiasts" photosCount={6} icon="carImage.png"/>
+
+    </div>
+  )
 }

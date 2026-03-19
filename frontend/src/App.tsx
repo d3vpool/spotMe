@@ -5,21 +5,20 @@ import { UploadPhotos } from './pages/UploadPhotos';
 import { BrowserRouter, Route, Router, Routes, useNavigate } from 'react-router-dom';
 
 import './App.css'
+import Header from './components/Header';
 
 function App() {
 
 
   return (
     <>
-      <BrowserRouter>
+        <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/createEvent' element= { <CreateEvent/> }/>
           <Route path='/uploadPhotos' element= { <UploadPhotos/> }/>
           <Route path='findMyPhotos' element= { <FindMyPhotos/> } />
         </Routes>
-      </BrowserRouter>
-      
     </>
   )
 }

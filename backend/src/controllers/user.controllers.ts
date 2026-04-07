@@ -36,3 +36,44 @@ export async function signUpController(req: Request, res: Response) {
         res.status(500).json({ message: "SignUp failed" });
     }
 }
+
+
+export async function logInController(req: Request, res: Response) {
+    const body = req.body;
+
+    const email = body.email;
+    const password = body.password;
+
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email
+        }
+    })
+
+    if(!user){
+        return res.status(401).json({
+            message: "Invalid email or password"
+        })
+    }
+
+    const hashedPassword = user.password;
+
+    const match = await bcrypt.compare(password, hashedPassword);
+
+    if(match){
+        const token = jwt.sign({
+            id: user.id
+        }, process.env.JWT_SECRET!)
+
+        return res.status(200).json({
+            message: "Logged In Successfully",
+            token: token
+        })
+    } else{
+        return res.status(401).json({
+            message: "Invalid email or password"
+        })
+    }
+
+
+}

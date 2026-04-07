@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import cors from "cors";
 import userRouter from "./routes/user.routes.js";
+import eventRouter from './routes/event.routes.js';
 
 const app = express();
 
@@ -15,5 +16,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/user", userRouter);
+
+app.use("/events", eventRouter);
 
 export default app

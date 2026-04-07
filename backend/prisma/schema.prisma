@@ -25,7 +25,7 @@ model event {
   id Int @id @default(autoincrement())
   title String
   description String
-  createdBy String
+  createdBy Int
   shareToken String
   createdAt DateTime @default(now())
 }

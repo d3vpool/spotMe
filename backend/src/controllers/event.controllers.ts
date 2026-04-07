@@ -28,9 +28,60 @@ export async function createEvent(req: Request, res: Response) {
         res.status(201).json(event);
         
     }catch(error) {
+        console.log(error);
         return res.status(500).json({
             message: "Something Went Wrong"
         })
     }
     
+}
+
+export async function getAllEvents(req: Request, res: Response) {
+
+    const userId = res.locals.userId
+
+    const events = await prisma.event.findMany({
+        where: {
+            createdBy: userId
+        },
+        select: {
+            title: true,
+            description: true,
+            shareToken: true,
+        }
+    })
+
+    return res.status(200).json({
+        events: events
+    })
+}
+
+export async function getEventFromId(req: Request, res: Response) {
+
+    const userId = res.locals.userId;
+
+    const eventId = Number(req.params.eventId);
+
+    const event = await prisma.event.findFirst({
+        where: {
+            id: eventId,
+            createdBy: userId
+        }, 
+        select: {
+            title: true,
+            description: true,
+            shareToken: true
+        }
+    })
+
+    if(!event) {
+        return res.status(404).json({
+            message: "Event not found"
+        });
+    }
+
+    return res.status(200).json({
+        message: "Found Event",
+        event: event
+    })
 }

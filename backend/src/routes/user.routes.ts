@@ -1,6 +1,6 @@
 import express from "express";
-import { signUpController } from "../controllers/user.controllers.js";
-import { validateInput } from "../middlewares/inputValidation.js";
+import { logInController, signUpController } from "../controllers/user.controllers.js";
+import { userLogInSchema, userSignUpSchema, validateInput } from "../middlewares/inputValidation.js";
 
 const router = express.Router();
 
@@ -9,7 +9,9 @@ router.get("/", (req, res) => {
     res.send("Hello Hello");
 })
 
-router.post("/signUp", validateInput, signUpController);
+router.post("/signUp", validateInput(userSignUpSchema), signUpController);
 
+
+router.post("/logIn", validateInput(userLogInSchema), logInController);
 
 export default router;

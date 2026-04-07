@@ -28,17 +28,19 @@ export type AggregateEvent = {
 
 export type EventAvgAggregateOutputType = {
   id: number | null
+  createdBy: number | null
 }
 
 export type EventSumAggregateOutputType = {
   id: number | null
+  createdBy: number | null
 }
 
 export type EventMinAggregateOutputType = {
   id: number | null
   title: string | null
   description: string | null
-  createdBy: string | null
+  createdBy: number | null
   shareToken: string | null
   createdAt: Date | null
 }
@@ -47,7 +49,7 @@ export type EventMaxAggregateOutputType = {
   id: number | null
   title: string | null
   description: string | null
-  createdBy: string | null
+  createdBy: number | null
   shareToken: string | null
   createdAt: Date | null
 }
@@ -65,10 +67,12 @@ export type EventCountAggregateOutputType = {
 
 export type EventAvgAggregateInputType = {
   id?: true
+  createdBy?: true
 }
 
 export type EventSumAggregateInputType = {
   id?: true
+  createdBy?: true
 }
 
 export type EventMinAggregateInputType = {
@@ -189,7 +193,7 @@ export type EventGroupByOutputType = {
   id: number
   title: string
   description: string
-  createdBy: string
+  createdBy: number
   shareToken: string
   createdAt: Date
   _count: EventCountAggregateOutputType | null
@@ -221,7 +225,7 @@ export type eventWhereInput = {
   id?: Prisma.IntFilter<"event"> | number
   title?: Prisma.StringFilter<"event"> | string
   description?: Prisma.StringFilter<"event"> | string
-  createdBy?: Prisma.StringFilter<"event"> | string
+  createdBy?: Prisma.IntFilter<"event"> | number
   shareToken?: Prisma.StringFilter<"event"> | string
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
 }
@@ -242,7 +246,7 @@ export type eventWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.eventWhereInput | Prisma.eventWhereInput[]
   title?: Prisma.StringFilter<"event"> | string
   description?: Prisma.StringFilter<"event"> | string
-  createdBy?: Prisma.StringFilter<"event"> | string
+  createdBy?: Prisma.IntFilter<"event"> | number
   shareToken?: Prisma.StringFilter<"event"> | string
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
 }, "id">
@@ -268,7 +272,7 @@ export type eventScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"event"> | number
   title?: Prisma.StringWithAggregatesFilter<"event"> | string
   description?: Prisma.StringWithAggregatesFilter<"event"> | string
-  createdBy?: Prisma.StringWithAggregatesFilter<"event"> | string
+  createdBy?: Prisma.IntWithAggregatesFilter<"event"> | number
   shareToken?: Prisma.StringWithAggregatesFilter<"event"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"event"> | Date | string
 }
@@ -276,7 +280,7 @@ export type eventScalarWhereWithAggregatesInput = {
 export type eventCreateInput = {
   title: string
   description: string
-  createdBy: string
+  createdBy: number
   shareToken: string
   createdAt?: Date | string
 }
@@ -285,7 +289,7 @@ export type eventUncheckedCreateInput = {
   id?: number
   title: string
   description: string
-  createdBy: string
+  createdBy: number
   shareToken: string
   createdAt?: Date | string
 }
@@ -293,7 +297,7 @@ export type eventUncheckedCreateInput = {
 export type eventUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -302,7 +306,7 @@ export type eventUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -311,7 +315,7 @@ export type eventCreateManyInput = {
   id?: number
   title: string
   description: string
-  createdBy: string
+  createdBy: number
   shareToken: string
   createdAt?: Date | string
 }
@@ -319,7 +323,7 @@ export type eventCreateManyInput = {
 export type eventUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -328,7 +332,7 @@ export type eventUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -344,6 +348,7 @@ export type eventCountOrderByAggregateInput = {
 
 export type eventAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type eventMaxOrderByAggregateInput = {
@@ -366,6 +371,7 @@ export type eventMinOrderByAggregateInput = {
 
 export type eventSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 
@@ -415,7 +421,7 @@ export type $eventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: number
     title: string
     description: string
-    createdBy: string
+    createdBy: number
     shareToken: string
     createdAt: Date
   }, ExtArgs["result"]["event"]>
@@ -844,7 +850,7 @@ export interface eventFieldRefs {
   readonly id: Prisma.FieldRef<"event", 'Int'>
   readonly title: Prisma.FieldRef<"event", 'String'>
   readonly description: Prisma.FieldRef<"event", 'String'>
-  readonly createdBy: Prisma.FieldRef<"event", 'String'>
+  readonly createdBy: Prisma.FieldRef<"event", 'Int'>
   readonly shareToken: Prisma.FieldRef<"event", 'String'>
   readonly createdAt: Prisma.FieldRef<"event", 'DateTime'>
 }

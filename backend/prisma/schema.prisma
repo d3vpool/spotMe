@@ -18,4 +18,14 @@ model User {
   email String @unique
   firstName String
   password String
+  createdAt DateTime @default(now())
+}
+
+model event {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  createdBy String
+  shareToken String
+  createdAt DateTime @default(now())
 }

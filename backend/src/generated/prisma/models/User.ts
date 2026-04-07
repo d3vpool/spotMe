@@ -39,6 +39,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   firstName: string | null
   password: string | null
+  createdAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -46,6 +47,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   firstName: string | null
   password: string | null
+  createdAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -53,6 +55,7 @@ export type UserCountAggregateOutputType = {
   email: number
   firstName: number
   password: number
+  createdAt: number
   _all: number
 }
 
@@ -70,6 +73,7 @@ export type UserMinAggregateInputType = {
   email?: true
   firstName?: true
   password?: true
+  createdAt?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -77,6 +81,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   firstName?: true
   password?: true
+  createdAt?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type UserCountAggregateInputType = {
   email?: true
   firstName?: true
   password?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -178,6 +184,7 @@ export type UserGroupByOutputType = {
   email: string
   firstName: string
   password: string
+  createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -208,6 +215,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   firstName?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
 export type UserOrderByWithRelationInput = {
@@ -215,6 +223,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -225,6 +234,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   firstName?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -232,6 +242,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -247,12 +258,14 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   firstName?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   email: string
   firstName: string
   password: string
+  createdAt?: Date | string
 }
 
 export type UserUncheckedCreateInput = {
@@ -260,12 +273,14 @@ export type UserUncheckedCreateInput = {
   email: string
   firstName: string
   password: string
+  createdAt?: Date | string
 }
 
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateInput = {
@@ -273,6 +288,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCreateManyInput = {
@@ -280,12 +296,14 @@ export type UserCreateManyInput = {
   email: string
   firstName: string
   password: string
+  createdAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -293,6 +311,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -300,6 +319,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -311,6 +331,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -318,6 +339,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -326,6 +348,10 @@ export type UserSumOrderByAggregateInput = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -343,6 +369,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   firstName?: boolean
   password?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -350,6 +377,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   firstName?: boolean
   password?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -357,6 +385,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   firstName?: boolean
   password?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -364,9 +393,10 @@ export type UserSelectScalar = {
   email?: boolean
   firstName?: boolean
   password?: boolean
+  createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "firstName" | "password", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "firstName" | "password" | "createdAt", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -376,6 +406,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     firstName: string
     password: string
+    createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -803,6 +834,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly firstName: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 

@@ -85,3 +85,82 @@ export async function getEventFromId(req: Request, res: Response) {
         event: event
     })
 }
+
+export async function deleteEventFromId(req: Request, res: Response) {
+    
+    const userId = res.locals.userId;
+
+    const eventId = Number(req.params.eventId);
+
+    const event = await prisma.event.findFirst({
+        where: {
+            createdBy: userId,
+            id: eventId
+        }
+    });
+
+    if(!event) {
+        return res.status(404).json({
+            message: "Event Not Found"
+        })
+    }
+
+    const deletedEvent = await prisma.event.delete({
+        where: {
+            id: eventId
+        }
+    })
+
+    return res.status(200).json({
+        message: "Deleted event successfully",
+        deletedEvent
+    })
+}
+
+
+export async function updateEventFromId(req: Request, res: Response) {
+    const userId = res.locals.userId;
+    const eventId = Number(req.params.eventId);
+
+    const newTitle = req.body.newTitle;
+    const newDescription = req.body.newDescription;
+
+    if(!newTitle && !newDescription){
+        return res.status(400).json({
+            message: "At least one field must be provided"
+        })
+    }
+
+
+    const event = await prisma.event.findFirst({
+        where: {
+            createdBy: userId,
+            id: eventId
+        }
+    });
+
+    if(!event) {
+        return res.status(404).json({
+            message: "Event Not Found"
+        })
+    }
+
+    const updatedEvent = await prisma.event.update({
+        where: {
+            id: eventId
+        },
+        data: {
+            title: newTitle,
+            description: newDescription
+        },
+        select: {
+            title: true,
+            description: true
+        }
+    })
+
+    return res.status(200).json({
+        message: "Event Updated SUccessfully",
+        updatedEvent: updatedEvent
+    })
+}

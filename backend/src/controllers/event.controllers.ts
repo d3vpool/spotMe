@@ -164,3 +164,47 @@ export async function updateEventFromId(req: Request, res: Response) {
         updatedEvent: updatedEvent
     })
 }
+
+export async function uploadImage(req: Request, res: Response) {
+    console.log("Controller Hit")
+    const eventId = Number(req.params.eventId);
+    const userId = res.locals.userId;
+
+    const event = await prisma.event.findFirst({
+        where: {
+            createdBy: userId,
+            id: eventId
+        }
+    })
+    if(!event) {
+        return res.status(404).json({
+            message: "Event Not Found"
+        })
+    }
+
+    const images = req.files as Express.Multer.File[];
+
+    if(!images || images.length == 0){
+        return res.status(400).json({
+            message: "Please select an image"
+        })
+    }
+
+    for (const file of images) {
+        const filePath = file.path;
+
+        await prisma.image.create({
+            data: {
+                imageUrl: filePath,
+                eventId: eventId
+            }
+        })
+    }
+
+
+    // console.log(images)
+
+    return res.status(200).json({
+        message: "Image uploaded successfully"
+    })
+}

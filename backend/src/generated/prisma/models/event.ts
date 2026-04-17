@@ -228,6 +228,7 @@ export type eventWhereInput = {
   createdBy?: Prisma.IntFilter<"event"> | number
   shareToken?: Prisma.StringFilter<"event"> | string
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
+  images?: Prisma.ImageListRelationFilter
 }
 
 export type eventOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type eventOrderByWithRelationInput = {
   createdBy?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  images?: Prisma.imageOrderByRelationAggregateInput
 }
 
 export type eventWhereUniqueInput = Prisma.AtLeast<{
@@ -249,6 +251,7 @@ export type eventWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.IntFilter<"event"> | number
   shareToken?: Prisma.StringFilter<"event"> | string
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
+  images?: Prisma.ImageListRelationFilter
 }, "id">
 
 export type eventOrderByWithAggregationInput = {
@@ -283,6 +286,7 @@ export type eventCreateInput = {
   createdBy: number
   shareToken: string
   createdAt?: Date | string
+  images?: Prisma.imageCreateNestedManyWithoutEventInput
 }
 
 export type eventUncheckedCreateInput = {
@@ -292,6 +296,7 @@ export type eventUncheckedCreateInput = {
   createdBy: number
   shareToken: string
   createdAt?: Date | string
+  images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type eventUpdateInput = {
@@ -300,6 +305,7 @@ export type eventUpdateInput = {
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.imageUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateInput = {
@@ -309,6 +315,7 @@ export type eventUncheckedUpdateInput = {
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type eventCreateManyInput = {
@@ -374,6 +381,104 @@ export type eventSumOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
 }
 
+export type EventScalarRelationFilter = {
+  is?: Prisma.eventWhereInput
+  isNot?: Prisma.eventWhereInput
+}
+
+export type eventCreateNestedOneWithoutImagesInput = {
+  create?: Prisma.XOR<Prisma.eventCreateWithoutImagesInput, Prisma.eventUncheckedCreateWithoutImagesInput>
+  connectOrCreate?: Prisma.eventCreateOrConnectWithoutImagesInput
+  connect?: Prisma.eventWhereUniqueInput
+}
+
+export type eventUpdateOneRequiredWithoutImagesNestedInput = {
+  create?: Prisma.XOR<Prisma.eventCreateWithoutImagesInput, Prisma.eventUncheckedCreateWithoutImagesInput>
+  connectOrCreate?: Prisma.eventCreateOrConnectWithoutImagesInput
+  upsert?: Prisma.eventUpsertWithoutImagesInput
+  connect?: Prisma.eventWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.eventUpdateToOneWithWhereWithoutImagesInput, Prisma.eventUpdateWithoutImagesInput>, Prisma.eventUncheckedUpdateWithoutImagesInput>
+}
+
+export type eventCreateWithoutImagesInput = {
+  title: string
+  description: string
+  createdBy: number
+  shareToken: string
+  createdAt?: Date | string
+}
+
+export type eventUncheckedCreateWithoutImagesInput = {
+  id?: number
+  title: string
+  description: string
+  createdBy: number
+  shareToken: string
+  createdAt?: Date | string
+}
+
+export type eventCreateOrConnectWithoutImagesInput = {
+  where: Prisma.eventWhereUniqueInput
+  create: Prisma.XOR<Prisma.eventCreateWithoutImagesInput, Prisma.eventUncheckedCreateWithoutImagesInput>
+}
+
+export type eventUpsertWithoutImagesInput = {
+  update: Prisma.XOR<Prisma.eventUpdateWithoutImagesInput, Prisma.eventUncheckedUpdateWithoutImagesInput>
+  create: Prisma.XOR<Prisma.eventCreateWithoutImagesInput, Prisma.eventUncheckedCreateWithoutImagesInput>
+  where?: Prisma.eventWhereInput
+}
+
+export type eventUpdateToOneWithWhereWithoutImagesInput = {
+  where?: Prisma.eventWhereInput
+  data: Prisma.XOR<Prisma.eventUpdateWithoutImagesInput, Prisma.eventUncheckedUpdateWithoutImagesInput>
+}
+
+export type eventUpdateWithoutImagesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type eventUncheckedUpdateWithoutImagesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type EventCountOutputType
+ */
+
+export type EventCountOutputType = {
+  images: number
+}
+
+export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  images?: boolean | EventCountOutputTypeCountImagesArgs
+}
+
+/**
+ * EventCountOutputType without action
+ */
+export type EventCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EventCountOutputType
+   */
+  select?: Prisma.EventCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * EventCountOutputType without action
+ */
+export type EventCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.imageWhereInput
+}
 
 
 export type eventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -383,6 +488,8 @@ export type eventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdBy?: boolean
   shareToken?: boolean
   createdAt?: boolean
+  images?: boolean | Prisma.event$imagesArgs<ExtArgs>
+  _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
 export type eventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -413,10 +520,18 @@ export type eventSelectScalar = {
 }
 
 export type eventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "createdBy" | "shareToken" | "createdAt", ExtArgs["result"]["event"]>
+export type eventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  images?: boolean | Prisma.event$imagesArgs<ExtArgs>
+  _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type eventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type eventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $eventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "event"
-  objects: {}
+  objects: {
+    images: Prisma.$imagePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
@@ -818,6 +933,7 @@ readonly fields: eventFieldRefs;
  */
 export interface Prisma__eventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  images<T extends Prisma.event$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.event$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$imagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -870,6 +986,10 @@ export type eventFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  /**
    * Filter, which event to fetch.
    */
   where: Prisma.eventWhereUniqueInput
@@ -888,6 +1008,10 @@ export type eventFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  /**
    * Filter, which event to fetch.
    */
   where: Prisma.eventWhereUniqueInput
@@ -905,6 +1029,10 @@ export type eventFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the event
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
   /**
    * Filter, which event to fetch.
    */
@@ -954,6 +1082,10 @@ export type eventFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  /**
    * Filter, which event to fetch.
    */
   where?: Prisma.eventWhereInput
@@ -1001,6 +1133,10 @@ export type eventFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the event
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
   /**
    * Filter, which events to fetch.
    */
@@ -1050,6 +1186,10 @@ export type eventCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  /**
    * The data needed to create a event.
    */
   data: Prisma.XOR<Prisma.eventCreateInput, Prisma.eventUncheckedCreateInput>
@@ -1097,6 +1237,10 @@ export type eventUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the event
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
   /**
    * The data needed to update a event.
    */
@@ -1164,6 +1308,10 @@ export type eventUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  /**
    * The filter to search for the event to update in case it exists.
    */
   where: Prisma.eventWhereUniqueInput
@@ -1190,6 +1338,10 @@ export type eventDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  /**
    * Filter which event to delete.
    */
   where: Prisma.eventWhereUniqueInput
@@ -1210,6 +1362,30 @@ export type eventDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
+ * event.images
+ */
+export type event$imagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the image
+   */
+  select?: Prisma.imageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the image
+   */
+  omit?: Prisma.imageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.imageInclude<ExtArgs> | null
+  where?: Prisma.imageWhereInput
+  orderBy?: Prisma.imageOrderByWithRelationInput | Prisma.imageOrderByWithRelationInput[]
+  cursor?: Prisma.imageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ImageScalarFieldEnum | Prisma.ImageScalarFieldEnum[]
+}
+
+/**
  * event without action
  */
 export type eventDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1221,4 +1397,8 @@ export type eventDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the event
    */
   omit?: Prisma.eventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
 }

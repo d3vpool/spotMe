@@ -27,3 +27,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type event = Prisma.eventModel
+/**
+ * Model image
+ * 
+ */
+export type image = Prisma.imageModel

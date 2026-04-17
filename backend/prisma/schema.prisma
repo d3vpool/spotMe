@@ -28,4 +28,15 @@ model event {
   createdBy Int
   shareToken String
   createdAt DateTime @default(now())
+
+  images image[]
+}
+
+model image {
+  id Int @id @default(autoincrement())
+  imageUrl String
+  eventId Int
+  createdAt DateTime @default(now())
+
+  event event @relation(fields: [eventId], references: [id])
 }

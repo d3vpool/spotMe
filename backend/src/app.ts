@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 
 
 
+
+
 // console.log("Filepath: "+path.join(__dirname, "../../..", "uploads"))
 app.use("/uploads", express.static(path.join(__dirname, "../../..", "uploads")));
 

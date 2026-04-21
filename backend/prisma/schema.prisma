@@ -31,4 +31,14 @@ model image {
   eventId   Int
   createdAt DateTime @default(now())
   event     event    @relation(fields: [eventId], references: [id])
+  faceEmbeddings faceEmbedding[]
+}
+
+model faceEmbedding {
+  id Int @id @default(autoincrement())
+  imageId Int
+  vector Unsupported("vector(128)")
+  image image @relation(fields: [imageId], references: [id])
+  boundingBox Json?
+  createdAt DateTime @default(now())
 }

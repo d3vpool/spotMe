@@ -386,7 +386,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   event: 'event',
-  image: 'image'
+  image: 'image',
+  faceEmbedding: 'faceEmbedding'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "event" | "image"
+    modelProps: "user" | "event" | "image" | "faceEmbedding"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -628,6 +629,64 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    faceEmbedding: {
+      payload: Prisma.$faceEmbeddingPayload<ExtArgs>
+      fields: Prisma.faceEmbeddingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.faceEmbeddingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.faceEmbeddingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+        }
+        findFirst: {
+          args: Prisma.faceEmbeddingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.faceEmbeddingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+        }
+        findMany: {
+          args: Prisma.faceEmbeddingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>[]
+        }
+        delete: {
+          args: Prisma.faceEmbeddingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+        }
+        update: {
+          args: Prisma.faceEmbeddingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+        }
+        deleteMany: {
+          args: Prisma.faceEmbeddingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.faceEmbeddingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.faceEmbeddingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>[]
+        }
+        aggregate: {
+          args: Prisma.FaceEmbeddingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFaceEmbedding>
+        }
+        groupBy: {
+          args: Prisma.faceEmbeddingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FaceEmbeddingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.faceEmbeddingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FaceEmbeddingCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -700,6 +759,16 @@ export const ImageScalarFieldEnum = {
 export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
 
 
+export const FaceEmbeddingScalarFieldEnum = {
+  id: 'id',
+  imageId: 'imageId',
+  boundingBox: 'boundingBox',
+  createdAt: 'createdAt'
+} as const
+
+export type FaceEmbeddingScalarFieldEnum = (typeof FaceEmbeddingScalarFieldEnum)[keyof typeof FaceEmbeddingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -708,12 +777,37 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -761,6 +855,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -875,6 +983,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   event?: Prisma.eventOmit
   image?: Prisma.imageOmit
+  faceEmbedding?: Prisma.faceEmbeddingOmit
 }
 
 /* Types for Logging */

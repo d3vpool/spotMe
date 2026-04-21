@@ -2,6 +2,9 @@ import type { Request, Response } from "express";
 import { prisma } from "../db/db.js";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import "dotenv/config";
+import { title } from "process";
+
 
 export async function createEvent(req: Request, res: Response) {
     try{
@@ -191,11 +194,13 @@ export async function uploadImage(req: Request, res: Response) {
     }
 
     for (const file of images) {
-        const filePath = file.path;
+        const fileName = file.filename;
+        const serverUrl = `${req.protocol}://${req.get('host')}`;
 
+        console.log(serverUrl)
         await prisma.image.create({
             data: {
-                imageUrl: filePath,
+                imageUrl: serverUrl+"/uploads/"+fileName,
                 eventId: eventId
             }
         })
@@ -206,5 +211,37 @@ export async function uploadImage(req: Request, res: Response) {
 
     return res.status(200).json({
         message: "Image uploaded successfully"
+    })
+}
+
+
+export async function getEventFromShareToken(req: Request, res: Response) {
+    const shareToken = String(req.params.shareToken)
+    const event = await prisma.event.findFirst({
+        where: {
+            shareToken: shareToken,
+        }, 
+        select: {
+            title: true,
+            description: true,
+            shareToken: true,
+            images: {
+                select: {
+                    imageUrl: true
+                }
+            }
+        }
+    })
+    if(!event){
+        return res.status(404).json({
+            message: "Event Not Found"
+        })
+    }
+    const images = event.images;
+
+    console.log(images)
+
+    return res.status(200).json({
+        event
     })
 }

@@ -1,6 +1,8 @@
 import * as faceapi from "face-api.js"
 import * as canvas from "canvas"
 import path from "path"
+import { prisma } from "../db/db.js";
+
 
 const {Canvas, Image, ImageData } = canvas;
 faceapi.env.monkeyPatch({ 
@@ -36,3 +38,43 @@ export async function loadModels() {
     }
 }
 
+export async function detectFaces(imagePath : string, imageId: number) {
+    
+    const img = await canvas.loadImage(imagePath);
+    
+    
+    const detections = await faceapi.detectAllFaces(img as any)
+                                    .withFaceLandmarks()
+                                    .withFaceDescriptors();
+    
+    // console.log(detections)
+
+    for(const detection of detections){
+        const vector = Array.from(detection.descriptor)
+        const box = detection.detection.box
+
+        const vectorString = `[${vector.join(",")}]`;
+
+        const boundingBox = {
+            x: box.x,
+            y: box.y,
+            width: box.width,
+            height: box.height
+        };
+
+        const faceEmbedding = await prisma.$executeRaw`
+            INSERT INTO "FaceEmbedding" ("imageId", "vector", "boundingBox", "createdAt")
+            VALUES (
+                ${imageId},
+                ${vectorString}::vector,
+                ${JSON.stringify(boundingBox)},
+                NOW()
+            )
+        `;
+
+        console.log(faceEmbedding)
+    }
+
+
+
+}

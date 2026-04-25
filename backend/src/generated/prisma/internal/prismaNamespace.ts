@@ -387,7 +387,7 @@ export const ModelName = {
   User: 'User',
   event: 'event',
   image: 'image',
-  faceEmbedding: 'faceEmbedding'
+  FaceEmbedding: 'FaceEmbedding'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -629,60 +629,60 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    faceEmbedding: {
-      payload: Prisma.$faceEmbeddingPayload<ExtArgs>
-      fields: Prisma.faceEmbeddingFieldRefs
+    FaceEmbedding: {
+      payload: Prisma.$FaceEmbeddingPayload<ExtArgs>
+      fields: Prisma.FaceEmbeddingFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.faceEmbeddingFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload> | null
+          args: Prisma.FaceEmbeddingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.faceEmbeddingFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+          args: Prisma.FaceEmbeddingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload>
         }
         findFirst: {
-          args: Prisma.faceEmbeddingFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload> | null
+          args: Prisma.FaceEmbeddingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.faceEmbeddingFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+          args: Prisma.FaceEmbeddingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload>
         }
         findMany: {
-          args: Prisma.faceEmbeddingFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>[]
+          args: Prisma.FaceEmbeddingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload>[]
         }
         delete: {
-          args: Prisma.faceEmbeddingDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+          args: Prisma.FaceEmbeddingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload>
         }
         update: {
-          args: Prisma.faceEmbeddingUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>
+          args: Prisma.FaceEmbeddingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload>
         }
         deleteMany: {
-          args: Prisma.faceEmbeddingDeleteManyArgs<ExtArgs>
+          args: Prisma.FaceEmbeddingDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.faceEmbeddingUpdateManyArgs<ExtArgs>
+          args: Prisma.FaceEmbeddingUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.faceEmbeddingUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$faceEmbeddingPayload>[]
+          args: Prisma.FaceEmbeddingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceEmbeddingPayload>[]
         }
         aggregate: {
           args: Prisma.FaceEmbeddingAggregateArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AggregateFaceEmbedding>
         }
         groupBy: {
-          args: Prisma.faceEmbeddingGroupByArgs<ExtArgs>
+          args: Prisma.FaceEmbeddingGroupByArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FaceEmbeddingGroupByOutputType>[]
         }
         count: {
-          args: Prisma.faceEmbeddingCountArgs<ExtArgs>
+          args: Prisma.FaceEmbeddingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FaceEmbeddingCountAggregateOutputType> | number
         }
       }
@@ -983,7 +983,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   event?: Prisma.eventOmit
   image?: Prisma.imageOmit
-  faceEmbedding?: Prisma.faceEmbeddingOmit
+  faceEmbedding?: Prisma.FaceEmbeddingOmit
 }
 
 /* Types for Logging */

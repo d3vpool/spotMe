@@ -31,10 +31,10 @@ model image {
   eventId   Int
   createdAt DateTime @default(now())
   event     event    @relation(fields: [eventId], references: [id])
-  faceEmbeddings faceEmbedding[]
+  faceEmbeddings FaceEmbedding[]
 }
 
-model faceEmbedding {
+model FaceEmbedding {
   id Int @id @default(autoincrement())
   imageId Int
   vector Unsupported("vector(128)")

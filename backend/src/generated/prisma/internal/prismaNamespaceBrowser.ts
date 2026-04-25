@@ -54,7 +54,7 @@ export const ModelName = {
   User: 'User',
   event: 'event',
   image: 'image',
-  faceEmbedding: 'faceEmbedding'
+  FaceEmbedding: 'FaceEmbedding'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]

@@ -222,7 +222,7 @@ export type imageOrderByWithRelationInput = {
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   event?: Prisma.eventOrderByWithRelationInput
-  faceEmbeddings?: Prisma.faceEmbeddingOrderByRelationAggregateInput
+  faceEmbeddings?: Prisma.FaceEmbeddingOrderByRelationAggregateInput
 }
 
 export type imageWhereUniqueInput = Prisma.AtLeast<{
@@ -263,7 +263,7 @@ export type imageCreateInput = {
   imageUrl: string
   createdAt?: Date | string
   event: Prisma.eventCreateNestedOneWithoutImagesInput
-  faceEmbeddings?: Prisma.faceEmbeddingCreateNestedManyWithoutImageInput
+  faceEmbeddings?: Prisma.FaceEmbeddingCreateNestedManyWithoutImageInput
 }
 
 export type imageUncheckedCreateInput = {
@@ -271,14 +271,14 @@ export type imageUncheckedCreateInput = {
   imageUrl: string
   eventId: number
   createdAt?: Date | string
-  faceEmbeddings?: Prisma.faceEmbeddingUncheckedCreateNestedManyWithoutImageInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUncheckedCreateNestedManyWithoutImageInput
 }
 
 export type imageUpdateInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   event?: Prisma.eventUpdateOneRequiredWithoutImagesNestedInput
-  faceEmbeddings?: Prisma.faceEmbeddingUpdateManyWithoutImageNestedInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUpdateManyWithoutImageNestedInput
 }
 
 export type imageUncheckedUpdateInput = {
@@ -286,7 +286,7 @@ export type imageUncheckedUpdateInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  faceEmbeddings?: Prisma.faceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
 }
 
 export type imageCreateManyInput = {
@@ -407,14 +407,14 @@ export type imageUpdateOneRequiredWithoutFaceEmbeddingsNestedInput = {
 export type imageCreateWithoutEventInput = {
   imageUrl: string
   createdAt?: Date | string
-  faceEmbeddings?: Prisma.faceEmbeddingCreateNestedManyWithoutImageInput
+  faceEmbeddings?: Prisma.FaceEmbeddingCreateNestedManyWithoutImageInput
 }
 
 export type imageUncheckedCreateWithoutEventInput = {
   id?: number
   imageUrl: string
   createdAt?: Date | string
-  faceEmbeddings?: Prisma.faceEmbeddingUncheckedCreateNestedManyWithoutImageInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUncheckedCreateNestedManyWithoutImageInput
 }
 
 export type imageCreateOrConnectWithoutEventInput = {
@@ -504,14 +504,14 @@ export type imageCreateManyEventInput = {
 export type imageUpdateWithoutEventInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  faceEmbeddings?: Prisma.faceEmbeddingUpdateManyWithoutImageNestedInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUpdateManyWithoutImageNestedInput
 }
 
 export type imageUncheckedUpdateWithoutEventInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  faceEmbeddings?: Prisma.faceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
 }
 
 export type imageUncheckedUpdateManyWithoutEventInput = {
@@ -547,7 +547,7 @@ export type ImageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
  * ImageCountOutputType without action
  */
 export type ImageCountOutputTypeCountFaceEmbeddingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
 }
 
 
@@ -601,7 +601,7 @@ export type $imagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "image"
   objects: {
     event: Prisma.$eventPayload<ExtArgs>
-    faceEmbeddings: Prisma.$faceEmbeddingPayload<ExtArgs>[]
+    faceEmbeddings: Prisma.$FaceEmbeddingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1003,7 +1003,7 @@ readonly fields: imageFieldRefs;
 export interface Prisma__imageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   event<T extends Prisma.eventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.eventDefaultArgs<ExtArgs>>): Prisma.Prisma__eventClient<runtime.Types.Result.GetResult<Prisma.$eventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  faceEmbeddings<T extends Prisma.image$faceEmbeddingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.image$faceEmbeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  faceEmbeddings<T extends Prisma.image$faceEmbeddingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.image$faceEmbeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1442,20 +1442,20 @@ export type imageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
  */
 export type image$faceEmbeddingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
-  where?: Prisma.faceEmbeddingWhereInput
-  orderBy?: Prisma.faceEmbeddingOrderByWithRelationInput | Prisma.faceEmbeddingOrderByWithRelationInput[]
-  cursor?: Prisma.faceEmbeddingWhereUniqueInput
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
+  where?: Prisma.FaceEmbeddingWhereInput
+  orderBy?: Prisma.FaceEmbeddingOrderByWithRelationInput | Prisma.FaceEmbeddingOrderByWithRelationInput[]
+  cursor?: Prisma.FaceEmbeddingWhereUniqueInput
   take?: number
   skip?: number
   distinct?: Prisma.FaceEmbeddingScalarFieldEnum | Prisma.FaceEmbeddingScalarFieldEnum[]

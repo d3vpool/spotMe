@@ -4,7 +4,7 @@
 // biome-ignore-all lint: generated file
 // @ts-nocheck 
 /*
- * This file exports the `faceEmbedding` model and its related types.
+ * This file exports the `FaceEmbedding` model and its related types.
  *
  * 🟢 You can import this file directly.
  */
@@ -13,10 +13,10 @@ import type * as $Enums from "../enums.js"
 import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
- * Model faceEmbedding
+ * Model FaceEmbedding
  * 
  */
-export type faceEmbeddingModel = runtime.Types.Result.DefaultSelection<Prisma.$faceEmbeddingPayload>
+export type FaceEmbeddingModel = runtime.Types.Result.DefaultSelection<Prisma.$FaceEmbeddingPayload>
 
 export type AggregateFaceEmbedding = {
   _count: FaceEmbeddingCountAggregateOutputType | null
@@ -89,37 +89,37 @@ export type FaceEmbeddingCountAggregateInputType = {
 
 export type FaceEmbeddingAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which faceEmbedding to aggregate.
+   * Filter which FaceEmbedding to aggregate.
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of faceEmbeddings to fetch.
+   * Determine the order of FaceEmbeddings to fetch.
    */
-  orderBy?: Prisma.faceEmbeddingOrderByWithRelationInput | Prisma.faceEmbeddingOrderByWithRelationInput[]
+  orderBy?: Prisma.FaceEmbeddingOrderByWithRelationInput | Prisma.FaceEmbeddingOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
    * Sets the start position
    */
-  cursor?: Prisma.faceEmbeddingWhereUniqueInput
+  cursor?: Prisma.FaceEmbeddingWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` faceEmbeddings from the position of the cursor.
+   * Take `±n` FaceEmbeddings from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` faceEmbeddings.
+   * Skip the first `n` FaceEmbeddings.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Count returned faceEmbeddings
+   * Count returned FaceEmbeddings
   **/
   _count?: true | FaceEmbeddingCountAggregateInputType
   /**
@@ -159,11 +159,11 @@ export type GetFaceEmbeddingAggregateType<T extends FaceEmbeddingAggregateArgs> 
 
 
 
-export type faceEmbeddingGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.faceEmbeddingWhereInput
-  orderBy?: Prisma.faceEmbeddingOrderByWithAggregationInput | Prisma.faceEmbeddingOrderByWithAggregationInput[]
+export type FaceEmbeddingGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FaceEmbeddingWhereInput
+  orderBy?: Prisma.FaceEmbeddingOrderByWithAggregationInput | Prisma.FaceEmbeddingOrderByWithAggregationInput[]
   by: Prisma.FaceEmbeddingScalarFieldEnum[] | Prisma.FaceEmbeddingScalarFieldEnum
-  having?: Prisma.faceEmbeddingScalarWhereWithAggregatesInput
+  having?: Prisma.FaceEmbeddingScalarWhereWithAggregatesInput
   take?: number
   skip?: number
   _count?: FaceEmbeddingCountAggregateInputType | true
@@ -185,7 +185,7 @@ export type FaceEmbeddingGroupByOutputType = {
   _max: FaceEmbeddingMaxAggregateOutputType | null
 }
 
-type GetFaceEmbeddingGroupByPayload<T extends faceEmbeddingGroupByArgs> = Prisma.PrismaPromise<
+type GetFaceEmbeddingGroupByPayload<T extends FaceEmbeddingGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<FaceEmbeddingGroupByOutputType, T['by']> &
       {
@@ -200,18 +200,18 @@ type GetFaceEmbeddingGroupByPayload<T extends faceEmbeddingGroupByArgs> = Prisma
 
 
 
-export type faceEmbeddingWhereInput = {
-  AND?: Prisma.faceEmbeddingWhereInput | Prisma.faceEmbeddingWhereInput[]
-  OR?: Prisma.faceEmbeddingWhereInput[]
-  NOT?: Prisma.faceEmbeddingWhereInput | Prisma.faceEmbeddingWhereInput[]
-  id?: Prisma.IntFilter<"faceEmbedding"> | number
-  imageId?: Prisma.IntFilter<"faceEmbedding"> | number
-  boundingBox?: Prisma.JsonNullableFilter<"faceEmbedding">
-  createdAt?: Prisma.DateTimeFilter<"faceEmbedding"> | Date | string
+export type FaceEmbeddingWhereInput = {
+  AND?: Prisma.FaceEmbeddingWhereInput | Prisma.FaceEmbeddingWhereInput[]
+  OR?: Prisma.FaceEmbeddingWhereInput[]
+  NOT?: Prisma.FaceEmbeddingWhereInput | Prisma.FaceEmbeddingWhereInput[]
+  id?: Prisma.IntFilter<"FaceEmbedding"> | number
+  imageId?: Prisma.IntFilter<"FaceEmbedding"> | number
+  boundingBox?: Prisma.JsonNullableFilter<"FaceEmbedding">
+  createdAt?: Prisma.DateTimeFilter<"FaceEmbedding"> | Date | string
   image?: Prisma.XOR<Prisma.ImageScalarRelationFilter, Prisma.imageWhereInput>
 }
 
-export type faceEmbeddingOrderByWithRelationInput = {
+export type FaceEmbeddingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   boundingBox?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -219,58 +219,58 @@ export type faceEmbeddingOrderByWithRelationInput = {
   image?: Prisma.imageOrderByWithRelationInput
 }
 
-export type faceEmbeddingWhereUniqueInput = Prisma.AtLeast<{
+export type FaceEmbeddingWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  AND?: Prisma.faceEmbeddingWhereInput | Prisma.faceEmbeddingWhereInput[]
-  OR?: Prisma.faceEmbeddingWhereInput[]
-  NOT?: Prisma.faceEmbeddingWhereInput | Prisma.faceEmbeddingWhereInput[]
-  imageId?: Prisma.IntFilter<"faceEmbedding"> | number
-  boundingBox?: Prisma.JsonNullableFilter<"faceEmbedding">
-  createdAt?: Prisma.DateTimeFilter<"faceEmbedding"> | Date | string
+  AND?: Prisma.FaceEmbeddingWhereInput | Prisma.FaceEmbeddingWhereInput[]
+  OR?: Prisma.FaceEmbeddingWhereInput[]
+  NOT?: Prisma.FaceEmbeddingWhereInput | Prisma.FaceEmbeddingWhereInput[]
+  imageId?: Prisma.IntFilter<"FaceEmbedding"> | number
+  boundingBox?: Prisma.JsonNullableFilter<"FaceEmbedding">
+  createdAt?: Prisma.DateTimeFilter<"FaceEmbedding"> | Date | string
   image?: Prisma.XOR<Prisma.ImageScalarRelationFilter, Prisma.imageWhereInput>
 }, "id">
 
-export type faceEmbeddingOrderByWithAggregationInput = {
+export type FaceEmbeddingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   boundingBox?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  _count?: Prisma.faceEmbeddingCountOrderByAggregateInput
-  _avg?: Prisma.faceEmbeddingAvgOrderByAggregateInput
-  _max?: Prisma.faceEmbeddingMaxOrderByAggregateInput
-  _min?: Prisma.faceEmbeddingMinOrderByAggregateInput
-  _sum?: Prisma.faceEmbeddingSumOrderByAggregateInput
+  _count?: Prisma.FaceEmbeddingCountOrderByAggregateInput
+  _avg?: Prisma.FaceEmbeddingAvgOrderByAggregateInput
+  _max?: Prisma.FaceEmbeddingMaxOrderByAggregateInput
+  _min?: Prisma.FaceEmbeddingMinOrderByAggregateInput
+  _sum?: Prisma.FaceEmbeddingSumOrderByAggregateInput
 }
 
-export type faceEmbeddingScalarWhereWithAggregatesInput = {
-  AND?: Prisma.faceEmbeddingScalarWhereWithAggregatesInput | Prisma.faceEmbeddingScalarWhereWithAggregatesInput[]
-  OR?: Prisma.faceEmbeddingScalarWhereWithAggregatesInput[]
-  NOT?: Prisma.faceEmbeddingScalarWhereWithAggregatesInput | Prisma.faceEmbeddingScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"faceEmbedding"> | number
-  imageId?: Prisma.IntWithAggregatesFilter<"faceEmbedding"> | number
-  boundingBox?: Prisma.JsonNullableWithAggregatesFilter<"faceEmbedding">
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"faceEmbedding"> | Date | string
+export type FaceEmbeddingScalarWhereWithAggregatesInput = {
+  AND?: Prisma.FaceEmbeddingScalarWhereWithAggregatesInput | Prisma.FaceEmbeddingScalarWhereWithAggregatesInput[]
+  OR?: Prisma.FaceEmbeddingScalarWhereWithAggregatesInput[]
+  NOT?: Prisma.FaceEmbeddingScalarWhereWithAggregatesInput | Prisma.FaceEmbeddingScalarWhereWithAggregatesInput[]
+  id?: Prisma.IntWithAggregatesFilter<"FaceEmbedding"> | number
+  imageId?: Prisma.IntWithAggregatesFilter<"FaceEmbedding"> | number
+  boundingBox?: Prisma.JsonNullableWithAggregatesFilter<"FaceEmbedding">
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"FaceEmbedding"> | Date | string
 }
 
-export type faceEmbeddingUpdateInput = {
+export type FaceEmbeddingUpdateInput = {
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.imageUpdateOneRequiredWithoutFaceEmbeddingsNestedInput
 }
 
-export type faceEmbeddingUncheckedUpdateInput = {
+export type FaceEmbeddingUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageId?: Prisma.IntFieldUpdateOperationsInput | number
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type faceEmbeddingUpdateManyMutationInput = {
+export type FaceEmbeddingUpdateManyMutationInput = {
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type faceEmbeddingUncheckedUpdateManyInput = {
+export type FaceEmbeddingUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageId?: Prisma.IntFieldUpdateOperationsInput | number
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -278,104 +278,104 @@ export type faceEmbeddingUncheckedUpdateManyInput = {
 }
 
 export type FaceEmbeddingListRelationFilter = {
-  every?: Prisma.faceEmbeddingWhereInput
-  some?: Prisma.faceEmbeddingWhereInput
-  none?: Prisma.faceEmbeddingWhereInput
+  every?: Prisma.FaceEmbeddingWhereInput
+  some?: Prisma.FaceEmbeddingWhereInput
+  none?: Prisma.FaceEmbeddingWhereInput
 }
 
-export type faceEmbeddingOrderByRelationAggregateInput = {
+export type FaceEmbeddingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type faceEmbeddingCountOrderByAggregateInput = {
+export type FaceEmbeddingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   boundingBox?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
-export type faceEmbeddingAvgOrderByAggregateInput = {
+export type FaceEmbeddingAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
 }
 
-export type faceEmbeddingMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  imageId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type faceEmbeddingMinOrderByAggregateInput = {
+export type FaceEmbeddingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
-export type faceEmbeddingSumOrderByAggregateInput = {
+export type FaceEmbeddingMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  imageId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type FaceEmbeddingSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
 }
 
-export type faceEmbeddingCreateNestedManyWithoutImageInput = {
-  connect?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
+export type FaceEmbeddingCreateNestedManyWithoutImageInput = {
+  connect?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
 }
 
-export type faceEmbeddingUncheckedCreateNestedManyWithoutImageInput = {
-  connect?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
+export type FaceEmbeddingUncheckedCreateNestedManyWithoutImageInput = {
+  connect?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
 }
 
-export type faceEmbeddingUpdateManyWithoutImageNestedInput = {
-  set?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  disconnect?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  delete?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  connect?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  update?: Prisma.faceEmbeddingUpdateWithWhereUniqueWithoutImageInput | Prisma.faceEmbeddingUpdateWithWhereUniqueWithoutImageInput[]
-  updateMany?: Prisma.faceEmbeddingUpdateManyWithWhereWithoutImageInput | Prisma.faceEmbeddingUpdateManyWithWhereWithoutImageInput[]
-  deleteMany?: Prisma.faceEmbeddingScalarWhereInput | Prisma.faceEmbeddingScalarWhereInput[]
+export type FaceEmbeddingUpdateManyWithoutImageNestedInput = {
+  set?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  disconnect?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  delete?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  connect?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  update?: Prisma.FaceEmbeddingUpdateWithWhereUniqueWithoutImageInput | Prisma.FaceEmbeddingUpdateWithWhereUniqueWithoutImageInput[]
+  updateMany?: Prisma.FaceEmbeddingUpdateManyWithWhereWithoutImageInput | Prisma.FaceEmbeddingUpdateManyWithWhereWithoutImageInput[]
+  deleteMany?: Prisma.FaceEmbeddingScalarWhereInput | Prisma.FaceEmbeddingScalarWhereInput[]
 }
 
-export type faceEmbeddingUncheckedUpdateManyWithoutImageNestedInput = {
-  set?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  disconnect?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  delete?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  connect?: Prisma.faceEmbeddingWhereUniqueInput | Prisma.faceEmbeddingWhereUniqueInput[]
-  update?: Prisma.faceEmbeddingUpdateWithWhereUniqueWithoutImageInput | Prisma.faceEmbeddingUpdateWithWhereUniqueWithoutImageInput[]
-  updateMany?: Prisma.faceEmbeddingUpdateManyWithWhereWithoutImageInput | Prisma.faceEmbeddingUpdateManyWithWhereWithoutImageInput[]
-  deleteMany?: Prisma.faceEmbeddingScalarWhereInput | Prisma.faceEmbeddingScalarWhereInput[]
+export type FaceEmbeddingUncheckedUpdateManyWithoutImageNestedInput = {
+  set?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  disconnect?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  delete?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  connect?: Prisma.FaceEmbeddingWhereUniqueInput | Prisma.FaceEmbeddingWhereUniqueInput[]
+  update?: Prisma.FaceEmbeddingUpdateWithWhereUniqueWithoutImageInput | Prisma.FaceEmbeddingUpdateWithWhereUniqueWithoutImageInput[]
+  updateMany?: Prisma.FaceEmbeddingUpdateManyWithWhereWithoutImageInput | Prisma.FaceEmbeddingUpdateManyWithWhereWithoutImageInput[]
+  deleteMany?: Prisma.FaceEmbeddingScalarWhereInput | Prisma.FaceEmbeddingScalarWhereInput[]
 }
 
-export type faceEmbeddingUpdateWithWhereUniqueWithoutImageInput = {
-  where: Prisma.faceEmbeddingWhereUniqueInput
-  data: Prisma.XOR<Prisma.faceEmbeddingUpdateWithoutImageInput, Prisma.faceEmbeddingUncheckedUpdateWithoutImageInput>
+export type FaceEmbeddingUpdateWithWhereUniqueWithoutImageInput = {
+  where: Prisma.FaceEmbeddingWhereUniqueInput
+  data: Prisma.XOR<Prisma.FaceEmbeddingUpdateWithoutImageInput, Prisma.FaceEmbeddingUncheckedUpdateWithoutImageInput>
 }
 
-export type faceEmbeddingUpdateManyWithWhereWithoutImageInput = {
-  where: Prisma.faceEmbeddingScalarWhereInput
-  data: Prisma.XOR<Prisma.faceEmbeddingUpdateManyMutationInput, Prisma.faceEmbeddingUncheckedUpdateManyWithoutImageInput>
+export type FaceEmbeddingUpdateManyWithWhereWithoutImageInput = {
+  where: Prisma.FaceEmbeddingScalarWhereInput
+  data: Prisma.XOR<Prisma.FaceEmbeddingUpdateManyMutationInput, Prisma.FaceEmbeddingUncheckedUpdateManyWithoutImageInput>
 }
 
-export type faceEmbeddingScalarWhereInput = {
-  AND?: Prisma.faceEmbeddingScalarWhereInput | Prisma.faceEmbeddingScalarWhereInput[]
-  OR?: Prisma.faceEmbeddingScalarWhereInput[]
-  NOT?: Prisma.faceEmbeddingScalarWhereInput | Prisma.faceEmbeddingScalarWhereInput[]
-  id?: Prisma.IntFilter<"faceEmbedding"> | number
-  imageId?: Prisma.IntFilter<"faceEmbedding"> | number
-  boundingBox?: Prisma.JsonNullableFilter<"faceEmbedding">
-  createdAt?: Prisma.DateTimeFilter<"faceEmbedding"> | Date | string
+export type FaceEmbeddingScalarWhereInput = {
+  AND?: Prisma.FaceEmbeddingScalarWhereInput | Prisma.FaceEmbeddingScalarWhereInput[]
+  OR?: Prisma.FaceEmbeddingScalarWhereInput[]
+  NOT?: Prisma.FaceEmbeddingScalarWhereInput | Prisma.FaceEmbeddingScalarWhereInput[]
+  id?: Prisma.IntFilter<"FaceEmbedding"> | number
+  imageId?: Prisma.IntFilter<"FaceEmbedding"> | number
+  boundingBox?: Prisma.JsonNullableFilter<"FaceEmbedding">
+  createdAt?: Prisma.DateTimeFilter<"FaceEmbedding"> | Date | string
 }
 
-export type faceEmbeddingUpdateWithoutImageInput = {
+export type FaceEmbeddingUpdateWithoutImageInput = {
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type faceEmbeddingUncheckedUpdateWithoutImageInput = {
+export type FaceEmbeddingUncheckedUpdateWithoutImageInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type faceEmbeddingUncheckedUpdateManyWithoutImageInput = {
+export type FaceEmbeddingUncheckedUpdateManyWithoutImageInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   boundingBox?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,7 +383,7 @@ export type faceEmbeddingUncheckedUpdateManyWithoutImageInput = {
 
 
 
-export type faceEmbeddingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type FaceEmbeddingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   imageId?: boolean
   boundingBox?: boolean
@@ -392,7 +392,7 @@ export type faceEmbeddingSelect<ExtArgs extends runtime.Types.Extensions.Interna
 }, ExtArgs["result"]["faceEmbedding"]>
 
 
-export type faceEmbeddingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type FaceEmbeddingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   imageId?: boolean
   boundingBox?: boolean
@@ -400,23 +400,23 @@ export type faceEmbeddingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   image?: boolean | Prisma.imageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["faceEmbedding"]>
 
-export type faceEmbeddingSelectScalar = {
+export type FaceEmbeddingSelectScalar = {
   id?: boolean
   imageId?: boolean
   boundingBox?: boolean
   createdAt?: boolean
 }
 
-export type faceEmbeddingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageId" | "boundingBox" | "createdAt", ExtArgs["result"]["faceEmbedding"]>
-export type faceEmbeddingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageId" | "boundingBox" | "createdAt", ExtArgs["result"]["faceEmbedding"]>
+export type FaceEmbeddingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   image?: boolean | Prisma.imageDefaultArgs<ExtArgs>
 }
-export type faceEmbeddingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   image?: boolean | Prisma.imageDefaultArgs<ExtArgs>
 }
 
-export type $faceEmbeddingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  name: "faceEmbedding"
+export type $FaceEmbeddingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  name: "FaceEmbedding"
   objects: {
     image: Prisma.$imagePayload<ExtArgs>
   }
@@ -429,18 +429,18 @@ export type $faceEmbeddingPayload<ExtArgs extends runtime.Types.Extensions.Inter
   composites: {}
 }
 
-export type faceEmbeddingGetPayload<S extends boolean | null | undefined | faceEmbeddingDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload, S>
+export type FaceEmbeddingGetPayload<S extends boolean | null | undefined | FaceEmbeddingDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload, S>
 
-export type faceEmbeddingCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<faceEmbeddingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type FaceEmbeddingCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
+  Omit<FaceEmbeddingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: FaceEmbeddingCountAggregateInputType | true
   }
 
-export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['faceEmbedding'], meta: { name: 'faceEmbedding' } }
+export interface FaceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FaceEmbedding'], meta: { name: 'FaceEmbedding' } }
   /**
    * Find zero or one FaceEmbedding that matches the filter.
-   * @param {faceEmbeddingFindUniqueArgs} args - Arguments to find a FaceEmbedding
+   * @param {FaceEmbeddingFindUniqueArgs} args - Arguments to find a FaceEmbedding
    * @example
    * // Get one FaceEmbedding
    * const faceEmbedding = await prisma.faceEmbedding.findUnique({
@@ -449,12 +449,12 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    *   }
    * })
    */
-  findUnique<T extends faceEmbeddingFindUniqueArgs>(args: Prisma.SelectSubset<T, faceEmbeddingFindUniqueArgs<ExtArgs>>): Prisma.Prisma__faceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findUnique<T extends FaceEmbeddingFindUniqueArgs>(args: Prisma.SelectSubset<T, FaceEmbeddingFindUniqueArgs<ExtArgs>>): Prisma.Prisma__FaceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find one FaceEmbedding that matches the filter or throw an error with `error.code='P2025'`
    * if no matches were found.
-   * @param {faceEmbeddingFindUniqueOrThrowArgs} args - Arguments to find a FaceEmbedding
+   * @param {FaceEmbeddingFindUniqueOrThrowArgs} args - Arguments to find a FaceEmbedding
    * @example
    * // Get one FaceEmbedding
    * const faceEmbedding = await prisma.faceEmbedding.findUniqueOrThrow({
@@ -463,13 +463,13 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    *   }
    * })
    */
-  findUniqueOrThrow<T extends faceEmbeddingFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, faceEmbeddingFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__faceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findUniqueOrThrow<T extends FaceEmbeddingFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, FaceEmbeddingFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__FaceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find the first FaceEmbedding that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {faceEmbeddingFindFirstArgs} args - Arguments to find a FaceEmbedding
+   * @param {FaceEmbeddingFindFirstArgs} args - Arguments to find a FaceEmbedding
    * @example
    * // Get one FaceEmbedding
    * const faceEmbedding = await prisma.faceEmbedding.findFirst({
@@ -478,14 +478,14 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    *   }
    * })
    */
-  findFirst<T extends faceEmbeddingFindFirstArgs>(args?: Prisma.SelectSubset<T, faceEmbeddingFindFirstArgs<ExtArgs>>): Prisma.Prisma__faceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findFirst<T extends FaceEmbeddingFindFirstArgs>(args?: Prisma.SelectSubset<T, FaceEmbeddingFindFirstArgs<ExtArgs>>): Prisma.Prisma__FaceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find the first FaceEmbedding that matches the filter or
    * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {faceEmbeddingFindFirstOrThrowArgs} args - Arguments to find a FaceEmbedding
+   * @param {FaceEmbeddingFindFirstOrThrowArgs} args - Arguments to find a FaceEmbedding
    * @example
    * // Get one FaceEmbedding
    * const faceEmbedding = await prisma.faceEmbedding.findFirstOrThrow({
@@ -494,13 +494,13 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    *   }
    * })
    */
-  findFirstOrThrow<T extends faceEmbeddingFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, faceEmbeddingFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__faceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findFirstOrThrow<T extends FaceEmbeddingFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, FaceEmbeddingFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__FaceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find zero or more FaceEmbeddings that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {faceEmbeddingFindManyArgs} args - Arguments to filter and select certain fields only.
+   * @param {FaceEmbeddingFindManyArgs} args - Arguments to filter and select certain fields only.
    * @example
    * // Get all FaceEmbeddings
    * const faceEmbeddings = await prisma.faceEmbedding.findMany()
@@ -512,11 +512,11 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * const faceEmbeddingWithIdOnly = await prisma.faceEmbedding.findMany({ select: { id: true } })
    * 
    */
-  findMany<T extends faceEmbeddingFindManyArgs>(args?: Prisma.SelectSubset<T, faceEmbeddingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+  findMany<T extends FaceEmbeddingFindManyArgs>(args?: Prisma.SelectSubset<T, FaceEmbeddingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
   /**
    * Delete a FaceEmbedding.
-   * @param {faceEmbeddingDeleteArgs} args - Arguments to delete one FaceEmbedding.
+   * @param {FaceEmbeddingDeleteArgs} args - Arguments to delete one FaceEmbedding.
    * @example
    * // Delete one FaceEmbedding
    * const FaceEmbedding = await prisma.faceEmbedding.delete({
@@ -526,11 +526,11 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * })
    * 
    */
-  delete<T extends faceEmbeddingDeleteArgs>(args: Prisma.SelectSubset<T, faceEmbeddingDeleteArgs<ExtArgs>>): Prisma.Prisma__faceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  delete<T extends FaceEmbeddingDeleteArgs>(args: Prisma.SelectSubset<T, FaceEmbeddingDeleteArgs<ExtArgs>>): Prisma.Prisma__FaceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Update one FaceEmbedding.
-   * @param {faceEmbeddingUpdateArgs} args - Arguments to update one FaceEmbedding.
+   * @param {FaceEmbeddingUpdateArgs} args - Arguments to update one FaceEmbedding.
    * @example
    * // Update one FaceEmbedding
    * const faceEmbedding = await prisma.faceEmbedding.update({
@@ -543,11 +543,11 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * })
    * 
    */
-  update<T extends faceEmbeddingUpdateArgs>(args: Prisma.SelectSubset<T, faceEmbeddingUpdateArgs<ExtArgs>>): Prisma.Prisma__faceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  update<T extends FaceEmbeddingUpdateArgs>(args: Prisma.SelectSubset<T, FaceEmbeddingUpdateArgs<ExtArgs>>): Prisma.Prisma__FaceEmbeddingClient<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Delete zero or more FaceEmbeddings.
-   * @param {faceEmbeddingDeleteManyArgs} args - Arguments to filter FaceEmbeddings to delete.
+   * @param {FaceEmbeddingDeleteManyArgs} args - Arguments to filter FaceEmbeddings to delete.
    * @example
    * // Delete a few FaceEmbeddings
    * const { count } = await prisma.faceEmbedding.deleteMany({
@@ -557,13 +557,13 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * })
    * 
    */
-  deleteMany<T extends faceEmbeddingDeleteManyArgs>(args?: Prisma.SelectSubset<T, faceEmbeddingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  deleteMany<T extends FaceEmbeddingDeleteManyArgs>(args?: Prisma.SelectSubset<T, FaceEmbeddingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Update zero or more FaceEmbeddings.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {faceEmbeddingUpdateManyArgs} args - Arguments to update one or more rows.
+   * @param {FaceEmbeddingUpdateManyArgs} args - Arguments to update one or more rows.
    * @example
    * // Update many FaceEmbeddings
    * const faceEmbedding = await prisma.faceEmbedding.updateMany({
@@ -576,11 +576,11 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * })
    * 
    */
-  updateMany<T extends faceEmbeddingUpdateManyArgs>(args: Prisma.SelectSubset<T, faceEmbeddingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  updateMany<T extends FaceEmbeddingUpdateManyArgs>(args: Prisma.SelectSubset<T, FaceEmbeddingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Update zero or more FaceEmbeddings and returns the data updated in the database.
-   * @param {faceEmbeddingUpdateManyAndReturnArgs} args - Arguments to update many FaceEmbeddings.
+   * @param {FaceEmbeddingUpdateManyAndReturnArgs} args - Arguments to update many FaceEmbeddings.
    * @example
    * // Update many FaceEmbeddings
    * const faceEmbedding = await prisma.faceEmbedding.updateManyAndReturn({
@@ -606,14 +606,14 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  updateManyAndReturn<T extends faceEmbeddingUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, faceEmbeddingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$faceEmbeddingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+  updateManyAndReturn<T extends FaceEmbeddingUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, FaceEmbeddingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
 
   /**
    * Count the number of FaceEmbeddings.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {faceEmbeddingCountArgs} args - Arguments to filter FaceEmbeddings to count.
+   * @param {FaceEmbeddingCountArgs} args - Arguments to filter FaceEmbeddings to count.
    * @example
    * // Count the number of FaceEmbeddings
    * const count = await prisma.faceEmbedding.count({
@@ -622,8 +622,8 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    *   }
    * })
   **/
-  count<T extends faceEmbeddingCountArgs>(
-    args?: Prisma.Subset<T, faceEmbeddingCountArgs>,
+  count<T extends FaceEmbeddingCountArgs>(
+    args?: Prisma.Subset<T, FaceEmbeddingCountArgs>,
   ): Prisma.PrismaPromise<
     T extends runtime.Types.Utils.Record<'select', any>
       ? T['select'] extends true
@@ -662,7 +662,7 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * Group by FaceEmbedding.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {faceEmbeddingGroupByArgs} args - Group by arguments.
+   * @param {FaceEmbeddingGroupByArgs} args - Group by arguments.
    * @example
    * // Group by city, order by createdAt, get count
    * const result = await prisma.user.groupBy({
@@ -677,14 +677,14 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
    * 
   **/
   groupBy<
-    T extends faceEmbeddingGroupByArgs,
+    T extends FaceEmbeddingGroupByArgs,
     HasSelectOrTake extends Prisma.Or<
       Prisma.Extends<'skip', Prisma.Keys<T>>,
       Prisma.Extends<'take', Prisma.Keys<T>>
     >,
     OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: faceEmbeddingGroupByArgs['orderBy'] }
-      : { orderBy?: faceEmbeddingGroupByArgs['orderBy'] },
+      ? { orderBy: FaceEmbeddingGroupByArgs['orderBy'] }
+      : { orderBy?: FaceEmbeddingGroupByArgs['orderBy'] },
     OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
@@ -733,20 +733,20 @@ export interface faceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.
           ? never
           : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
       }[OrderFields]
-  >(args: Prisma.SubsetIntersection<T, faceEmbeddingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFaceEmbeddingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  >(args: Prisma.SubsetIntersection<T, FaceEmbeddingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFaceEmbeddingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 /**
- * Fields of the faceEmbedding model
+ * Fields of the FaceEmbedding model
  */
-readonly fields: faceEmbeddingFieldRefs;
+readonly fields: FaceEmbeddingFieldRefs;
 }
 
 /**
- * The delegate class that acts as a "Promise-like" for faceEmbedding.
+ * The delegate class that acts as a "Promise-like" for FaceEmbedding.
  * Why is this prefixed with `Prisma__`?
  * Because we want to prevent naming conflicts as mentioned in
  * https://github.com/prisma/prisma-client-js/issues/707
  */
-export interface Prisma__faceEmbeddingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+export interface Prisma__FaceEmbeddingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   image<T extends Prisma.imageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.imageDefaultArgs<ExtArgs>>): Prisma.Prisma__imageClient<runtime.Types.Result.GetResult<Prisma.$imagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -775,341 +775,341 @@ export interface Prisma__faceEmbeddingClient<T, Null = never, ExtArgs extends ru
 
 
 /**
- * Fields of the faceEmbedding model
+ * Fields of the FaceEmbedding model
  */
-export interface faceEmbeddingFieldRefs {
-  readonly id: Prisma.FieldRef<"faceEmbedding", 'Int'>
-  readonly imageId: Prisma.FieldRef<"faceEmbedding", 'Int'>
-  readonly boundingBox: Prisma.FieldRef<"faceEmbedding", 'Json'>
-  readonly createdAt: Prisma.FieldRef<"faceEmbedding", 'DateTime'>
+export interface FaceEmbeddingFieldRefs {
+  readonly id: Prisma.FieldRef<"FaceEmbedding", 'Int'>
+  readonly imageId: Prisma.FieldRef<"FaceEmbedding", 'Int'>
+  readonly boundingBox: Prisma.FieldRef<"FaceEmbedding", 'Json'>
+  readonly createdAt: Prisma.FieldRef<"FaceEmbedding", 'DateTime'>
 }
     
 
 // Custom InputTypes
 /**
- * faceEmbedding findUnique
+ * FaceEmbedding findUnique
  */
-export type faceEmbeddingFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * Filter, which faceEmbedding to fetch.
+   * Filter, which FaceEmbedding to fetch.
    */
-  where: Prisma.faceEmbeddingWhereUniqueInput
+  where: Prisma.FaceEmbeddingWhereUniqueInput
 }
 
 /**
- * faceEmbedding findUniqueOrThrow
+ * FaceEmbedding findUniqueOrThrow
  */
-export type faceEmbeddingFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * Filter, which faceEmbedding to fetch.
+   * Filter, which FaceEmbedding to fetch.
    */
-  where: Prisma.faceEmbeddingWhereUniqueInput
+  where: Prisma.FaceEmbeddingWhereUniqueInput
 }
 
 /**
- * faceEmbedding findFirst
+ * FaceEmbedding findFirst
  */
-export type faceEmbeddingFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * Filter, which faceEmbedding to fetch.
+   * Filter, which FaceEmbedding to fetch.
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of faceEmbeddings to fetch.
+   * Determine the order of FaceEmbeddings to fetch.
    */
-  orderBy?: Prisma.faceEmbeddingOrderByWithRelationInput | Prisma.faceEmbeddingOrderByWithRelationInput[]
+  orderBy?: Prisma.FaceEmbeddingOrderByWithRelationInput | Prisma.FaceEmbeddingOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for faceEmbeddings.
+   * Sets the position for searching for FaceEmbeddings.
    */
-  cursor?: Prisma.faceEmbeddingWhereUniqueInput
+  cursor?: Prisma.FaceEmbeddingWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` faceEmbeddings from the position of the cursor.
+   * Take `±n` FaceEmbeddings from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` faceEmbeddings.
+   * Skip the first `n` FaceEmbeddings.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of faceEmbeddings.
+   * Filter by unique combinations of FaceEmbeddings.
    */
   distinct?: Prisma.FaceEmbeddingScalarFieldEnum | Prisma.FaceEmbeddingScalarFieldEnum[]
 }
 
 /**
- * faceEmbedding findFirstOrThrow
+ * FaceEmbedding findFirstOrThrow
  */
-export type faceEmbeddingFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * Filter, which faceEmbedding to fetch.
+   * Filter, which FaceEmbedding to fetch.
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of faceEmbeddings to fetch.
+   * Determine the order of FaceEmbeddings to fetch.
    */
-  orderBy?: Prisma.faceEmbeddingOrderByWithRelationInput | Prisma.faceEmbeddingOrderByWithRelationInput[]
+  orderBy?: Prisma.FaceEmbeddingOrderByWithRelationInput | Prisma.FaceEmbeddingOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for faceEmbeddings.
+   * Sets the position for searching for FaceEmbeddings.
    */
-  cursor?: Prisma.faceEmbeddingWhereUniqueInput
+  cursor?: Prisma.FaceEmbeddingWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` faceEmbeddings from the position of the cursor.
+   * Take `±n` FaceEmbeddings from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` faceEmbeddings.
+   * Skip the first `n` FaceEmbeddings.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of faceEmbeddings.
+   * Filter by unique combinations of FaceEmbeddings.
    */
   distinct?: Prisma.FaceEmbeddingScalarFieldEnum | Prisma.FaceEmbeddingScalarFieldEnum[]
 }
 
 /**
- * faceEmbedding findMany
+ * FaceEmbedding findMany
  */
-export type faceEmbeddingFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * Filter, which faceEmbeddings to fetch.
+   * Filter, which FaceEmbeddings to fetch.
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of faceEmbeddings to fetch.
+   * Determine the order of FaceEmbeddings to fetch.
    */
-  orderBy?: Prisma.faceEmbeddingOrderByWithRelationInput | Prisma.faceEmbeddingOrderByWithRelationInput[]
+  orderBy?: Prisma.FaceEmbeddingOrderByWithRelationInput | Prisma.FaceEmbeddingOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for listing faceEmbeddings.
+   * Sets the position for listing FaceEmbeddings.
    */
-  cursor?: Prisma.faceEmbeddingWhereUniqueInput
+  cursor?: Prisma.FaceEmbeddingWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` faceEmbeddings from the position of the cursor.
+   * Take `±n` FaceEmbeddings from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` faceEmbeddings.
+   * Skip the first `n` FaceEmbeddings.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of faceEmbeddings.
+   * Filter by unique combinations of FaceEmbeddings.
    */
   distinct?: Prisma.FaceEmbeddingScalarFieldEnum | Prisma.FaceEmbeddingScalarFieldEnum[]
 }
 
 /**
- * faceEmbedding update
+ * FaceEmbedding update
  */
-export type faceEmbeddingUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * The data needed to update a faceEmbedding.
+   * The data needed to update a FaceEmbedding.
    */
-  data: Prisma.XOR<Prisma.faceEmbeddingUpdateInput, Prisma.faceEmbeddingUncheckedUpdateInput>
+  data: Prisma.XOR<Prisma.FaceEmbeddingUpdateInput, Prisma.FaceEmbeddingUncheckedUpdateInput>
   /**
-   * Choose, which faceEmbedding to update.
+   * Choose, which FaceEmbedding to update.
    */
-  where: Prisma.faceEmbeddingWhereUniqueInput
+  where: Prisma.FaceEmbeddingWhereUniqueInput
 }
 
 /**
- * faceEmbedding updateMany
+ * FaceEmbedding updateMany
  */
-export type faceEmbeddingUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to update faceEmbeddings.
+   * The data used to update FaceEmbeddings.
    */
-  data: Prisma.XOR<Prisma.faceEmbeddingUpdateManyMutationInput, Prisma.faceEmbeddingUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.FaceEmbeddingUpdateManyMutationInput, Prisma.FaceEmbeddingUncheckedUpdateManyInput>
   /**
-   * Filter which faceEmbeddings to update
+   * Filter which FaceEmbeddings to update
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
-   * Limit how many faceEmbeddings to update.
+   * Limit how many FaceEmbeddings to update.
    */
   limit?: number
 }
 
 /**
- * faceEmbedding updateManyAndReturn
+ * FaceEmbedding updateManyAndReturn
  */
-export type faceEmbeddingUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelectUpdateManyAndReturn<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelectUpdateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
-   * The data used to update faceEmbeddings.
+   * The data used to update FaceEmbeddings.
    */
-  data: Prisma.XOR<Prisma.faceEmbeddingUpdateManyMutationInput, Prisma.faceEmbeddingUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.FaceEmbeddingUpdateManyMutationInput, Prisma.FaceEmbeddingUncheckedUpdateManyInput>
   /**
-   * Filter which faceEmbeddings to update
+   * Filter which FaceEmbeddings to update
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
-   * Limit how many faceEmbeddings to update.
+   * Limit how many FaceEmbeddings to update.
    */
   limit?: number
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingIncludeUpdateManyAndReturn<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * faceEmbedding delete
+ * FaceEmbedding delete
  */
-export type faceEmbeddingDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
   /**
-   * Filter which faceEmbedding to delete.
+   * Filter which FaceEmbedding to delete.
    */
-  where: Prisma.faceEmbeddingWhereUniqueInput
+  where: Prisma.FaceEmbeddingWhereUniqueInput
 }
 
 /**
- * faceEmbedding deleteMany
+ * FaceEmbedding deleteMany
  */
-export type faceEmbeddingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which faceEmbeddings to delete
+   * Filter which FaceEmbeddings to delete
    */
-  where?: Prisma.faceEmbeddingWhereInput
+  where?: Prisma.FaceEmbeddingWhereInput
   /**
-   * Limit how many faceEmbeddings to delete.
+   * Limit how many FaceEmbeddings to delete.
    */
   limit?: number
 }
 
 /**
- * faceEmbedding without action
+ * FaceEmbedding without action
  */
-export type faceEmbeddingDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type FaceEmbeddingDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the faceEmbedding
+   * Select specific fields to fetch from the FaceEmbedding
    */
-  select?: Prisma.faceEmbeddingSelect<ExtArgs> | null
+  select?: Prisma.FaceEmbeddingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the faceEmbedding
+   * Omit specific fields from the FaceEmbedding
    */
-  omit?: Prisma.faceEmbeddingOmit<ExtArgs> | null
+  omit?: Prisma.FaceEmbeddingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.faceEmbeddingInclude<ExtArgs> | null
+  include?: Prisma.FaceEmbeddingInclude<ExtArgs> | null
 }

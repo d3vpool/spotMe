@@ -33,7 +33,7 @@ export type event = Prisma.eventModel
  */
 export type image = Prisma.imageModel
 /**
- * Model faceEmbedding
+ * Model FaceEmbedding
  * 
  */
-export type faceEmbedding = Prisma.faceEmbeddingModel
+export type FaceEmbedding = Prisma.FaceEmbeddingModel

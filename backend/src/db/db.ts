@@ -7,29 +7,3 @@ const adapter = new PrismaPg({
 });
 
 export const prisma = new PrismaClient({ adapter })
-
-
-
-// async function insertUser(
-//     email: string,
-//     firstName: string,
-//     password: string,
-// ) {
-//     const res = await prisma.user.create({
-//         data: {
-//             email: email,
-//             password: password,
-//             firstName: firstName
-//         }
-//     })
-
-//     console.log("User Created Successfully: "+res);
-// }
-
-// async function showAllUsers() {
-//     const users = await prisma.user.findMany();
-//     console.log(users);
-// }
-
-//insertUser("abcd@example.com", "Alphabet's Brother", "number's sister");
-//showAllUsers();

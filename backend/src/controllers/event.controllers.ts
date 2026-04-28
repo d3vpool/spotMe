@@ -1,9 +1,12 @@
 import type { Request, Response } from "express";
+import * as faceapi from "face-api.js"
+import * as canvas from "canvas"
 import { prisma } from "../db/db.js";
-import jwt from "jsonwebtoken";
+import fs from "fs";
 import crypto from "crypto";
 import "dotenv/config";
 import { title } from "process";
+import { detectEveryFace } from "../services/face.service.js";
 
 
 export async function createEvent(req: Request, res: Response) {
@@ -198,12 +201,14 @@ export async function uploadImage(req: Request, res: Response) {
         const serverUrl = `${req.protocol}://${req.get('host')}`;
 
         console.log(serverUrl)
-        await prisma.image.create({
+        const image = await prisma.image.create({
             data: {
                 imageUrl: serverUrl+"/uploads/"+fileName,
                 eventId: eventId
             }
         })
+
+        await detectEveryFace(file.path, image.id);
     }
 
 
@@ -244,4 +249,107 @@ export async function getEventFromShareToken(req: Request, res: Response) {
     return res.status(200).json({
         event
     })
+}
+
+type FaceMatch = {
+    id: number;
+    imageId: number;
+    boundingBox: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    imageUrl: string;
+    distance: number;
+};
+
+export async function searchFaces(req: Request, res: Response) {
+
+
+    const eventId = Number(req.params.eventId)
+    const userId = res.locals.userId
+
+    const event = await prisma.event.findFirst({
+        where: {
+            createdBy: userId,
+            id:eventId
+        }
+    })
+
+    if(!event) {
+        return res.status(404).json({
+            message: "Event not found"
+        })
+    }
+
+    const selfieObj = req.file;
+
+    if(!selfieObj){
+        return res.status(400).json({
+            message: "Please upload your selfie"
+        })
+    }
+
+    try{
+        const selfie = await canvas.loadImage(selfieObj.path);
+
+        const detection = await faceapi
+            .detectSingleFace(selfie as any)
+            .withFaceLandmarks()
+            .withFaceDescriptor();
+        
+        if (!detection) {
+            return res.status(400).json({
+                message: "No face detected in selfie"
+            });
+        }
+        
+        const vector = Array.from(detection.descriptor);
+        
+        const vectorString = `[${vector.join(",")}]`;
+
+
+        const query = await prisma.$queryRaw<FaceMatch[]>`
+            SELECT 
+                "FaceEmbedding"."id",
+                "FaceEmbedding"."imageId",
+                "FaceEmbedding"."boundingBox",
+                "image"."imageUrl",
+                "FaceEmbedding"."vector" <-> ${vectorString}::vector AS distance
+            FROM "FaceEmbedding"
+            JOIN "image" 
+                ON "FaceEmbedding"."imageId" = "image"."id"
+            WHERE "image"."eventId" = ${eventId}
+            ORDER BY distance
+            LIMIT 10;
+        `
+        // console.log(query)
+        const threshold = 0.5;
+        const filtered = query.filter((r:any) => r.distance < threshold);
+        if(filtered.length === 0){
+            return res.status(200).json({
+                message: "No matching images found",
+                matches: []
+            });
+        }
+
+        const response = filtered.map((r:any) => ({
+            imageId: r.imageId,
+            imageUrl: r.imageUrl
+        }))
+
+        return res.status(200).json({
+            matches: response
+        })
+    } finally {
+        //always runs, even if error appears
+        if(selfieObj?.path){
+            fs.unlink(selfieObj.path, (err) => {
+                if(err)
+                    console.error("Failed to delete selfie:", err)
+            });
+        }
+    }
+
 }

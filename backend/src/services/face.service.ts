@@ -38,7 +38,7 @@ export async function loadModels() {
     }
 }
 
-export async function detectFaces(imagePath : string, imageId: number) {
+export async function detectEveryFace(imagePath : string, imageId: number) {
     
     const img = await canvas.loadImage(imagePath);
     
@@ -74,7 +74,28 @@ export async function detectFaces(imagePath : string, imageId: number) {
 
         console.log(faceEmbedding)
     }
-
-
-
 }
+
+// export async function detectOneFace(imagePath: string, imageId: number) {
+
+//     const img = await canvas.loadImage(imagePath);
+
+//     const detection = await faceapi.detectSingleFace(img as any)
+//                                     .withFaceLandmarks()
+//                                     .withFaceDescriptor();
+
+//     const vector = Array.from(detection.descriptor);
+//     const box = detection?.detection.box;
+    
+//     const vectorString = `[${vector.join(",")}]`;
+
+//     const boundingBox = {
+//         x: box?.x,
+//         y: box?.y,
+//         width: box?.width,
+//         height: box?.height
+//     }
+
+    
+    
+// }

@@ -437,6 +437,7 @@ export type FaceEmbeddingCountArgs<ExtArgs extends runtime.Types.Extensions.Inte
   }
 
 export interface FaceEmbeddingDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    create(arg0: {}): unknown
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FaceEmbedding'], meta: { name: 'FaceEmbedding' } }
   /**
    * Find zero or one FaceEmbedding that matches the filter.

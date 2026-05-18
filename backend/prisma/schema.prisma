@@ -13,25 +13,37 @@ model User {
   firstName String
   password  String
   createdAt DateTime @default(now())
+
+  events    event[]
 }
 
 model event {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String
   createdBy   Int
-  shareToken  String
-  createdAt   DateTime @default(now())
-  images      image[]
+  shareToken  String    @unique
+  createdAt   DateTime  @default(now())
+
+  creator     User      @relation(fields: [createdBy], references: [id])
+
+  coverImageId Int?
+  coverImage  image?    @relation("CoverImage", fields: [coverImageId], references: [id])
+
+  images      image[]   @relation("EventImages")
 }
 
 model image {
-  id        Int      @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   imageUrl  String
-  eventId   Int
-  createdAt DateTime @default(now())
-  event     event    @relation(fields: [eventId], references: [id])
-  faceEmbeddings FaceEmbedding[]
+  eventId   Int?
+  createdAt DateTime    @default(now())
+
+  event     event?      @relation("EventImages", fields: [eventId], references: [id])
+
+  coverForEvents event[] @relation("CoverImage")
+
+  faceEmbeddings FaceEmbedding[]  
 }
 
 model FaceEmbedding {

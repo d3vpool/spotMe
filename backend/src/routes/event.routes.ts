@@ -5,7 +5,7 @@ import { upload } from "../middlewares/upload.middleware.js";
 
 const router = express.Router();
 
-router.post("/", authCheck, createEvent);
+router.post("/", authCheck, upload.single("coverImage"), createEvent);
 
 router.get("/", authCheck, getAllEvents);
 

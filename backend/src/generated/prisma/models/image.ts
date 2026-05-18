@@ -180,7 +180,7 @@ export type imageGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type ImageGroupByOutputType = {
   id: number
   imageUrl: string
-  eventId: number
+  eventId: number | null
   createdAt: Date
   _count: ImageCountAggregateOutputType | null
   _avg: ImageAvgAggregateOutputType | null
@@ -210,18 +210,20 @@ export type imageWhereInput = {
   NOT?: Prisma.imageWhereInput | Prisma.imageWhereInput[]
   id?: Prisma.IntFilter<"image"> | number
   imageUrl?: Prisma.StringFilter<"image"> | string
-  eventId?: Prisma.IntFilter<"image"> | number
+  eventId?: Prisma.IntNullableFilter<"image"> | number | null
   createdAt?: Prisma.DateTimeFilter<"image"> | Date | string
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.eventWhereInput>
+  event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.eventWhereInput> | null
+  coverForEvents?: Prisma.EventListRelationFilter
   faceEmbeddings?: Prisma.FaceEmbeddingListRelationFilter
 }
 
 export type imageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   event?: Prisma.eventOrderByWithRelationInput
+  coverForEvents?: Prisma.eventOrderByRelationAggregateInput
   faceEmbeddings?: Prisma.FaceEmbeddingOrderByRelationAggregateInput
 }
 
@@ -231,16 +233,17 @@ export type imageWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.imageWhereInput[]
   NOT?: Prisma.imageWhereInput | Prisma.imageWhereInput[]
   imageUrl?: Prisma.StringFilter<"image"> | string
-  eventId?: Prisma.IntFilter<"image"> | number
+  eventId?: Prisma.IntNullableFilter<"image"> | number | null
   createdAt?: Prisma.DateTimeFilter<"image"> | Date | string
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.eventWhereInput>
+  event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.eventWhereInput> | null
+  coverForEvents?: Prisma.EventListRelationFilter
   faceEmbeddings?: Prisma.FaceEmbeddingListRelationFilter
 }, "id">
 
 export type imageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.imageCountOrderByAggregateInput
   _avg?: Prisma.imageAvgOrderByAggregateInput
@@ -255,44 +258,48 @@ export type imageScalarWhereWithAggregatesInput = {
   NOT?: Prisma.imageScalarWhereWithAggregatesInput | Prisma.imageScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"image"> | number
   imageUrl?: Prisma.StringWithAggregatesFilter<"image"> | string
-  eventId?: Prisma.IntWithAggregatesFilter<"image"> | number
+  eventId?: Prisma.IntNullableWithAggregatesFilter<"image"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"image"> | Date | string
 }
 
 export type imageCreateInput = {
   imageUrl: string
   createdAt?: Date | string
-  event: Prisma.eventCreateNestedOneWithoutImagesInput
+  event?: Prisma.eventCreateNestedOneWithoutImagesInput
+  coverForEvents?: Prisma.eventCreateNestedManyWithoutCoverImageInput
   faceEmbeddings?: Prisma.FaceEmbeddingCreateNestedManyWithoutImageInput
 }
 
 export type imageUncheckedCreateInput = {
   id?: number
   imageUrl: string
-  eventId: number
+  eventId?: number | null
   createdAt?: Date | string
+  coverForEvents?: Prisma.eventUncheckedCreateNestedManyWithoutCoverImageInput
   faceEmbeddings?: Prisma.FaceEmbeddingUncheckedCreateNestedManyWithoutImageInput
 }
 
 export type imageUpdateInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  event?: Prisma.eventUpdateOneRequiredWithoutImagesNestedInput
+  event?: Prisma.eventUpdateOneWithoutImagesNestedInput
+  coverForEvents?: Prisma.eventUpdateManyWithoutCoverImageNestedInput
   faceEmbeddings?: Prisma.FaceEmbeddingUpdateManyWithoutImageNestedInput
 }
 
 export type imageUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverForEvents?: Prisma.eventUncheckedUpdateManyWithoutCoverImageNestedInput
   faceEmbeddings?: Prisma.FaceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
 }
 
 export type imageCreateManyInput = {
   id?: number
   imageUrl: string
-  eventId: number
+  eventId?: number | null
   createdAt?: Date | string
 }
 
@@ -304,8 +311,13 @@ export type imageUpdateManyMutationInput = {
 export type imageUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ImageNullableScalarRelationFilter = {
+  is?: Prisma.imageWhereInput | null
+  isNot?: Prisma.imageWhereInput | null
 }
 
 export type ImageListRelationFilter = {
@@ -354,6 +366,12 @@ export type ImageScalarRelationFilter = {
   isNot?: Prisma.imageWhereInput
 }
 
+export type imageCreateNestedOneWithoutCoverForEventsInput = {
+  create?: Prisma.XOR<Prisma.imageCreateWithoutCoverForEventsInput, Prisma.imageUncheckedCreateWithoutCoverForEventsInput>
+  connectOrCreate?: Prisma.imageCreateOrConnectWithoutCoverForEventsInput
+  connect?: Prisma.imageWhereUniqueInput
+}
+
 export type imageCreateNestedManyWithoutEventInput = {
   create?: Prisma.XOR<Prisma.imageCreateWithoutEventInput, Prisma.imageUncheckedCreateWithoutEventInput> | Prisma.imageCreateWithoutEventInput[] | Prisma.imageUncheckedCreateWithoutEventInput[]
   connectOrCreate?: Prisma.imageCreateOrConnectWithoutEventInput | Prisma.imageCreateOrConnectWithoutEventInput[]
@@ -366,6 +384,16 @@ export type imageUncheckedCreateNestedManyWithoutEventInput = {
   connectOrCreate?: Prisma.imageCreateOrConnectWithoutEventInput | Prisma.imageCreateOrConnectWithoutEventInput[]
   createMany?: Prisma.imageCreateManyEventInputEnvelope
   connect?: Prisma.imageWhereUniqueInput | Prisma.imageWhereUniqueInput[]
+}
+
+export type imageUpdateOneWithoutCoverForEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.imageCreateWithoutCoverForEventsInput, Prisma.imageUncheckedCreateWithoutCoverForEventsInput>
+  connectOrCreate?: Prisma.imageCreateOrConnectWithoutCoverForEventsInput
+  upsert?: Prisma.imageUpsertWithoutCoverForEventsInput
+  disconnect?: Prisma.imageWhereInput | boolean
+  delete?: Prisma.imageWhereInput | boolean
+  connect?: Prisma.imageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.imageUpdateToOneWithWhereWithoutCoverForEventsInput, Prisma.imageUpdateWithoutCoverForEventsInput>, Prisma.imageUncheckedUpdateWithoutCoverForEventsInput>
 }
 
 export type imageUpdateManyWithoutEventNestedInput = {
@@ -404,9 +432,30 @@ export type imageUpdateOneRequiredWithoutFaceEmbeddingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.imageUpdateToOneWithWhereWithoutFaceEmbeddingsInput, Prisma.imageUpdateWithoutFaceEmbeddingsInput>, Prisma.imageUncheckedUpdateWithoutFaceEmbeddingsInput>
 }
 
+export type imageCreateWithoutCoverForEventsInput = {
+  imageUrl: string
+  createdAt?: Date | string
+  event?: Prisma.eventCreateNestedOneWithoutImagesInput
+  faceEmbeddings?: Prisma.FaceEmbeddingCreateNestedManyWithoutImageInput
+}
+
+export type imageUncheckedCreateWithoutCoverForEventsInput = {
+  id?: number
+  imageUrl: string
+  eventId?: number | null
+  createdAt?: Date | string
+  faceEmbeddings?: Prisma.FaceEmbeddingUncheckedCreateNestedManyWithoutImageInput
+}
+
+export type imageCreateOrConnectWithoutCoverForEventsInput = {
+  where: Prisma.imageWhereUniqueInput
+  create: Prisma.XOR<Prisma.imageCreateWithoutCoverForEventsInput, Prisma.imageUncheckedCreateWithoutCoverForEventsInput>
+}
+
 export type imageCreateWithoutEventInput = {
   imageUrl: string
   createdAt?: Date | string
+  coverForEvents?: Prisma.eventCreateNestedManyWithoutCoverImageInput
   faceEmbeddings?: Prisma.FaceEmbeddingCreateNestedManyWithoutImageInput
 }
 
@@ -414,6 +463,7 @@ export type imageUncheckedCreateWithoutEventInput = {
   id?: number
   imageUrl: string
   createdAt?: Date | string
+  coverForEvents?: Prisma.eventUncheckedCreateNestedManyWithoutCoverImageInput
   faceEmbeddings?: Prisma.FaceEmbeddingUncheckedCreateNestedManyWithoutImageInput
 }
 
@@ -425,6 +475,32 @@ export type imageCreateOrConnectWithoutEventInput = {
 export type imageCreateManyEventInputEnvelope = {
   data: Prisma.imageCreateManyEventInput | Prisma.imageCreateManyEventInput[]
   skipDuplicates?: boolean
+}
+
+export type imageUpsertWithoutCoverForEventsInput = {
+  update: Prisma.XOR<Prisma.imageUpdateWithoutCoverForEventsInput, Prisma.imageUncheckedUpdateWithoutCoverForEventsInput>
+  create: Prisma.XOR<Prisma.imageCreateWithoutCoverForEventsInput, Prisma.imageUncheckedCreateWithoutCoverForEventsInput>
+  where?: Prisma.imageWhereInput
+}
+
+export type imageUpdateToOneWithWhereWithoutCoverForEventsInput = {
+  where?: Prisma.imageWhereInput
+  data: Prisma.XOR<Prisma.imageUpdateWithoutCoverForEventsInput, Prisma.imageUncheckedUpdateWithoutCoverForEventsInput>
+}
+
+export type imageUpdateWithoutCoverForEventsInput = {
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.eventUpdateOneWithoutImagesNestedInput
+  faceEmbeddings?: Prisma.FaceEmbeddingUpdateManyWithoutImageNestedInput
+}
+
+export type imageUncheckedUpdateWithoutCoverForEventsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  faceEmbeddings?: Prisma.FaceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
 }
 
 export type imageUpsertWithWhereUniqueWithoutEventInput = {
@@ -449,21 +525,23 @@ export type imageScalarWhereInput = {
   NOT?: Prisma.imageScalarWhereInput | Prisma.imageScalarWhereInput[]
   id?: Prisma.IntFilter<"image"> | number
   imageUrl?: Prisma.StringFilter<"image"> | string
-  eventId?: Prisma.IntFilter<"image"> | number
+  eventId?: Prisma.IntNullableFilter<"image"> | number | null
   createdAt?: Prisma.DateTimeFilter<"image"> | Date | string
 }
 
 export type imageCreateWithoutFaceEmbeddingsInput = {
   imageUrl: string
   createdAt?: Date | string
-  event: Prisma.eventCreateNestedOneWithoutImagesInput
+  event?: Prisma.eventCreateNestedOneWithoutImagesInput
+  coverForEvents?: Prisma.eventCreateNestedManyWithoutCoverImageInput
 }
 
 export type imageUncheckedCreateWithoutFaceEmbeddingsInput = {
   id?: number
   imageUrl: string
-  eventId: number
+  eventId?: number | null
   createdAt?: Date | string
+  coverForEvents?: Prisma.eventUncheckedCreateNestedManyWithoutCoverImageInput
 }
 
 export type imageCreateOrConnectWithoutFaceEmbeddingsInput = {
@@ -485,14 +563,16 @@ export type imageUpdateToOneWithWhereWithoutFaceEmbeddingsInput = {
 export type imageUpdateWithoutFaceEmbeddingsInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  event?: Prisma.eventUpdateOneRequiredWithoutImagesNestedInput
+  event?: Prisma.eventUpdateOneWithoutImagesNestedInput
+  coverForEvents?: Prisma.eventUpdateManyWithoutCoverImageNestedInput
 }
 
 export type imageUncheckedUpdateWithoutFaceEmbeddingsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverForEvents?: Prisma.eventUncheckedUpdateManyWithoutCoverImageNestedInput
 }
 
 export type imageCreateManyEventInput = {
@@ -504,6 +584,7 @@ export type imageCreateManyEventInput = {
 export type imageUpdateWithoutEventInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverForEvents?: Prisma.eventUpdateManyWithoutCoverImageNestedInput
   faceEmbeddings?: Prisma.FaceEmbeddingUpdateManyWithoutImageNestedInput
 }
 
@@ -511,6 +592,7 @@ export type imageUncheckedUpdateWithoutEventInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverForEvents?: Prisma.eventUncheckedUpdateManyWithoutCoverImageNestedInput
   faceEmbeddings?: Prisma.FaceEmbeddingUncheckedUpdateManyWithoutImageNestedInput
 }
 
@@ -526,10 +608,12 @@ export type imageUncheckedUpdateManyWithoutEventInput = {
  */
 
 export type ImageCountOutputType = {
+  coverForEvents: number
   faceEmbeddings: number
 }
 
 export type ImageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coverForEvents?: boolean | ImageCountOutputTypeCountCoverForEventsArgs
   faceEmbeddings?: boolean | ImageCountOutputTypeCountFaceEmbeddingsArgs
 }
 
@@ -546,6 +630,13 @@ export type ImageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * ImageCountOutputType without action
  */
+export type ImageCountOutputTypeCountCoverForEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.eventWhereInput
+}
+
+/**
+ * ImageCountOutputType without action
+ */
 export type ImageCountOutputTypeCountFaceEmbeddingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FaceEmbeddingWhereInput
 }
@@ -556,7 +647,8 @@ export type imageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   imageUrl?: boolean
   eventId?: boolean
   createdAt?: boolean
-  event?: boolean | Prisma.eventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.image$eventArgs<ExtArgs>
+  coverForEvents?: boolean | Prisma.image$coverForEventsArgs<ExtArgs>
   faceEmbeddings?: boolean | Prisma.image$faceEmbeddingsArgs<ExtArgs>
   _count?: boolean | Prisma.ImageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["image"]>
@@ -566,7 +658,7 @@ export type imageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   imageUrl?: boolean
   eventId?: boolean
   createdAt?: boolean
-  event?: boolean | Prisma.eventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.image$eventArgs<ExtArgs>
 }, ExtArgs["result"]["image"]>
 
 export type imageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -574,7 +666,7 @@ export type imageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   imageUrl?: boolean
   eventId?: boolean
   createdAt?: boolean
-  event?: boolean | Prisma.eventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.image$eventArgs<ExtArgs>
 }, ExtArgs["result"]["image"]>
 
 export type imageSelectScalar = {
@@ -586,27 +678,29 @@ export type imageSelectScalar = {
 
 export type imageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "eventId" | "createdAt", ExtArgs["result"]["image"]>
 export type imageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.eventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.image$eventArgs<ExtArgs>
+  coverForEvents?: boolean | Prisma.image$coverForEventsArgs<ExtArgs>
   faceEmbeddings?: boolean | Prisma.image$faceEmbeddingsArgs<ExtArgs>
   _count?: boolean | Prisma.ImageCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type imageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.eventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.image$eventArgs<ExtArgs>
 }
 export type imageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.eventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.image$eventArgs<ExtArgs>
 }
 
 export type $imagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "image"
   objects: {
-    event: Prisma.$eventPayload<ExtArgs>
+    event: Prisma.$eventPayload<ExtArgs> | null
+    coverForEvents: Prisma.$eventPayload<ExtArgs>[]
     faceEmbeddings: Prisma.$FaceEmbeddingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     imageUrl: string
-    eventId: number
+    eventId: number | null
     createdAt: Date
   }, ExtArgs["result"]["image"]>
   composites: {}
@@ -1002,7 +1096,8 @@ readonly fields: imageFieldRefs;
  */
 export interface Prisma__imageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  event<T extends Prisma.eventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.eventDefaultArgs<ExtArgs>>): Prisma.Prisma__eventClient<runtime.Types.Result.GetResult<Prisma.$eventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  event<T extends Prisma.image$eventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.image$eventArgs<ExtArgs>>): Prisma.Prisma__eventClient<runtime.Types.Result.GetResult<Prisma.$eventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  coverForEvents<T extends Prisma.image$coverForEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.image$coverForEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$eventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   faceEmbeddings<T extends Prisma.image$faceEmbeddingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.image$faceEmbeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1435,6 +1530,49 @@ export type imageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many images to delete.
    */
   limit?: number
+}
+
+/**
+ * image.event
+ */
+export type image$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the event
+   */
+  select?: Prisma.eventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the event
+   */
+  omit?: Prisma.eventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  where?: Prisma.eventWhereInput
+}
+
+/**
+ * image.coverForEvents
+ */
+export type image$coverForEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the event
+   */
+  select?: Prisma.eventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the event
+   */
+  omit?: Prisma.eventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.eventInclude<ExtArgs> | null
+  where?: Prisma.eventWhereInput
+  orderBy?: Prisma.eventOrderByWithRelationInput | Prisma.eventOrderByWithRelationInput[]
+  cursor?: Prisma.eventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
 }
 
 /**

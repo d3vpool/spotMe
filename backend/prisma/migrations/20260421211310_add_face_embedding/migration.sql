@@ -1,4 +1,6 @@
 -- CreateTable
+CREATE EXTENSION IF NOT EXISTS vector;
+
 CREATE TABLE "faceEmbedding" (
     "id" SERIAL NOT NULL,
     "imageId" INTEGER NOT NULL,

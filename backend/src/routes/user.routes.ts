@@ -10,9 +10,9 @@ router.get("/", (req, res) => {
     res.send("Hello Hello");
 })
 
-router.post("/signUp", validateInput(userSignUpSchema), signUpController);
+router.post("/signup", validateInput(userSignUpSchema), signUpController);
 
 
-router.post("/logIn", validateInput(userLogInSchema), logInController);
+router.post("/login", validateInput(userLogInSchema), logInController);
 
 export default router;

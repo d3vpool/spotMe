@@ -11,6 +11,7 @@ import { detectEveryFace } from "../services/face.service.js";
 
 export async function createEvent(req: Request, res: Response) {
     try{
+
         const {title, description } = req.body;
         
         if(!title){
@@ -18,20 +19,40 @@ export async function createEvent(req: Request, res: Response) {
                 message: "Title is required"
             });
         }
-
+        
         const userId = res.locals.userId;
         const shareToken = crypto.randomUUID();
+        let coverImageId: number | null = null;
+        const coverImage = req.file as Express.Multer.File;
+        if(coverImage){
+            const fileName = coverImage.filename;
+
+            const serverUrl = `${req.protocol}://${req.get('host')}`;
+
+            const image = await prisma.image.create({
+                data: {
+                    imageUrl: `${serverUrl}/uploads/${fileName}`
+                }
+            })
+
+            coverImageId = image.id;
+            
+        }
 
         const event = await prisma.event.create({
             data: {
                 title: title,
                 description: description,
                 createdBy: userId,
-                shareToken: shareToken
+                shareToken: shareToken,
+                coverImageId: coverImageId
+
             }
         })
 
-        res.status(201).json(event);
+        res.status(201).json({
+            event
+        });
         
     }catch(error) {
         console.log(error);
@@ -51,14 +72,38 @@ export async function getAllEvents(req: Request, res: Response) {
             createdBy: userId
         },
         select: {
+            id: true,
             title: true,
             description: true,
             shareToken: true,
+
+            coverImage: {
+                select: {
+                    imageUrl: true
+                }
+            },
+
+            _count: {
+                select: {
+                    images: true
+                }
+            }
         }
     })
 
+    const formattedEvents = events.map(event => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        shareToke: event.shareToken,
+
+        thumbnailUrl: event.coverImage?.imageUrl || null,
+
+        imageCount: event._count.images
+    }));
+
     return res.status(200).json({
-        events: events
+        events: formattedEvents
     })
 }
 

@@ -2,12 +2,19 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { BrowserRouter } from 'react-router-dom'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
+const renderApp = () => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
       <App />
-    </BrowserRouter>
-  </StrictMode>,
-)
+    </StrictMode>,
+  )
+}
+
+if (import.meta.env.VITE_USE_MOCKS === 'true') {
+  import('./mock/mockApi').then(() => {
+    renderApp();
+  });
+} else {
+  renderApp();
+}

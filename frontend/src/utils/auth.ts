@@ -1,5 +1,5 @@
-const TOKEN_KEY = 'grabpic_jwt_token';
-const USER_KEY = 'grabpic_user_data';
+const TOKEN_KEY = 'spotme_jwt_token';
+const USER_KEY = 'spotme_user_data';
 
 export const getToken = (): string | null => {
   return localStorage.getItem(TOKEN_KEY);

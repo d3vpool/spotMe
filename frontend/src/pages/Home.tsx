@@ -60,7 +60,7 @@ export function Home() {
       <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
           <span className="text-2xl font-bold text-black tracking-tight">
-            Grab<span className="text-[#FFD600]">Pic</span>
+            Spot<span className="text-[#FFD600]">Me</span>
           </span>
           <div className="flex items-center gap-3">
             <Link
@@ -100,7 +100,7 @@ export function Home() {
             </span>
           </h1>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            GrabPic uses face recognition to instantly find every photo you appear in — no more
+            SpotMe uses face recognition to instantly find every photo you appear in — no more
             scrolling through hundreds of event photos.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -181,7 +181,7 @@ export function Home() {
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-100 py-8 px-4 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} GrabPic. All rights reserved.
+        © {new Date().getFullYear()} SpotMe. All rights reserved.
       </footer>
     </div>
   );

@@ -42,7 +42,7 @@ export const PublicEvent: React.FC = () => {
       <div className="max-w-4xl mx-auto mb-8 flex justify-between items-center">
         <div className="flex-shrink-0 flex items-center">
           <span className="text-2xl font-bold text-black tracking-tight">
-            Grab<span className="text-[#FFD600]">Pic</span>
+            Spot<span className="text-[#FFD600]">Me</span>
           </span>
         </div>
         <Link to="/login" className="text-sm font-medium text-gray-500 hover:text-black">

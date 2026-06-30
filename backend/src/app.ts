@@ -12,7 +12,10 @@ import { success } from 'zod';
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5174',
+    credentials: true
+}));
 
 
 app.get("/", (req, res) => {
@@ -28,14 +31,14 @@ app.use("/events", eventRouter);
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.error(err);
 
-    if(err instanceof multer.MulterError) {
+    if (err instanceof multer.MulterError) {
         return res.status(400).json({
             success: false,
             message: err.message
         });
     }
 
-    if(err.message === "Only image files are allowed") {
+    if (err.message === "Only image files are allowed") {
         return res.status(400).json({
             success: false,
             message: err.message

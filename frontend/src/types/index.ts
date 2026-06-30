@@ -20,6 +20,8 @@ export interface Event {
   description?: string;
   imageCount: number;
   thumbnailUrl?: string;
+  shareToken?: string;
+  isPublic: boolean;
 }
 
 export interface EventImage {
@@ -28,6 +30,7 @@ export interface EventImage {
 }
 
 export interface EventDetails extends Event {
+  coverImageUrl?: string;
   images: EventImage[];
 }
 
@@ -36,6 +39,12 @@ export interface FaceBoundingBox {
   y: number;
   width: number;
   height: number;
+}
+
+export interface SearchMatch {
+  imageId: number;
+  imageUrl: string;
+  faces: FaceBoundingBox[];
 }
 
 export interface SearchResult {

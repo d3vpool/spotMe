@@ -3,8 +3,7 @@ import { prisma } from "../db/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-console.log("Hi");
-console.log("SECRET KEY: "+process.env.JWT_SECRET);
+
 
 export async function signUpController(req: Request, res: Response) {
     const email = req.body.email;
@@ -23,7 +22,8 @@ export async function signUpController(req: Request, res: Response) {
 
         const token = jwt.sign(
             { id: user.id}, 
-            process.env.JWT_SECRET!
+            process.env.JWT_SECRET!,
+            { expiresIn: '7d' }
         );
 
 
@@ -63,7 +63,7 @@ export async function logInController(req: Request, res: Response) {
     if(match){
         const token = jwt.sign({
             id: user.id
-        }, process.env.JWT_SECRET!)
+        }, process.env.JWT_SECRET!, { expiresIn: '7d' })
 
         return res.status(200).json({
             message: "Logged In Successfully",

@@ -55,7 +55,7 @@ export async function createEvent(req: Request, res: Response) {
         });
         
     }catch(error) {
-        console.log(error);
+        console.error("Error creating event:", error);
         return res.status(500).json({
             message: "Something Went Wrong"
         })
@@ -95,7 +95,7 @@ export async function getAllEvents(req: Request, res: Response) {
         id: event.id,
         title: event.title,
         description: event.description,
-        shareToke: event.shareToken,
+        shareToken: event.shareToken,
 
         thumbnailUrl: event.coverImage?.imageUrl || null,
 
@@ -119,9 +119,21 @@ export async function getEventFromId(req: Request, res: Response) {
             createdBy: userId
         }, 
         select: {
+            id: true,
             title: true,
             description: true,
-            shareToken: true
+            shareToken: true,
+            isPublic: true,
+            coverImage: {
+                select: { imageUrl: true }
+            },
+            images: {
+                select: { id: true, imageUrl: true },
+                orderBy: { id: 'asc' }
+            },
+            _count: {
+                select: { images: true }
+            }
         }
     })
 
@@ -131,9 +143,20 @@ export async function getEventFromId(req: Request, res: Response) {
         });
     }
 
+    const formatted = {
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        shareToken: event.shareToken,
+        isPublic: event.isPublic,
+        coverImageUrl: event.coverImage?.imageUrl || null,
+        imageCount: event._count.images,
+        images: event.images.map(img => ({ id: String(img.id), url: img.imageUrl }))
+    };
+
     return res.status(200).json({
         message: "Found Event",
-        event: event
+        event: formatted
     })
 }
 
@@ -217,7 +240,6 @@ export async function updateEventFromId(req: Request, res: Response) {
 }
 
 export async function uploadImage(req: Request, res: Response) {
-    console.log("Controller Hit")
     const eventId = Number(req.params.eventId);
     const userId = res.locals.userId;
 
@@ -242,18 +264,22 @@ export async function uploadImage(req: Request, res: Response) {
     }
 
     for (const file of images) {
-        const fileName = file.filename;
-        const serverUrl = `${req.protocol}://${req.get('host')}`;
+        try {
+            const fileName = file.filename;
+            const serverUrl = `${req.protocol}://${req.get('host')}`;
 
-        console.log(serverUrl)
-        const image = await prisma.image.create({
-            data: {
-                imageUrl: serverUrl+"/uploads/"+fileName,
-                eventId: eventId
-            }
-        })
+            const image = await prisma.image.create({
+                data: {
+                    imageUrl: serverUrl+"/uploads/"+fileName,
+                    eventId: eventId
+                }
+            });
 
-        await detectEveryFace(file.path, image.id);
+            await detectEveryFace(file.path, image.id);
+        } catch (err) {
+            console.error(`Failed to process ${file.filename}:`, err);
+            // continue to next file — don't abort the whole batch
+        }
     }
 
 
@@ -270,6 +296,7 @@ export async function getEventFromShareToken(req: Request, res: Response) {
     const event = await prisma.event.findFirst({
         where: {
             shareToken: shareToken,
+            isPublic: true,
         }, 
         select: {
             title: true,
@@ -288,8 +315,6 @@ export async function getEventFromShareToken(req: Request, res: Response) {
         })
     }
     const images = event.images;
-
-    console.log(images)
 
     return res.status(200).json({
         event
@@ -338,6 +363,13 @@ export async function searchFaces(req: Request, res: Response) {
 
     try{
         const selfie = await canvas.loadImage(selfieObj.path);
+
+        const allDetections = await faceapi.detectAllFaces(selfie as any);
+        if (allDetections.length > 1) {
+            return res.status(400).json({
+                message: "Multiple faces detected. Please upload a selfie with only your face."
+            });
+        }
 
         const detection = await faceapi
             .detectSingleFace(selfie as any)
@@ -425,7 +457,8 @@ export async function searchFacesPublic(req: Request, res: Response) {
     }
     const event = await prisma.event.findFirst({
         where:{
-            shareToken: shareToken
+            shareToken: shareToken,
+            isPublic: true,
         }
     })
 
@@ -446,6 +479,13 @@ export async function searchFacesPublic(req: Request, res: Response) {
     try{
 
         const selfie = await canvas.loadImage(selfieObj.path);
+
+        const allDetections = await faceapi.detectAllFaces(selfie as any);
+        if (allDetections.length > 1) {
+            return res.status(400).json({
+                message: "Multiple faces detected. Please upload a selfie with only your face."
+            });
+        }
 
         const detection = await faceapi
             .detectSingleFace(selfie as any)
@@ -478,12 +518,6 @@ export async function searchFacesPublic(req: Request, res: Response) {
         // console.log(query)
         const threshold = 0.5;
         const filtered = query.filter((r:any) => r.distance < threshold);
-        if(filtered.length === 0){
-            return res.status(200).json({
-                message: "No matching images found",
-                matches: []
-            });
-        }
 
         const uniqueImages = new Map<number, {
             imageId: number,
@@ -503,10 +537,10 @@ export async function searchFacesPublic(req: Request, res: Response) {
             uniqueImages.get(item.imageId)!.faces.push(item.boundingBox);
         }
 
-        const response = Array.from(uniqueImages.values());
+        const matches = Array.from(uniqueImages.values());
 
         return res.status(200).json({
-            matches: response
+            matches
         })
     } finally {
         //always runs, even if error appears
@@ -518,4 +552,81 @@ export async function searchFacesPublic(req: Request, res: Response) {
         }
     }
 
+}
+
+export async function toggleEventVisibility(req: Request, res: Response) {
+    const userId = res.locals.userId;
+    const eventId = Number(req.params.eventId);
+
+    const event = await prisma.event.findFirst({
+        where: {
+            id: eventId,
+            createdBy: userId
+        }
+    });
+
+    if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+    }
+
+    const updatedEvent = await prisma.event.update({
+        where: { id: eventId },
+        data: { isPublic: !event.isPublic },
+        select: { id: true, isPublic: true }
+    });
+
+    return res.status(200).json({
+        message: `Event is now ${updatedEvent.isPublic ? 'public' : 'private'}`,
+        event: updatedEvent
+    });
+}
+
+export async function deleteImage(req: Request, res: Response) {
+    const userId = res.locals.userId;
+    const eventId = Number(req.params.eventId);
+    const imageId = Number(req.params.imageId);
+
+    // Verify event belongs to user
+    const event = await prisma.event.findFirst({
+        where: { id: eventId, createdBy: userId }
+    });
+
+    if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Verify image belongs to this event
+    const image = await prisma.image.findFirst({
+        where: { id: imageId, eventId: eventId }
+    });
+
+    if (!image) {
+        return res.status(404).json({ message: "Image not found in this event" });
+    }
+
+    // Cascade delete FaceEmbeddings first (FK constraint)
+    await prisma.faceEmbedding.deleteMany({
+        where: { imageId: imageId }
+    });
+
+    // Delete the image record
+    await prisma.image.delete({
+        where: { id: imageId }
+    });
+
+    // Remove physical file from disk
+    try {
+        const url = new URL(image.imageUrl);
+        const filename = url.pathname.split('/uploads/')[1];
+        if (filename) {
+            const filePath = `uploads/${filename}`;
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        }
+    } catch (e) {
+        console.warn("Could not delete file from disk:", e);
+    }
+
+    return res.status(200).json({ message: "Image deleted successfully" });
 }

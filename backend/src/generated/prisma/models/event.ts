@@ -44,6 +44,7 @@ export type EventMinAggregateOutputType = {
   description: string | null
   createdBy: number | null
   shareToken: string | null
+  isPublic: boolean | null
   createdAt: Date | null
   coverImageId: number | null
 }
@@ -54,6 +55,7 @@ export type EventMaxAggregateOutputType = {
   description: string | null
   createdBy: number | null
   shareToken: string | null
+  isPublic: boolean | null
   createdAt: Date | null
   coverImageId: number | null
 }
@@ -64,6 +66,7 @@ export type EventCountAggregateOutputType = {
   description: number
   createdBy: number
   shareToken: number
+  isPublic: number
   createdAt: number
   coverImageId: number
   _all: number
@@ -88,6 +91,7 @@ export type EventMinAggregateInputType = {
   description?: true
   createdBy?: true
   shareToken?: true
+  isPublic?: true
   createdAt?: true
   coverImageId?: true
 }
@@ -98,6 +102,7 @@ export type EventMaxAggregateInputType = {
   description?: true
   createdBy?: true
   shareToken?: true
+  isPublic?: true
   createdAt?: true
   coverImageId?: true
 }
@@ -108,6 +113,7 @@ export type EventCountAggregateInputType = {
   description?: true
   createdBy?: true
   shareToken?: true
+  isPublic?: true
   createdAt?: true
   coverImageId?: true
   _all?: true
@@ -205,6 +211,7 @@ export type EventGroupByOutputType = {
   description: string
   createdBy: number
   shareToken: string
+  isPublic: boolean
   createdAt: Date
   coverImageId: number | null
   _count: EventCountAggregateOutputType | null
@@ -238,6 +245,7 @@ export type eventWhereInput = {
   description?: Prisma.StringFilter<"event"> | string
   createdBy?: Prisma.IntFilter<"event"> | number
   shareToken?: Prisma.StringFilter<"event"> | string
+  isPublic?: Prisma.BoolFilter<"event"> | boolean
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
   coverImageId?: Prisma.IntNullableFilter<"event"> | number | null
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -251,6 +259,7 @@ export type eventOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coverImageId?: Prisma.SortOrderInput | Prisma.SortOrder
   creator?: Prisma.UserOrderByWithRelationInput
@@ -267,6 +276,7 @@ export type eventWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"event"> | string
   description?: Prisma.StringFilter<"event"> | string
   createdBy?: Prisma.IntFilter<"event"> | number
+  isPublic?: Prisma.BoolFilter<"event"> | boolean
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
   coverImageId?: Prisma.IntNullableFilter<"event"> | number | null
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -280,6 +290,7 @@ export type eventOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coverImageId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.eventCountOrderByAggregateInput
@@ -298,6 +309,7 @@ export type eventScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"event"> | string
   createdBy?: Prisma.IntWithAggregatesFilter<"event"> | number
   shareToken?: Prisma.StringWithAggregatesFilter<"event"> | string
+  isPublic?: Prisma.BoolWithAggregatesFilter<"event"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"event"> | Date | string
   coverImageId?: Prisma.IntNullableWithAggregatesFilter<"event"> | number | null
 }
@@ -306,6 +318,7 @@ export type eventCreateInput = {
   title: string
   description: string
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutEventsInput
   coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
@@ -318,6 +331,7 @@ export type eventUncheckedCreateInput = {
   description: string
   createdBy: number
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   coverImageId?: number | null
   images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
@@ -327,6 +341,7 @@ export type eventUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
   coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
@@ -339,6 +354,7 @@ export type eventUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
@@ -350,6 +366,7 @@ export type eventCreateManyInput = {
   description: string
   createdBy: number
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   coverImageId?: number | null
 }
@@ -358,6 +375,7 @@ export type eventUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -367,6 +385,7 @@ export type eventUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -387,6 +406,7 @@ export type eventCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coverImageId?: Prisma.SortOrder
 }
@@ -403,6 +423,7 @@ export type eventMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coverImageId?: Prisma.SortOrder
 }
@@ -413,6 +434,7 @@ export type eventMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   shareToken?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coverImageId?: Prisma.SortOrder
 }
@@ -468,6 +490,10 @@ export type eventUncheckedUpdateManyWithoutCreatorNestedInput = {
   update?: Prisma.eventUpdateWithWhereUniqueWithoutCreatorInput | Prisma.eventUpdateWithWhereUniqueWithoutCreatorInput[]
   updateMany?: Prisma.eventUpdateManyWithWhereWithoutCreatorInput | Prisma.eventUpdateManyWithWhereWithoutCreatorInput[]
   deleteMany?: Prisma.eventScalarWhereInput | Prisma.eventScalarWhereInput[]
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -540,6 +566,7 @@ export type eventCreateWithoutCreatorInput = {
   title: string
   description: string
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
   images?: Prisma.imageCreateNestedManyWithoutEventInput
@@ -550,6 +577,7 @@ export type eventUncheckedCreateWithoutCreatorInput = {
   title: string
   description: string
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   coverImageId?: number | null
   images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
@@ -590,6 +618,7 @@ export type eventScalarWhereInput = {
   description?: Prisma.StringFilter<"event"> | string
   createdBy?: Prisma.IntFilter<"event"> | number
   shareToken?: Prisma.StringFilter<"event"> | string
+  isPublic?: Prisma.BoolFilter<"event"> | boolean
   createdAt?: Prisma.DateTimeFilter<"event"> | Date | string
   coverImageId?: Prisma.IntNullableFilter<"event"> | number | null
 }
@@ -598,6 +627,7 @@ export type eventCreateWithoutImagesInput = {
   title: string
   description: string
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutEventsInput
   coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
@@ -609,6 +639,7 @@ export type eventUncheckedCreateWithoutImagesInput = {
   description: string
   createdBy: number
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   coverImageId?: number | null
 }
@@ -622,6 +653,7 @@ export type eventCreateWithoutCoverImageInput = {
   title: string
   description: string
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutEventsInput
   images?: Prisma.imageCreateNestedManyWithoutEventInput
@@ -633,6 +665,7 @@ export type eventUncheckedCreateWithoutCoverImageInput = {
   description: string
   createdBy: number
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
 }
@@ -662,6 +695,7 @@ export type eventUpdateWithoutImagesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
   coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
@@ -673,6 +707,7 @@ export type eventUncheckedUpdateWithoutImagesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -698,6 +733,7 @@ export type eventCreateManyCreatorInput = {
   title: string
   description: string
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
   coverImageId?: number | null
 }
@@ -706,6 +742,7 @@ export type eventUpdateWithoutCreatorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
   images?: Prisma.imageUpdateManyWithoutEventNestedInput
@@ -716,6 +753,7 @@ export type eventUncheckedUpdateWithoutCreatorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
@@ -726,6 +764,7 @@ export type eventUncheckedUpdateManyWithoutCreatorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -736,6 +775,7 @@ export type eventCreateManyCoverImageInput = {
   description: string
   createdBy: number
   shareToken: string
+  isPublic?: boolean
   createdAt?: Date | string
 }
 
@@ -743,6 +783,7 @@ export type eventUpdateWithoutCoverImageInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
   images?: Prisma.imageUpdateManyWithoutEventNestedInput
@@ -754,6 +795,7 @@ export type eventUncheckedUpdateWithoutCoverImageInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
 }
@@ -764,6 +806,7 @@ export type eventUncheckedUpdateManyWithoutCoverImageInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.IntFieldUpdateOperationsInput | number
   shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -804,6 +847,7 @@ export type eventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   description?: boolean
   createdBy?: boolean
   shareToken?: boolean
+  isPublic?: boolean
   createdAt?: boolean
   coverImageId?: boolean
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -818,6 +862,7 @@ export type eventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   description?: boolean
   createdBy?: boolean
   shareToken?: boolean
+  isPublic?: boolean
   createdAt?: boolean
   coverImageId?: boolean
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -830,6 +875,7 @@ export type eventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   description?: boolean
   createdBy?: boolean
   shareToken?: boolean
+  isPublic?: boolean
   createdAt?: boolean
   coverImageId?: boolean
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -842,11 +888,12 @@ export type eventSelectScalar = {
   description?: boolean
   createdBy?: boolean
   shareToken?: boolean
+  isPublic?: boolean
   createdAt?: boolean
   coverImageId?: boolean
 }
 
-export type eventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "createdBy" | "shareToken" | "createdAt" | "coverImageId", ExtArgs["result"]["event"]>
+export type eventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "createdBy" | "shareToken" | "isPublic" | "createdAt" | "coverImageId", ExtArgs["result"]["event"]>
 export type eventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   coverImage?: boolean | Prisma.event$coverImageArgs<ExtArgs>
@@ -875,6 +922,7 @@ export type $eventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     description: string
     createdBy: number
     shareToken: string
+    isPublic: boolean
     createdAt: Date
     coverImageId: number | null
   }, ExtArgs["result"]["event"]>
@@ -1308,6 +1356,7 @@ export interface eventFieldRefs {
   readonly description: Prisma.FieldRef<"event", 'String'>
   readonly createdBy: Prisma.FieldRef<"event", 'Int'>
   readonly shareToken: Prisma.FieldRef<"event", 'String'>
+  readonly isPublic: Prisma.FieldRef<"event", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"event", 'DateTime'>
   readonly coverImageId: Prisma.FieldRef<"event", 'Int'>
 }

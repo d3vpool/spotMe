@@ -1,53 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Camera, ChevronDown } from 'lucide-react';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { FileUploadBox } from '@components/ui/FileUploadBox';
 import { FaceHighlightImage } from '@components/ui/FaceHighlightImage';
 import { useToast } from '../contexts/ToastContext';
-
-// ---------------------------------------------------------------------------
-// Mock data — replace with real API calls when backend is ready
-// ---------------------------------------------------------------------------
-const MOCK_EVENTS = [
-  { id: 'e1', title: 'Summer Festival 2024' },
-  { id: 'e2', title: 'Tech Conference Meetup' },
-  { id: 'e3', title: "Sarah's Birthday Party" },
-];
-
-const MOCK_SEARCH_RESULT = {
-  imageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80',
-  faces: [{ x: 150, y: 150, width: 100, height: 100 }],
-};
-// ---------------------------------------------------------------------------
-
-type SearchResult = {
-  imageUrl: string;
-  faces: { x: number; y: number; width: number; height: number }[];
-};
+import { eventService } from '@services/event.service';
+import type { Event, SearchResult } from '../types';
 
 export function FindMyPhotos() {
+  const [events, setEvents] = useState<Event[]>([]);
   const [selectedEventId, setSelectedEventId] = useState('');
   const [selfieFile, setSelfieFile] = useState<File | null>(null);
   const [searching, setSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const { showToast } = useToast();
 
-  const selectedEvent = MOCK_EVENTS.find((e) => e.id === selectedEventId);
+  useEffect(() => {
+    eventService.getEvents().then((data) => {
+      setEvents(data.events);
+    }).catch(() => {
+      showToast('Failed to load events', 'error');
+    });
+  }, []);
+
+  const selectedEvent = events.find((e) => String(e.id) === selectedEventId);
 
   const handleSearch = async () => {
     if (!selectedEventId || !selfieFile) return;
     setSearching(true);
     setSearchResult(null);
-
-    // TODO: Replace with real API call:
-    // const data = await eventService.searchPrivateFaces(selectedEventId, selfieFile);
-    // setSearchResult(data.result);
-    await new Promise((r) => setTimeout(r, 1500)); // simulate network delay
-    setSearchResult(MOCK_SEARCH_RESULT);
-    showToast('Match found!', 'success');
-
-    setSearching(false);
+    try {
+      const data = await eventService.searchPrivateFaces(selectedEventId, selfieFile);
+      setSearchResult(data.result);
+      if (data.result.faces.length === 0) {
+        showToast('No matches found for this selfie.', 'info');
+      } else {
+        showToast('Match found!', 'success');
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Search failed', 'error');
+    } finally {
+      setSearching(false);
+    }
   };
 
   const handleReset = () => {
@@ -84,8 +79,8 @@ export function FindMyPhotos() {
                 className="w-full appearance-none px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFD600] focus:border-transparent bg-white text-gray-800 transition-all"
               >
                 <option value="">— Choose an event —</option>
-                {MOCK_EVENTS.map((ev) => (
-                  <option key={ev.id} value={ev.id}>
+                {events.map((ev) => (
+                  <option key={ev.id} value={String(ev.id)}>
                     {ev.title}
                   </option>
                 ))}

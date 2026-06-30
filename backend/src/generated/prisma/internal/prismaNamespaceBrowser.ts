@@ -90,6 +90,7 @@ export const EventScalarFieldEnum = {
   description: 'description',
   createdBy: 'createdBy',
   shareToken: 'shareToken',
+  isPublic: 'isPublic',
   createdAt: 'createdAt',
   coverImageId: 'coverImageId'
 } as const

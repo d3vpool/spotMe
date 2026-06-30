@@ -23,6 +23,7 @@ model event {
   description String
   createdBy   Int
   shareToken  String    @unique
+  isPublic    Boolean   @default(true)
   createdAt   DateTime  @default(now())
 
   creator     User      @relation(fields: [createdBy], references: [id])

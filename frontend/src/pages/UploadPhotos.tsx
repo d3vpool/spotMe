@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Upload, ChevronDown, X, CheckCircle, Image as ImageIcon } from 'lucide-react';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { FileUploadBox } from '@components/ui/FileUploadBox';
 import { Loader } from '@components/ui/Loader';
 import { useToast } from '../contexts/ToastContext';
-
-// ---------------------------------------------------------------------------
-// Mock data — replace with real API calls when backend is ready
-// ---------------------------------------------------------------------------
-const MOCK_EVENTS = [
-  { id: 'e1', title: 'Summer Festival 2024' },
-  { id: 'e2', title: 'Tech Conference Meetup' },
-  { id: 'e3', title: "Sarah's Birthday Party" },
-];
-// ---------------------------------------------------------------------------
+import { eventService } from '@services/event.service';
+import type { Event } from '../types';
 
 type UploadStatus = 'idle' | 'uploading' | 'done' | 'error';
 
 export function UploadPhotos() {
+  const [events, setEvents] = useState<Event[]>([]);
   const [selectedEventId, setSelectedEventId] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>('idle');
   const { showToast } = useToast();
 
-  const selectedEvent = MOCK_EVENTS.find((e) => e.id === selectedEventId);
+  useEffect(() => {
+    eventService.getEvents().then((data) => {
+      setEvents(data.events);
+    }).catch(() => {
+      showToast('Failed to load events', 'error');
+    });
+  }, []);
+
+  const selectedEvent = events.find((e) => String(e.id) === selectedEventId);
 
   const handleFilesSelected = (incoming: File[]) => {
     // Merge, deduplicating by name
@@ -42,13 +43,14 @@ export function UploadPhotos() {
   const handleUpload = async () => {
     if (!selectedEventId || files.length === 0) return;
     setUploadStatus('uploading');
-
-    // TODO: Replace with real API call:
-    // await eventService.uploadImages(selectedEventId, files);
-    await new Promise((r) => setTimeout(r, 2000)); // simulate upload
-
-    setUploadStatus('done');
-    showToast(`${files.length} photo${files.length > 1 ? 's' : ''} uploaded successfully!`, 'success');
+    try {
+      await eventService.uploadImages(selectedEventId, files);
+      setUploadStatus('done');
+      showToast(`${files.length} photo${files.length > 1 ? 's' : ''} uploaded successfully!`, 'success');
+    } catch (err: any) {
+      setUploadStatus('error');
+      showToast(err.message || 'Upload failed', 'error');
+    }
   };
 
   const handleReset = () => {
@@ -108,8 +110,8 @@ export function UploadPhotos() {
                 className="w-full appearance-none px-4 py-3 pr-10 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FFD600] focus:border-transparent bg-white text-gray-800 transition-all"
               >
                 <option value="">— Choose an event —</option>
-                {MOCK_EVENTS.map((ev) => (
-                  <option key={ev.id} value={ev.id}>
+                {events.map((ev) => (
+                  <option key={ev.id} value={String(ev.id)}>
                     {ev.title}
                   </option>
                 ))}

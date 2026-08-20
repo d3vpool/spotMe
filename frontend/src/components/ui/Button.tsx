@@ -8,8 +8,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: React.FC<ButtonProps> = ({ children, isLoading, variant = 'primary', className = '', disabled, ...props }) => {
   const baseStyles = 'px-5 py-2.5 min-h-[44px] rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer focus:outline-none';
   const variants = {
-    primary: 'bg-brand-yellow text-bg-dark hover:bg-brand-yellow-hover shadow-[0_4px_20px_rgba(255,214,0,0.15)] hover:shadow-[0_4px_25px_rgba(255,214,0,0.3)] focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark',
-    secondary: 'bg-white/10 text-white border border-white/5 hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark',
+    primary: 'bg-brand-yellow text-bg-dark hover:bg-brand-yellow-hover shadow-[0_4px_20px_rgba(255,214,0,0.18)] hover:shadow-[0_4px_25px_rgba(255,214,0,0.32)] focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark',
+    secondary: 'bg-white/[0.04] text-text-hi border border-border-dark hover:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark',
     danger: 'bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-dark',
   };
 

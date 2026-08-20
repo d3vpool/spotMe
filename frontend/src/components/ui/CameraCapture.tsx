@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { X, Camera, RotateCcw, Check } from 'lucide-react';
+import { Reticle } from './Reticle';
 
 interface CameraCaptureProps {
   onCapture: (file: File) => void;
@@ -182,10 +183,12 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onClose
                 muted
                 className={`w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
               />
-              {/* Subtle framing guide oval */}
+              {/* Reticle bracket framing guide */}
               {!starting && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-44 h-56 rounded-[50%] border-1.5 border-brand-yellow/30 bg-transparent" />
+                  <Reticle className="w-44 h-56">
+                    <div className="w-full h-full" />
+                  </Reticle>
                 </div>
               )}
             </>

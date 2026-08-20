@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HudTag } from './HudTag';
 
 interface LightboxProps {
   images: { id: string; url: string }[];
@@ -84,8 +85,8 @@ export const Lightbox: React.FC<LightboxProps> = ({ images, currentIndex, onClos
           className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl transition-all duration-300 animate-[fade-in_0.3s_ease-out]"
           key={images[currentIndex].id}
         />
-        <div className="mt-4 text-white/70 text-sm font-semibold tracking-wider bg-black/50 px-3 py-1 rounded-full border border-white/5">
-          {currentIndex + 1} / {images.length}
+        <div className="mt-4">
+          <HudTag>{String(currentIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}</HudTag>
         </div>
       </div>
 

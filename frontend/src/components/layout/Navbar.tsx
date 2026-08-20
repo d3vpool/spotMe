@@ -47,7 +47,10 @@ export const Navbar: React.FC = () => {
             aria-label="SpotMe Home"
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') navigate('/events'); }}
           >
-            <span className="text-2xl font-extrabold tracking-tight text-white">
+            <span className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-text-hi">
+              <span className="w-7 h-7 border-[1.5px] border-brand-yellow rounded-[6px] relative inline-block">
+                <span className="absolute inset-1.5 bg-brand-yellow rounded-[2px]" />
+              </span>
               Spot<span className="text-brand-yellow">Me</span>
             </span>
           </div>

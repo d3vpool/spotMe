@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Camera, ChevronDown } from 'lucide-react';
+import { Reticle } from '@components/ui/Reticle';
+import { Scanline } from '@components/ui/Scanline';
+import { HudTag } from '@components/ui/HudTag';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { FileUploadBox } from '@components/ui/FileUploadBox';
@@ -147,14 +150,12 @@ export function FindMyPhotos() {
               Here's a photo of you from{' '}
               <span className="font-semibold text-white">{selectedEvent?.title}</span>.
             </p>
-          </div>
-
-          <div className="rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-950 flex justify-center">
+          </div>            <Reticle active className="rounded-2xl overflow-hidden border border-border-dark shadow-lg bg-slate-950 flex justify-center p-0">
             <FaceHighlightImage
               imageUrl={searchResult.imageUrl}
               faces={searchResult.faces}
             />
-          </div>
+          </Reticle>
 
           <Button variant="secondary" className="w-full py-3" onClick={handleReset}>
             Search Another Event

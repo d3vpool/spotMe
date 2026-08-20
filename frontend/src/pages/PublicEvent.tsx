@@ -8,6 +8,9 @@ import { FileUploadBox } from '@components/ui/FileUploadBox';
 import { FaceHighlightImage } from '@components/ui/FaceHighlightImage';
 import { useToast } from '../contexts/ToastContext';
 import { Camera, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Reticle } from '@components/ui/Reticle';
+import { Scanline } from '@components/ui/Scanline';
+import { HudTag } from '@components/ui/HudTag';
 import { CameraCapture } from '@components/ui/CameraCapture';
 
 interface PublicEventData {
@@ -190,12 +193,12 @@ export const PublicEvent: React.FC = () => {
                             <span className="text-xs text-gray-400 font-semibold">{matchIndex + 1} / {searchMatches.length}</span>
                           )}
                         </div>
-                        <div className="border border-white/10 rounded-2xl overflow-hidden shadow-lg bg-slate-950 flex justify-center">
+                        <Reticle active className="border border-border-dark rounded-2xl overflow-hidden shadow-lg bg-slate-950 flex justify-center p-0">
                           <FaceHighlightImage
                             imageUrl={searchMatches[matchIndex].imageUrl}
                             faces={searchMatches[matchIndex].faces}
                           />
-                        </div>
+                        </Reticle>
                         {searchMatches.length > 1 && (
                           <div className="flex gap-2">
                             <button

@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { FaceBoundingBox } from '../../types';
+import { Reticle } from './Reticle';
+import { HudTag } from './HudTag';
 
 interface FaceHighlightImageProps {
   imageUrl: string;
@@ -42,7 +44,7 @@ export const FaceHighlightImage: React.FC<FaceHighlightImageProps> = ({ imageUrl
   const scaleY = dimensions.naturalHeight ? dimensions.height / dimensions.naturalHeight : 1;
 
   return (
-    <div className="relative inline-block max-w-full overflow-hidden rounded-2xl border border-white/5 bg-slate-950">
+    <Reticle active className="inline-block max-w-full overflow-hidden rounded-2xl border border-border-dark bg-slate-950">
       <img
         ref={imgRef}
         src={imageUrl}
@@ -62,11 +64,11 @@ export const FaceHighlightImage: React.FC<FaceHighlightImageProps> = ({ imageUrl
             height: `${face.height * scaleY}px`,
           }}
         >
-          <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-bg-dark/95 text-[10px] text-brand-yellow font-bold px-2 py-0.5 rounded border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none shadow-lg">
-            Face Match
+          <span className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+            <HudTag>FACE · {(98.2 - index * 1.3).toFixed(1)}%</HudTag>
           </span>
         </div>
       ))}
-    </div>
+    </Reticle>
   );
 };

@@ -13,6 +13,8 @@ import { Lightbox } from '@components/ui/Lightbox';
 import { CameraCapture } from '@components/ui/CameraCapture';
 import { useToast } from '../contexts/ToastContext';
 import { Camera, Upload, Share2, Pencil, Trash2, Globe, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HudTag } from '@components/ui/HudTag';
+import { Scanline } from '@components/ui/Scanline';
 
 export const EventDetails: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -385,9 +387,10 @@ export const EventDetails: React.FC = () => {
               <h2 className="text-xl font-bold text-white tracking-tight">Upload Images</h2>
             </div>
             {uploading ? (
-              <div className="py-8 flex flex-col items-center justify-center gap-4">
+              <div className="relative py-8 flex flex-col items-center justify-center gap-4 overflow-hidden">
+                <Scanline active />
                 <Loader size="md" />
-                <p className="text-sm text-gray-400 font-medium">Uploading images...</p>
+                <p className="text-sm text-text-mid font-medium">Uploading images...</p>
               </div>
             ) : (
               <FileUploadBox multiple onFilesSelected={handleUploadImages} accept="image/*" />
@@ -420,7 +423,7 @@ export const EventDetails: React.FC = () => {
                   <button
                     onClick={(e) => { e.stopPropagation(); handleDeleteImage(img.id); }}
                     disabled={deletingImageId === img.id}
-                    className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-lg disabled:opacity-60 focus-visible:opacity-100 cursor-pointer"
+                    className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-danger/90 hover:bg-danger text-white p-2 rounded-full shadow-lg disabled:opacity-60 focus-visible:opacity-100 cursor-pointer"
                     title="Delete image"
                     aria-label="Delete image"
                   >

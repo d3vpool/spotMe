@@ -1,139 +1,188 @@
 import { Link } from 'react-router-dom';
-import { Camera, Upload, Search, Zap, Shield, Users } from 'lucide-react';
+import { Upload, Search, Shield, Zap, Camera, Users } from 'lucide-react';
+import { Reticle } from '@components/ui/Reticle';
+import { HudTag } from '@components/ui/HudTag';
+import { Scanline } from '@components/ui/Scanline';
 
 const features = [
   {
-    icon: Upload,
-    title: 'Upload Event Photos',
-    description: 'Photographers upload all event photos in bulk to a dedicated gallery.',
-  },
-  {
     icon: Search,
-    title: 'AI Face Search',
-    description: 'Guests upload a selfie and our AI instantly finds every photo they appear in.',
+    title: 'Selfie search',
+    description: 'One photo in, every match out — ranked by confidence, not upload order.',
   },
   {
-    icon: Shield,
-    title: 'Private & Secure',
-    description: 'Event galleries are private by default. Share only with a unique link.',
-  },
-  {
-    icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Results in seconds — no manual tagging or scrolling through hundreds of photos.',
+    icon: Upload,
+    title: 'Bulk upload',
+    description: 'Drag in hundreds of files at once. Indexing runs in the background while you keep working.',
   },
   {
     icon: Camera,
-    title: 'Any Event Size',
-    description: 'Works for birthday parties, weddings, corporate events, and large concerts alike.',
+    title: 'Live camera capture',
+    description: 'No selfie handy? Guests can frame their face right in the browser and search instantly.',
+  },
+  {
+    icon: Shield,
+    title: 'Public or private events',
+    description: 'Share an open link for a wedding, or lock an event down to invited guests only.',
+  },
+  {
+    icon: Zap,
+    title: 'Full-size gallery',
+    description: 'Every photo opens in a fast, keyboard-navigable viewer — no download required to browse.',
   },
   {
     icon: Users,
-    title: 'Public Share Link',
-    description: 'Generate a public link so guests can find their photos without needing an account.',
+    title: 'Private by default',
+    description: 'Face data is used only to match within an event, never stored for anything else.',
   },
 ];
 
 const steps = [
   {
     number: '01',
-    title: 'Create an Event',
-    description: 'Sign up, create an event, and get a shareable gallery in seconds.',
+    label: 'SETUP',
+    title: 'Create the event',
+    description: 'Name it, add a cover photo, and get a shareable link guests can use without an account.',
   },
   {
     number: '02',
-    title: 'Upload Photos',
-    description: 'Upload all event photos at once. Our AI processes them automatically.',
+    label: 'UPLOAD',
+    title: 'Drop in the photos',
+    description: 'Drag in the full camera roll. SpotMe indexes every face in the background as files land.',
   },
   {
     number: '03',
-    title: 'Guests Find Their Photos',
-    description: 'Guests visit the link, take a selfie, and instantly see every photo of themselves.',
+    label: 'MATCH',
+    title: 'Guests find themselves',
+    description: 'A selfie or a quick camera capture is all it takes to pull every photo they\'re in.',
   },
 ];
 
 export function Home() {
   return (
-    <div className="min-h-screen bg-bg-dark text-slate-100 font-sans overflow-hidden">
+    <div className="min-h-screen bg-bg-dark text-text-hi font-display overflow-hidden relative z-10">
       {/* Navbar */}
       <nav className="sticky top-0 z-40 glass-nav shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-          <span className="text-2xl font-extrabold text-white tracking-tight">
+        <div className="max-w-[1240px] mx-auto px-6 flex justify-between items-center h-[72px]">
+          <span className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-text-hi">
+            <span className="w-7 h-7 border-[1.5px] border-brand-yellow rounded-[6px] relative inline-block">
+              <span className="absolute inset-1.5 bg-brand-yellow rounded-[2px]" />
+            </span>
             Spot<span className="text-brand-yellow">Me</span>
           </span>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link
               to="/login"
-              className="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:outline-none rounded-xl"
+              className="px-4 py-2 text-sm font-semibold text-text-mid hover:text-text-hi transition-colors focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:outline-none rounded-xl bg-white/[0.04] border border-border-dark hover:bg-white/[0.08]"
             >
-              Sign In
+              Sign in
             </Link>
             <Link
               to="/signup"
-              className="px-5 py-2.5 text-sm font-bold bg-brand-yellow text-bg-dark rounded-xl hover:bg-brand-yellow-hover transition-all shadow-[0_4px_15px_rgba(255,214,0,0.15)] focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:outline-none"
+              className="px-5 py-2.5 text-sm font-bold bg-brand-yellow text-bg-dark rounded-xl hover:bg-brand-yellow-hover transition-all shadow-[0_4px_20px_rgba(255,214,0,0.18)] hover:shadow-[0_4px_25px_rgba(255,214,0,0.32)] focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:outline-none"
             >
-              Get Started
+              Get started
             </Link>
           </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-24 pb-32 px-4">
-        {/* Ambient background glow spheres */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-brand-yellow/5 blur-[120px] animate-pulse-slow" />
-          <div className="absolute bottom-[-10%] left-[-15%] w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[100px] animate-pulse-slow" />
-        </div>
+      <section className="relative pt-20 pb-24 px-6">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
+            {/* Left: Copy */}
+            <div>
+              <div className="flex items-center gap-2.5 mb-5 font-mono text-xs font-medium tracking-[0.12em] text-text-low uppercase">
+                <span className="w-4 h-px bg-brand-yellow" />
+                Face-match photo delivery
+              </div>
+              <h1 className="text-5xl lg:text-[56px] leading-[1.04] font-extrabold tracking-[-0.03em] mb-6">
+                Every photo of you,<br />
+                found in <span className="text-brand-yellow">seconds.</span>
+              </h1>
+              <p className="text-[17px] leading-relaxed text-text-mid font-medium max-w-[480px] mb-8">
+                Upload one selfie. SpotMe scans every photo from the event and hands you back only the ones you're actually in — no scrolling, no guessing.
+              </p>
+              <div className="flex gap-3 mb-10">
+                <Link
+                  to="/signup"
+                  className="px-7 py-3.5 bg-brand-yellow text-bg-dark font-bold rounded-xl hover:bg-brand-yellow-hover transition-all shadow-[0_4px_20px_rgba(255,214,0,0.18)] hover:shadow-[0_4px_25px_rgba(255,214,0,0.32)] active:scale-95 focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:outline-none"
+                >
+                  Find my photos
+                </Link>
+                <Link
+                  to="/login"
+                  className="px-7 py-3.5 bg-white/[0.04] border border-border-dark text-text-hi font-semibold rounded-xl hover:bg-white/[0.08] transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+                >
+                  Create an event
+                </Link>
+              </div>
+              {/* Proof stats */}
+              <div className="flex gap-7 pt-7 border-t border-border-dark max-w-[480px]">
+                <div>
+                  <div className="font-mono text-[22px] font-semibold text-text-hi">98.2%</div>
+                  <div className="text-xs text-text-low mt-0.5">match accuracy</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[22px] font-semibold text-text-hi">&lt;4s</div>
+                  <div className="text-xs text-text-low mt-0.5">per-photo scan</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[22px] font-semibold text-text-hi">10K+</div>
+                  <div className="text-xs text-text-low mt-0.5">events hosted</div>
+                </div>
+              </div>
+            </div>
 
-        <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-brand-yellow/10 border border-brand-yellow/20 text-brand-yellow text-xs font-bold px-4 py-2 rounded-full mb-8 tracking-wider uppercase animate-[fade-in_0.6s_ease-out]">
-            <Zap className="w-3.5 h-3.5" />
-            AI-Powered Photo Finder
-          </div>
-          <h1 className="text-5xl sm:text-7xl font-extrabold text-white leading-tight tracking-tight mb-8 animate-[fade-in_0.8s_ease-out]">
-            Find Your Photos from{' '}
-            <span className="relative inline-block whitespace-nowrap">
-              <span className="relative z-10 text-brand-yellow">Any Event</span>
-            </span>
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed animate-[fade-in_1s_ease-out]">
-            SpotMe uses advanced face recognition to instantly find every photo you appear in — no more
-            scrolling through hundreds of event photos.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-[fade-in_1.2s_ease-out]">
-            <Link
-              to="/signup"
-              className="w-full sm:w-auto px-8 py-3.5 bg-brand-yellow text-bg-dark font-bold rounded-xl hover:bg-brand-yellow-hover transition-all shadow-lg hover:shadow-xl hover:shadow-brand-yellow/10 active:scale-95 text-center focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:outline-none"
-            >
-              Start for Free
-            </Link>
-            <Link
-              to="/login"
-              className="w-full sm:w-auto px-8 py-3.5 bg-white/5 border border-white/15 text-white font-semibold rounded-xl hover:bg-white/10 transition-all active:scale-95 text-center focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
-            >
-              Sign In
-            </Link>
+            {/* Right: Viewfinder visual */}
+            <div className="relative">
+              <div className="absolute -top-3.5 right-5 z-10 animate-float">
+                <HudTag dot="green">3 matches found</HudTag>
+              </div>
+              <Reticle className="bg-gradient-to-br from-surface-card to-surface-dark border border-border-dark rounded-[20px] p-[18px] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
+                <div className="grid grid-cols-3 gap-2 rounded-xl overflow-hidden relative">
+                  <Scanline active />
+                  <div className="aspect-square bg-[#1B1F3B] relative outline outline-2 outline-brand-yellow outline-offset-[-2px]">
+                    <span className="absolute bottom-1.5 left-1.5 font-mono text-[9px] font-semibold bg-bg-dark/85 text-brand-yellow px-1.5 py-0.5 rounded">MATCH</span>
+                  </div>
+                  <div className="aspect-square bg-[#20233f]" />
+                  <div className="aspect-square bg-[#1B1F3B] relative outline outline-2 outline-brand-yellow outline-offset-[-2px]">
+                    <span className="absolute bottom-1.5 left-1.5 font-mono text-[9px] font-semibold bg-bg-dark/85 text-brand-yellow px-1.5 py-0.5 rounded">MATCH</span>
+                  </div>
+                  <div className="aspect-square bg-[#181b34]" />
+                  <div className="aspect-square bg-[#20233f]" />
+                  <div className="aspect-square bg-[#1B1F3B] relative outline outline-2 outline-brand-yellow outline-offset-[-2px]">
+                    <span className="absolute bottom-1.5 left-1.5 font-mono text-[9px] font-semibold bg-bg-dark/85 text-brand-yellow px-1.5 py-0.5 rounded">MATCH</span>
+                  </div>
+                </div>
+              </Reticle>
+            </div>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="bg-white/[0.02] border-y border-white/5 py-28 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">How It Works</h2>
-            <p className="text-gray-400 text-lg">Three steps, done in minutes.</p>
+      <section className="py-20 px-6">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="max-w-[560px] mb-[52px]">
+            <h2 className="text-[34px] font-extrabold tracking-tight mb-3">Three steps, no manual sorting</h2>
+            <p className="text-text-mid text-[15.5px] leading-relaxed">The whole flow runs in the order below — each step depends on the last, so there's no need to jump around.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {steps.map((step) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {steps.map((step, i) => (
               <div
                 key={step.number}
-                className="relative bg-surface-dark/40 border border-white/5 rounded-2xl p-8 shadow-2xl flex flex-col gap-4 transition-all duration-300 hover:border-brand-yellow/30 group hover:translate-y-[-4px]"
+                className="relative bg-surface-dark/50 backdrop-blur-[10px] border border-border-dark rounded-2xl p-7 transition-all duration-300 hover:border-brand-yellow/30 hover:-translate-y-[3px] group"
               >
-                <span className="text-5xl font-black text-brand-yellow/10 group-hover:text-brand-yellow/20 transition-colors leading-none">{step.number}</span>
-                <h3 className="text-xl font-bold text-white group-hover:text-brand-yellow transition-colors">{step.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{step.description}</p>
+                <div className="font-mono text-[13px] text-brand-yellow tracking-[0.05em] mb-4">
+                  {step.number} / {step.label}
+                </div>
+                <h3 className="text-[17px] font-bold mb-2 group-hover:text-brand-yellow transition-colors">{step.title}</h3>
+                <p className="text-[14px] text-text-mid leading-[1.55]">{step.description}</p>
+                {i < steps.length - 1 && (
+                  <span className="hidden md:block absolute top-7 -right-[30px] font-mono text-[18px] text-text-low">→</span>
+                )}
               </div>
             ))}
           </div>
@@ -141,23 +190,23 @@ export function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-28 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Everything You Need</h2>
-            <p className="text-gray-400 text-lg">Powerful features built for photographers and event organizers.</p>
+      <section className="py-20 px-6">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="max-w-[560px] mb-[52px]">
+            <h2 className="text-[34px] font-extrabold tracking-tight mb-3">Built for the moment after the event</h2>
+            <p className="text-text-mid text-[15.5px] leading-relaxed">The features that matter once a thousand photos are sitting in one folder and nobody wants to scroll through them.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
             {features.map((f) => (
               <div
                 key={f.title}
-                className="group p-8 rounded-2xl border border-white/5 hover:border-brand-yellow/30 hover:shadow-2xl transition-all duration-300 bg-surface-dark/20 hover:translate-y-[-4px]"
+                className="group p-[26px] rounded-2xl border border-border-dark bg-surface-dark/40 backdrop-blur-[10px] transition-all duration-300 hover:-translate-y-[3px] hover:border-brand-yellow/30"
               >
-                <div className="w-12 h-12 rounded-xl bg-brand-yellow/5 border border-brand-yellow/10 flex items-center justify-center mb-6 group-hover:bg-brand-yellow/20 transition-all duration-300">
-                  <f.icon className="w-6 h-6 text-brand-yellow" />
+                <div className="w-[38px] h-[38px] rounded-[10px] bg-brand-yellow/[0.08] border border-brand-yellow/20 flex items-center justify-center mb-4 text-brand-yellow">
+                  <f.icon className="w-5 h-5" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-brand-yellow transition-colors">{f.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{f.description}</p>
+                <h3 className="text-[16px] font-bold mb-2 group-hover:text-brand-yellow transition-colors">{f.title}</h3>
+                <p className="text-[13.5px] text-text-mid leading-[1.55]">{f.description}</p>
               </div>
             ))}
           </div>
@@ -165,27 +214,29 @@ export function Home() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-24 px-4 relative overflow-hidden bg-brand-yellow text-bg-dark border-t border-brand-yellow/20">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-30%] right-[-10%] w-[500px] h-[500px] rounded-full bg-white/20 blur-[90px]" />
+      <div className="mx-6 my-24 bg-brand-yellow rounded-3xl p-14 flex items-center justify-between gap-8 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.06]">
+          <div className="w-full h-full" style={{ backgroundImage: 'radial-gradient(circle, #070913 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
         </div>
-        <div className="relative max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-bg-dark mb-6">Ready to find your photos?</h2>
-          <p className="text-bg-dark/80 text-lg sm:text-xl font-medium mb-10 max-w-xl mx-auto">
-            Create a free account and set up your first event gallery in under a minute.
-          </p>
-          <Link
-            to="/signup"
-            className="inline-block px-10 py-4 bg-bg-dark text-white font-bold rounded-xl hover:bg-slate-900 transition-all shadow-2xl active:scale-95 text-lg focus-visible:ring-2 focus-visible:ring-bg-dark focus-visible:outline-none"
-          >
-            Get Started — It's Free
-          </Link>
-        </div>
-      </section>
+        <h2 className="relative text-[30px] font-extrabold text-bg-dark tracking-tight max-w-[420px]">
+          Stop asking "did anyone get a photo of me?"
+        </h2>
+        <Link
+          to="/signup"
+          className="relative px-8 py-4 bg-bg-dark text-brand-yellow font-bold rounded-xl hover:bg-[#171922] transition-all shadow-2xl active:scale-95 text-lg focus-visible:ring-2 focus-visible:ring-bg-dark focus-visible:outline-none flex-shrink-0"
+        >
+          Create your first event
+        </Link>
+      </div>
 
       {/* Footer */}
-      <footer className="bg-bg-dark border-t border-white/5 py-10 px-4 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} SpotMe. All rights reserved.
+      <footer className="border-t border-border-dark py-8 px-6 flex justify-between items-center text-[13px] text-text-low max-w-[1240px] mx-auto">
+        <div>© {new Date().getFullYear()} SpotMe</div>
+        <div className="flex gap-4">
+          <span>Privacy</span>
+          <span>Terms</span>
+          <span>Contact</span>
+        </div>
       </footer>
     </div>
   );

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Upload, ChevronDown, X, CheckCircle } from 'lucide-react';
+import { HudTag } from '@components/ui/HudTag';
+import { Scanline } from '@components/ui/Scanline';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { FileUploadBox } from '@components/ui/FileUploadBox';
@@ -72,14 +74,10 @@ export function UploadPhotos() {
       {uploadStatus === 'done' ? (
         /* Success State */
         <Card className="p-10 flex flex-col items-center text-center gap-5 bg-surface-dark/20 border-white/5 shadow-2xl">
-          <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center shadow-lg animate-bounce">
-            <CheckCircle className="w-8 h-8 text-green-400" />
-          </div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Upload Complete!</h2>
-          <p className="text-gray-300 max-w-md">
-            <span className="font-semibold text-brand-yellow">{files.length} photo{files.length > 1 ? 's' : ''}</span>{' '}
-            uploaded to{' '}
-            <span className="font-semibold text-white">{selectedEvent?.title}</span>.
+          <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center shadow-lg animate-bounce">              <CheckCircle className="w-8 h-8 text-success" />
+            </div>
+            <h2 className="text-2xl font-bold text-text-hi tracking-tight">Upload Complete!</h2>
+          <p className="text-gray-300 max-w-md">              <HudTag dot="green">{files.length} PHOTOS INDEXED</HudTag>
           </p>
           <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
             Our AI is now processing the images in the background. This may take a minute.
@@ -187,12 +185,14 @@ export function UploadPhotos() {
                 Clear All
               </Button>
             )}
-            <Button
-              className="flex-1 py-3.5 text-base"
-              onClick={handleUpload}
-              isLoading={uploadStatus === 'uploading'}
-              disabled={!selectedEventId || files.length === 0}
-            >
+            <div className="relative">
+              <Scanline active={uploadStatus === 'uploading'} />
+              <Button
+                className="flex-1 py-3.5 text-base"
+                onClick={handleUpload}
+                isLoading={uploadStatus === 'uploading'}
+                disabled={!selectedEventId || files.length === 0}
+              >
               {uploadStatus === 'uploading' ? (
                 'Uploading...'
               ) : (
@@ -202,6 +202,7 @@ export function UploadPhotos() {
                 </>
               )}
             </Button>
+            </div>
           </div>
         </div>
       )}

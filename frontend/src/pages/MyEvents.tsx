@@ -77,6 +77,7 @@ export const MyEvents: React.FC = () => {
             <Card
               key={event.id}
               hoverable
+              reticle
               onClick={() => navigate(`/events/${event.id}`)}
               className="group flex flex-col h-full bg-surface-dark/20"
             >
@@ -91,15 +92,15 @@ export const MyEvents: React.FC = () => {
                 ) : (
                   <ImageIcon className="w-12 h-12 text-white/10" />
                 )}
-                <div className="absolute top-3 right-3 bg-black/75 backdrop-blur-md text-white text-xs font-semibold px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1">
-                  <ImageIcon className="w-3.5 h-3.5" />
-                  {event.imageCount || 0}
+                <div className="absolute top-3 right-3 bg-bg-dark/85 backdrop-blur-md px-2 py-1 rounded-md border border-brand-yellow/25 flex items-center gap-1.5">
+                  <ImageIcon className="w-3.5 h-3.5 text-brand-yellow" />
+                  <span className="font-mono text-[11px] font-semibold text-brand-yellow tracking-wide">{event.imageCount || 0}</span>
                 </div>
               </div>
               <div className="p-5 flex-grow flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-lg text-white mb-1.5 line-clamp-1 group-hover:text-brand-yellow transition-colors">{event.title}</h3>
-                  {event.description && <p className="text-gray-400 text-sm line-clamp-2 leading-relaxed">{event.description}</p>}
+                  <h3 className="font-bold text-lg text-text-hi mb-1.5 line-clamp-1 group-hover:text-brand-yellow transition-colors">{event.title}</h3>
+                  {event.description && <p className="text-text-mid text-sm line-clamp-2 leading-relaxed">{event.description}</p>}
                 </div>
               </div>
             </Card>

@@ -9,7 +9,8 @@ SpotMe is an AI-powered event photo platform. Photographers upload bulk event ph
 ## ✨ Features
 
 - 🎉 **Event Management** — Create, edit, and delete named event galleries with cover images
-- 📤 **Bulk Photo Upload** — Upload hundreds of photos at once with automatic AI face indexing
+- 📤 **Bulk Photo Upload** — Upload hundreds of photos at once with async background AI face indexing
+- 📂 **Google Drive Import** — Paste a Google Drive folder link to import photos directly (public folders only)
 - 🤖 **AI Face Search** — Upload a selfie → instantly get back every photo you appear in
 - 🔗 **Public Share Links** — Share a unique link so guests can find their photos without signing up
 - 🔒 **Private by Default** — Galleries are only accessible via the share token
@@ -31,6 +32,7 @@ SpotMe is an AI-powered event photo platform. Photographers upload bulk event ph
 | AI / ML | face-api.js + TensorFlow.js Node |
 | Auth | JWT + bcrypt |
 | File Uploads | Multer |
+| Job Queue | BullMQ + Redis |
 | Validation | Zod |
 
 ### Frontend
@@ -106,19 +108,28 @@ psql -U postgres -c "CREATE DATABASE spotme;"
 psql -U postgres -d spotme -c "CREATE EXTENSION IF NOT EXISTS vector;"
 ```
 
-### 3. Backend setup
+### 3. Start infrastructure
+
+```bash
+docker compose up -d   # starts PostgreSQL + Redis
+```
+
+### 4. Backend setup
 
 ```bash
 cd backend
 cp .env.example .env   # fill in your values
 npm install
 npx prisma migrate dev
-npm run dev
+npm run dev &           # API server on port 3000
+npm run worker &        # background face-processing worker
 ```
 
-Backend runs on **http://localhost:8003**
+You need **two backend processes** running:
+- `npm run dev` — the Express API server
+- `npm run worker` — the BullMQ worker that processes face detection in the background
 
-### 4. Frontend setup
+### 5. Frontend setup
 
 ```bash
 cd frontend
@@ -136,11 +147,14 @@ Frontend runs on **http://localhost:5173**
 ### `backend/.env`
 
 ```env
-PORT=8003
+PORT=3000
 DATABASE_URL=postgresql://postgres:<password>@localhost:5432/spotme
 JWT_SECRET=your_secret_key
-BACKEND_URL=http://localhost:8003/
+REDIS_URL=redis://localhost:6379
+GOOGLE_DRIVE_API_KEY=your-google-drive-api-key
 ```
+
+> **Getting a Google Drive API key:** Go to [Google Cloud Console](https://console.cloud.google.com/), create or select a project, enable the **Google Drive API**, then create an API key (restrict it to Drive API only).
 
 ### `frontend/.env`
 
@@ -161,7 +175,9 @@ VITE_API_URL=http://localhost:8003/api
 | `GET` | `/api/events/:id` | ✅ | Get a single event by ID |
 | `PATCH` | `/api/events/:id` | ✅ | Update event title/description |
 | `DELETE` | `/api/events/:id` | ✅ | Delete an event |
-| `POST` | `/api/events/:id/images` | ✅ | Upload photos to an event (triggers face indexing) |
+| `POST` | `/api/events/:id/images` | ✅ | Upload photos to an event (enqueues background face indexing) |
+| `POST` | `/api/events/:id/images/import-drive` | ✅ | Import images from a public Google Drive folder |
+| `GET` | `/api/events/:id/upload-status/:batchId` | ✅ | Poll face-indexing progress for an upload batch |
 | `POST` | `/api/events/:id/search` | ✅ | Search faces in a private event with a selfie |
 | `GET` | `/api/events/share/:token` | — | View public event gallery |
 | `POST` | `/api/events/share/:token/search` | — | Search faces in a public event with a selfie |
@@ -211,6 +227,7 @@ FaceEmbedding  — id, imageId, vector(128), boundingBox (JSON)
 - [ ] Multiple face matches per event per search
 - [ ] Email / SMS share link delivery
 - [ ] Admin dashboard with event analytics
+- [ ] Google Drive OAuth flow for private folders
 
 ---
 

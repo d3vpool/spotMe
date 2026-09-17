@@ -37,3 +37,8 @@ export type image = Prisma.imageModel
  * 
  */
 export type FaceEmbedding = Prisma.FaceEmbeddingModel
+/**
+ * Model UploadBatch
+ * 
+ */
+export type UploadBatch = Prisma.UploadBatchModel

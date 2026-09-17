@@ -23,7 +23,7 @@ model event {
   description String
   createdBy   Int
   shareToken  String    @unique
-  isPublic    Boolean   @default(true)
+  isPublic    Boolean   @default(false)
   createdAt   DateTime  @default(now())
 
   creator     User      @relation(fields: [createdBy], references: [id])
@@ -32,6 +32,8 @@ model event {
   coverImage  image?    @relation("CoverImage", fields: [coverImageId], references: [id])
 
   images      image[]   @relation("EventImages")
+
+  uploadBatches UploadBatch[]
 }
 
 model image {
@@ -54,4 +56,16 @@ model FaceEmbedding {
   image image @relation(fields: [imageId], references: [id])
   boundingBox Json?
   createdAt DateTime @default(now())
+}
+
+model UploadBatch {
+  id          String   @id @default(uuid())
+  eventId     Int
+  event       event    @relation(fields: [eventId], references: [id])
+  totalImages Int
+  completed   Int      @default(0)
+  failed      Int      @default(0)
+  status      String   @default("processing")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

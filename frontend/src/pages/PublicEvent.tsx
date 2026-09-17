@@ -46,7 +46,7 @@ export const PublicEvent: React.FC = () => {
         const data = await eventService.getPublicEvent(shareToken);
         setEventData(data.event);
       } catch (err: any) {
-        setEventError(err.response?.status === 404 ? 'This event is private or does not exist.' : 'Failed to load event.');
+        setEventError(err.status === 404 ? 'This event is private or does not exist.' : 'Failed to load event.');
       } finally {
         setEventLoading(false);
       }

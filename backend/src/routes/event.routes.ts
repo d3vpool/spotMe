@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from "express";
 import { authCheck } from "../middlewares/authMiddleware.js";
-import { createEvent, deleteEventFromId, getAllEvents, getEventFromId, getEventFromShareToken, searchFaces, searchFacesPublic, toggleEventVisibility, updateEventFromId, uploadImage, deleteImage } from "../controllers/event.controllers.js";
+import { createEvent, deleteEventFromId, getAllEvents, getEventFromId, getEventFromShareToken, searchFaces, searchFacesPublic, toggleEventVisibility, updateEventFromId, uploadImage, deleteImage, importFromDrive, getUploadStatus } from "../controllers/event.controllers.js";
 import { upload } from "../middlewares/upload.middleware.js";
 
 const router = express.Router();
@@ -19,6 +19,12 @@ router.patch("/:eventId/visibility", authCheck, toggleEventVisibility)
 
 //upload images
 router.post("/:eventId/images", authCheck, upload.array('EventImages'), uploadImage)
+
+//import from Google Drive
+router.post("/:eventId/images/import-drive", authCheck, importFromDrive)
+
+//upload batch status
+router.get("/:eventId/upload-status/:batchId", authCheck, getUploadStatus)
 
 //delete individual image
 router.delete("/:eventId/images/:imageId", authCheck, deleteImage)

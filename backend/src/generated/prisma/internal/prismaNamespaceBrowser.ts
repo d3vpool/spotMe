@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   event: 'event',
   image: 'image',
-  FaceEmbedding: 'FaceEmbedding'
+  FaceEmbedding: 'FaceEmbedding',
+  UploadBatch: 'UploadBatch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -116,6 +117,20 @@ export const FaceEmbeddingScalarFieldEnum = {
 } as const
 
 export type FaceEmbeddingScalarFieldEnum = (typeof FaceEmbeddingScalarFieldEnum)[keyof typeof FaceEmbeddingScalarFieldEnum]
+
+
+export const UploadBatchScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  totalImages: 'totalImages',
+  completed: 'completed',
+  failed: 'failed',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UploadBatchScalarFieldEnum = (typeof UploadBatchScalarFieldEnum)[keyof typeof UploadBatchScalarFieldEnum]
 
 
 export const SortOrder = {

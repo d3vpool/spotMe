@@ -251,6 +251,7 @@ export type eventWhereInput = {
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   coverImage?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.imageWhereInput> | null
   images?: Prisma.ImageListRelationFilter
+  uploadBatches?: Prisma.UploadBatchListRelationFilter
 }
 
 export type eventOrderByWithRelationInput = {
@@ -265,6 +266,7 @@ export type eventOrderByWithRelationInput = {
   creator?: Prisma.UserOrderByWithRelationInput
   coverImage?: Prisma.imageOrderByWithRelationInput
   images?: Prisma.imageOrderByRelationAggregateInput
+  uploadBatches?: Prisma.UploadBatchOrderByRelationAggregateInput
 }
 
 export type eventWhereUniqueInput = Prisma.AtLeast<{
@@ -282,6 +284,7 @@ export type eventWhereUniqueInput = Prisma.AtLeast<{
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   coverImage?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.imageWhereInput> | null
   images?: Prisma.ImageListRelationFilter
+  uploadBatches?: Prisma.UploadBatchListRelationFilter
 }, "id" | "shareToken">
 
 export type eventOrderByWithAggregationInput = {
@@ -323,6 +326,7 @@ export type eventCreateInput = {
   creator: Prisma.UserCreateNestedOneWithoutEventsInput
   coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
   images?: Prisma.imageCreateNestedManyWithoutEventInput
+  uploadBatches?: Prisma.UploadBatchCreateNestedManyWithoutEventInput
 }
 
 export type eventUncheckedCreateInput = {
@@ -335,6 +339,7 @@ export type eventUncheckedCreateInput = {
   createdAt?: Date | string
   coverImageId?: number | null
   images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
+  uploadBatches?: Prisma.UploadBatchUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type eventUpdateInput = {
@@ -346,6 +351,7 @@ export type eventUpdateInput = {
   creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
   coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
   images?: Prisma.imageUpdateManyWithoutEventNestedInput
+  uploadBatches?: Prisma.UploadBatchUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateInput = {
@@ -358,6 +364,7 @@ export type eventUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
+  uploadBatches?: Prisma.UploadBatchUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type eventCreateManyInput = {
@@ -448,6 +455,11 @@ export type eventSumOrderByAggregateInput = {
 export type EventNullableScalarRelationFilter = {
   is?: Prisma.eventWhereInput | null
   isNot?: Prisma.eventWhereInput | null
+}
+
+export type EventScalarRelationFilter = {
+  is?: Prisma.eventWhereInput
+  isNot?: Prisma.eventWhereInput
 }
 
 export type eventCreateNestedManyWithoutCreatorInput = {
@@ -562,6 +574,20 @@ export type eventUncheckedUpdateManyWithoutCoverImageNestedInput = {
   deleteMany?: Prisma.eventScalarWhereInput | Prisma.eventScalarWhereInput[]
 }
 
+export type eventCreateNestedOneWithoutUploadBatchesInput = {
+  create?: Prisma.XOR<Prisma.eventCreateWithoutUploadBatchesInput, Prisma.eventUncheckedCreateWithoutUploadBatchesInput>
+  connectOrCreate?: Prisma.eventCreateOrConnectWithoutUploadBatchesInput
+  connect?: Prisma.eventWhereUniqueInput
+}
+
+export type eventUpdateOneRequiredWithoutUploadBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.eventCreateWithoutUploadBatchesInput, Prisma.eventUncheckedCreateWithoutUploadBatchesInput>
+  connectOrCreate?: Prisma.eventCreateOrConnectWithoutUploadBatchesInput
+  upsert?: Prisma.eventUpsertWithoutUploadBatchesInput
+  connect?: Prisma.eventWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.eventUpdateToOneWithWhereWithoutUploadBatchesInput, Prisma.eventUpdateWithoutUploadBatchesInput>, Prisma.eventUncheckedUpdateWithoutUploadBatchesInput>
+}
+
 export type eventCreateWithoutCreatorInput = {
   title: string
   description: string
@@ -570,6 +596,7 @@ export type eventCreateWithoutCreatorInput = {
   createdAt?: Date | string
   coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
   images?: Prisma.imageCreateNestedManyWithoutEventInput
+  uploadBatches?: Prisma.UploadBatchCreateNestedManyWithoutEventInput
 }
 
 export type eventUncheckedCreateWithoutCreatorInput = {
@@ -581,6 +608,7 @@ export type eventUncheckedCreateWithoutCreatorInput = {
   createdAt?: Date | string
   coverImageId?: number | null
   images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
+  uploadBatches?: Prisma.UploadBatchUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type eventCreateOrConnectWithoutCreatorInput = {
@@ -631,6 +659,7 @@ export type eventCreateWithoutImagesInput = {
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutEventsInput
   coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
+  uploadBatches?: Prisma.UploadBatchCreateNestedManyWithoutEventInput
 }
 
 export type eventUncheckedCreateWithoutImagesInput = {
@@ -642,6 +671,7 @@ export type eventUncheckedCreateWithoutImagesInput = {
   isPublic?: boolean
   createdAt?: Date | string
   coverImageId?: number | null
+  uploadBatches?: Prisma.UploadBatchUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type eventCreateOrConnectWithoutImagesInput = {
@@ -657,6 +687,7 @@ export type eventCreateWithoutCoverImageInput = {
   createdAt?: Date | string
   creator: Prisma.UserCreateNestedOneWithoutEventsInput
   images?: Prisma.imageCreateNestedManyWithoutEventInput
+  uploadBatches?: Prisma.UploadBatchCreateNestedManyWithoutEventInput
 }
 
 export type eventUncheckedCreateWithoutCoverImageInput = {
@@ -668,6 +699,7 @@ export type eventUncheckedCreateWithoutCoverImageInput = {
   isPublic?: boolean
   createdAt?: Date | string
   images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
+  uploadBatches?: Prisma.UploadBatchUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type eventCreateOrConnectWithoutCoverImageInput = {
@@ -699,6 +731,7 @@ export type eventUpdateWithoutImagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
   coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
+  uploadBatches?: Prisma.UploadBatchUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateWithoutImagesInput = {
@@ -710,6 +743,7 @@ export type eventUncheckedUpdateWithoutImagesInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadBatches?: Prisma.UploadBatchUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type eventUpsertWithWhereUniqueWithoutCoverImageInput = {
@@ -726,6 +760,68 @@ export type eventUpdateWithWhereUniqueWithoutCoverImageInput = {
 export type eventUpdateManyWithWhereWithoutCoverImageInput = {
   where: Prisma.eventScalarWhereInput
   data: Prisma.XOR<Prisma.eventUpdateManyMutationInput, Prisma.eventUncheckedUpdateManyWithoutCoverImageInput>
+}
+
+export type eventCreateWithoutUploadBatchesInput = {
+  title: string
+  description: string
+  shareToken: string
+  isPublic?: boolean
+  createdAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutEventsInput
+  coverImage?: Prisma.imageCreateNestedOneWithoutCoverForEventsInput
+  images?: Prisma.imageCreateNestedManyWithoutEventInput
+}
+
+export type eventUncheckedCreateWithoutUploadBatchesInput = {
+  id?: number
+  title: string
+  description: string
+  createdBy: number
+  shareToken: string
+  isPublic?: boolean
+  createdAt?: Date | string
+  coverImageId?: number | null
+  images?: Prisma.imageUncheckedCreateNestedManyWithoutEventInput
+}
+
+export type eventCreateOrConnectWithoutUploadBatchesInput = {
+  where: Prisma.eventWhereUniqueInput
+  create: Prisma.XOR<Prisma.eventCreateWithoutUploadBatchesInput, Prisma.eventUncheckedCreateWithoutUploadBatchesInput>
+}
+
+export type eventUpsertWithoutUploadBatchesInput = {
+  update: Prisma.XOR<Prisma.eventUpdateWithoutUploadBatchesInput, Prisma.eventUncheckedUpdateWithoutUploadBatchesInput>
+  create: Prisma.XOR<Prisma.eventCreateWithoutUploadBatchesInput, Prisma.eventUncheckedCreateWithoutUploadBatchesInput>
+  where?: Prisma.eventWhereInput
+}
+
+export type eventUpdateToOneWithWhereWithoutUploadBatchesInput = {
+  where?: Prisma.eventWhereInput
+  data: Prisma.XOR<Prisma.eventUpdateWithoutUploadBatchesInput, Prisma.eventUncheckedUpdateWithoutUploadBatchesInput>
+}
+
+export type eventUpdateWithoutUploadBatchesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
+  coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
+  images?: Prisma.imageUpdateManyWithoutEventNestedInput
+}
+
+export type eventUncheckedUpdateWithoutUploadBatchesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.IntFieldUpdateOperationsInput | number
+  shareToken?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type eventCreateManyCreatorInput = {
@@ -746,6 +842,7 @@ export type eventUpdateWithoutCreatorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImage?: Prisma.imageUpdateOneWithoutCoverForEventsNestedInput
   images?: Prisma.imageUpdateManyWithoutEventNestedInput
+  uploadBatches?: Prisma.UploadBatchUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateWithoutCreatorInput = {
@@ -757,6 +854,7 @@ export type eventUncheckedUpdateWithoutCreatorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coverImageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
+  uploadBatches?: Prisma.UploadBatchUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateManyWithoutCreatorInput = {
@@ -787,6 +885,7 @@ export type eventUpdateWithoutCoverImageInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creator?: Prisma.UserUpdateOneRequiredWithoutEventsNestedInput
   images?: Prisma.imageUpdateManyWithoutEventNestedInput
+  uploadBatches?: Prisma.UploadBatchUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateWithoutCoverImageInput = {
@@ -798,6 +897,7 @@ export type eventUncheckedUpdateWithoutCoverImageInput = {
   isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.imageUncheckedUpdateManyWithoutEventNestedInput
+  uploadBatches?: Prisma.UploadBatchUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type eventUncheckedUpdateManyWithoutCoverImageInput = {
@@ -817,10 +917,12 @@ export type eventUncheckedUpdateManyWithoutCoverImageInput = {
 
 export type EventCountOutputType = {
   images: number
+  uploadBatches: number
 }
 
 export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | EventCountOutputTypeCountImagesArgs
+  uploadBatches?: boolean | EventCountOutputTypeCountUploadBatchesArgs
 }
 
 /**
@@ -840,6 +942,13 @@ export type EventCountOutputTypeCountImagesArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.imageWhereInput
 }
 
+/**
+ * EventCountOutputType without action
+ */
+export type EventCountOutputTypeCountUploadBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UploadBatchWhereInput
+}
+
 
 export type eventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -853,6 +962,7 @@ export type eventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   coverImage?: boolean | Prisma.event$coverImageArgs<ExtArgs>
   images?: boolean | Prisma.event$imagesArgs<ExtArgs>
+  uploadBatches?: boolean | Prisma.event$uploadBatchesArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -898,6 +1008,7 @@ export type eventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   coverImage?: boolean | Prisma.event$coverImageArgs<ExtArgs>
   images?: boolean | Prisma.event$imagesArgs<ExtArgs>
+  uploadBatches?: boolean | Prisma.event$uploadBatchesArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type eventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -915,6 +1026,7 @@ export type $eventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     creator: Prisma.$UserPayload<ExtArgs>
     coverImage: Prisma.$imagePayload<ExtArgs> | null
     images: Prisma.$imagePayload<ExtArgs>[]
+    uploadBatches: Prisma.$UploadBatchPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1322,6 +1434,7 @@ export interface Prisma__eventClient<T, Null = never, ExtArgs extends runtime.Ty
   creator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   coverImage<T extends Prisma.event$coverImageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.event$coverImageArgs<ExtArgs>>): Prisma.Prisma__imageClient<runtime.Types.Result.GetResult<Prisma.$imagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   images<T extends Prisma.event$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.event$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$imagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  uploadBatches<T extends Prisma.event$uploadBatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.event$uploadBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UploadBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1800,6 +1913,30 @@ export type event$imagesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ImageScalarFieldEnum | Prisma.ImageScalarFieldEnum[]
+}
+
+/**
+ * event.uploadBatches
+ */
+export type event$uploadBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UploadBatch
+   */
+  select?: Prisma.UploadBatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UploadBatch
+   */
+  omit?: Prisma.UploadBatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UploadBatchInclude<ExtArgs> | null
+  where?: Prisma.UploadBatchWhereInput
+  orderBy?: Prisma.UploadBatchOrderByWithRelationInput | Prisma.UploadBatchOrderByWithRelationInput[]
+  cursor?: Prisma.UploadBatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UploadBatchScalarFieldEnum | Prisma.UploadBatchScalarFieldEnum[]
 }
 
 /**

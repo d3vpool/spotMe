@@ -387,7 +387,8 @@ export const ModelName = {
   User: 'User',
   event: 'event',
   image: 'image',
-  FaceEmbedding: 'FaceEmbedding'
+  FaceEmbedding: 'FaceEmbedding',
+  UploadBatch: 'UploadBatch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "event" | "image" | "faceEmbedding"
+    modelProps: "user" | "event" | "image" | "faceEmbedding" | "uploadBatch"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -687,6 +688,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UploadBatch: {
+      payload: Prisma.$UploadBatchPayload<ExtArgs>
+      fields: Prisma.UploadBatchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UploadBatchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UploadBatchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>
+        }
+        findFirst: {
+          args: Prisma.UploadBatchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UploadBatchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>
+        }
+        findMany: {
+          args: Prisma.UploadBatchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>[]
+        }
+        create: {
+          args: Prisma.UploadBatchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>
+        }
+        createMany: {
+          args: Prisma.UploadBatchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UploadBatchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>[]
+        }
+        delete: {
+          args: Prisma.UploadBatchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>
+        }
+        update: {
+          args: Prisma.UploadBatchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>
+        }
+        deleteMany: {
+          args: Prisma.UploadBatchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UploadBatchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UploadBatchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>[]
+        }
+        upsert: {
+          args: Prisma.UploadBatchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UploadBatchPayload>
+        }
+        aggregate: {
+          args: Prisma.UploadBatchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUploadBatch>
+        }
+        groupBy: {
+          args: Prisma.UploadBatchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UploadBatchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UploadBatchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UploadBatchCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -769,6 +844,20 @@ export const FaceEmbeddingScalarFieldEnum = {
 } as const
 
 export type FaceEmbeddingScalarFieldEnum = (typeof FaceEmbeddingScalarFieldEnum)[keyof typeof FaceEmbeddingScalarFieldEnum]
+
+
+export const UploadBatchScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  totalImages: 'totalImages',
+  completed: 'completed',
+  failed: 'failed',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UploadBatchScalarFieldEnum = (typeof UploadBatchScalarFieldEnum)[keyof typeof UploadBatchScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -993,6 +1082,7 @@ export type GlobalOmitConfig = {
   event?: Prisma.eventOmit
   image?: Prisma.imageOmit
   faceEmbedding?: Prisma.FaceEmbeddingOmit
+  uploadBatch?: Prisma.UploadBatchOmit
 }
 
 /* Types for Logging */

@@ -51,3 +51,11 @@ export interface SearchResult {
   imageUrl: string;
   faces: FaceBoundingBox[];
 }
+
+export interface UploadBatchStatus {
+  batchId: string;
+  totalImages: number;
+  completed: number;
+  failed: number;
+  status: 'processing' | 'completed' | 'completed_with_errors';
+}

@@ -18,10 +18,21 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Unwrap the envelope: { success, data, message? } → return data directly
+    response.data = response.data.data;
+    return response;
+  },
   (error) => {
-    const message = error.response?.data?.message || error.message || 'An unexpected error occurred';
-    return Promise.reject({ success: false, message });
+    // Extract error message from envelope: { success: false, error: { message } }
+    const message =
+      error.response?.data?.error?.message ||
+      error.response?.data?.message ||
+      error.message ||
+      'An unexpected error occurred';
+    // Preserve the status code for callers that need it (e.g. 404 checks)
+    const status = error.response?.status;
+    return Promise.reject({ success: false, message, status });
   }
 );
 

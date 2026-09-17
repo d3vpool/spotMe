@@ -47,55 +47,40 @@ export async function detectEveryFace(imagePath : string, imageId: number) {
                                     .withFaceLandmarks()
                                     .withFaceDescriptors();
     
-    // console.log(detections)
+    if (detections.length === 0) return;
 
-    for(const detection of detections){
-        const vector = Array.from(detection.descriptor)
-        const box = detection.detection.box
+    // Batch insert all face embeddings in a single multi-row INSERT
+    const values: string[] = [];
+    const params: unknown[] = [];
+    let paramIndex = 1;
+
+    for (const detection of detections) {
+        const vector = Array.from(detection.descriptor);
+        const box = detection.detection.box;
 
         const vectorString = `[${vector.join(",")}]`;
-
         const boundingBox = {
             x: box.x,
             y: box.y,
             width: box.width,
-            height: box.height
+            height: box.height,
         };
 
-        const faceEmbedding = await prisma.$executeRaw`
-            INSERT INTO "FaceEmbedding" ("imageId", "vector", "boundingBox", "createdAt")
-            VALUES (
-                ${imageId},
-                ${vectorString}::vector,
-                ${JSON.stringify(boundingBox)},
-                NOW()
-            )
-        `;
-
-        console.log(faceEmbedding)
+        values.push(
+            `(${paramIndex}, ${paramIndex + 1}::vector, ${paramIndex + 2}, NOW())`
+        );
+        params.push(imageId, vectorString, JSON.stringify(boundingBox));
+        paramIndex += 3;
     }
+
+    // Use raw SQL for multi-row INSERT (FaceEmbedding.vector is an unmapped type)
+    const sql = `INSERT INTO "FaceEmbedding" ("imageId", "vector", "boundingBox", "createdAt") VALUES ${values.join(", ")}`;
+    
+    // Use $queryRawUnsafe for parameterized multi-row insert
+    await prisma.$executeRawUnsafe(sql, ...params);
+    
+    console.log(`Inserted ${detections.length} face embeddings for image ${imageId}`);
 }
 
 // export async function detectOneFace(imagePath: string, imageId: number) {
 
-//     const img = await canvas.loadImage(imagePath);
-
-//     const detection = await faceapi.detectSingleFace(img as any)
-//                                     .withFaceLandmarks()
-//                                     .withFaceDescriptor();
-
-//     const vector = Array.from(detection.descriptor);
-//     const box = detection?.detection.box;
-    
-//     const vectorString = `[${vector.join(",")}]`;
-
-//     const boundingBox = {
-//         x: box?.x,
-//         y: box?.y,
-//         width: box?.width,
-//         height: box?.height
-//     }
-
-    
-    
-// }

@@ -1,19 +1,22 @@
 import express, { type NextFunction } from 'express';
 import type { Request, Response } from "express";
-import dotenv from "dotenv"
-dotenv.config();
 import cors from "cors";
 import userRouter from "./routes/user.routes.js";
 import eventRouter from './routes/event.routes.js';
 import path from 'path';
 import multer from 'multer';
-import { success } from 'zod';
+import { requestTimer } from './middlewares/requestTimer.js';
+import { sendError } from './utils/response.js';
+import { env } from './config/env.js';
 
 const app = express();
 
+// Request timing — must be first to wrap everything
+app.use(requestTimer);
+
 app.use(express.json());
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: env.FRONTEND_URL,
     credentials: true
 }));
 
@@ -32,23 +35,14 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.error(err);
 
     if (err instanceof multer.MulterError) {
-        return res.status(400).json({
-            success: false,
-            message: err.message
-        });
+        return sendError(res, 400, err.message);
     }
 
     if (err.message === "Only image files are allowed") {
-        return res.status(400).json({
-            success: false,
-            message: err.message
-        });
+        return sendError(res, 400, err.message);
     }
 
-    return res.status(500).json({
-        success: false,
-        message: "Something went wrong"
-    });
+    return sendError(res, 500, "Something went wrong");
 });
 
 export default app

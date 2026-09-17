@@ -2,6 +2,8 @@ import type { Request, Response } from "express";
 import { prisma } from "../db/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { sendSuccess, sendError } from "../utils/response.js";
+import { env } from "../config/env.js";
 
 
 
@@ -22,18 +24,13 @@ export async function signUpController(req: Request, res: Response) {
 
         const token = jwt.sign(
             { id: user.id}, 
-            process.env.JWT_SECRET!,
+            env.JWT_SECRET, 
             { expiresIn: '7d' }
         );
 
-
-        
-        res.json({
-            message: "User Created Successfully",
-            token: token
-        });
+        sendSuccess(res, { token }, "User Created Successfully", 201);
     } catch(err) {
-        res.status(500).json({ message: "SignUp failed" });
+        sendError(res, 500, "SignUp failed");
     }
 }
 
@@ -51,9 +48,7 @@ export async function logInController(req: Request, res: Response) {
     })
 
     if(!user){
-        return res.status(401).json({
-            message: "Invalid email or password"
-        })
+        return sendError(res, 401, "Invalid email or password");
     }
 
     const hashedPassword = user.password;
@@ -63,16 +58,11 @@ export async function logInController(req: Request, res: Response) {
     if(match){
         const token = jwt.sign({
             id: user.id
-        }, process.env.JWT_SECRET!, { expiresIn: '7d' })
+        }, env.JWT_SECRET, { expiresIn: '7d' })
 
-        return res.status(200).json({
-            message: "Logged In Successfully",
-            token: token
-        })
+        return sendSuccess(res, { token }, "Logged In Successfully");
     } else{
-        return res.status(401).json({
-            message: "Invalid email or password"
-        })
+        return sendError(res, 401, "Invalid email or password");
     }
 
 

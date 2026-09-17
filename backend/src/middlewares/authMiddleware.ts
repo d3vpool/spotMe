@@ -1,5 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { sendError } from "../utils/response.js";
+import { env } from "../config/env.js";
 
 
 
@@ -9,12 +11,12 @@ export async function authCheck(req: Request, res: Response, next: NextFunction)
     const token = authHeader && authHeader.split(' ')[1];
 
     if(!token) {
-        return res.status(401).json({message: "Token Missing"});
+        return sendError(res, 401, "Token Missing");
     }
 
-    jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
+    jwt.verify(token, env.JWT_SECRET, (err, decoded) => {
         if(err) {
-            return res.status(403).json({message: "Invalid or Expired Token"});
+            return sendError(res, 403, "Invalid or Expired Token");
         }
         const payload = decoded as jwt.JwtPayload;
 

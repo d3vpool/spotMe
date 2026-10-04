@@ -16,7 +16,7 @@
  *   - Extracts 128-D embeddings for all fixture photos via face-api.js
  *   - Computes all pairwise L2 (<->) and cosine (<=>) distances
  *   - Labels each pair as same-person or different-person (from folder names)
- *   - Sweeps threshold 0.3–0.7 in steps of 0.05
+ *   - Sweeps metric-appropriate thresholds (L2 0.30–0.90, Cosine 0.02–0.30)
  *   - Reports precision/recall/F1 at each threshold
  *   - Prints optimal threshold (max F1) for each distance metric
  */
@@ -221,15 +221,38 @@ async function main() {
   );
 
   // 5. Sweep thresholds
-  const thresholds: number[] = [];
-  for (let t = 0.3; t <= 0.7 + 1e-9; t += 0.05) {
-    thresholds.push(Math.round(t * 100) / 100);
-  }
+  // Ranges are metric-specific: L2 distances between face-api.js descriptors
+  // span roughly 0.3–0.9, while cosine distances sit an order of magnitude
+  // smaller (descriptors are not unit-normalized), so a 0.30–0.70 cosine sweep
+  // is degenerate — every pair passes every threshold.
+  const sweepSpec = {
+    L2: { start: 0.3, end: 0.9, step: 0.05 },
+    Cosine: { start: 0.02, end: 0.3, step: 0.02 },
+  } as const;
 
   const results: ThresholdResult[] = [];
 
   for (const metric of ["L2", "Cosine"] as const) {
     const distKey = metric === "L2" ? "l2Distance" : "cosineDistance";
+
+    // Distance distribution per class — verifies the sweep brackets the
+    // decision boundary (best F1 not at an artifact of a truncated range).
+    for (const [label, group] of [
+      ["same-person", samePairs],
+      ["different-person", diffPairs],
+    ] as const) {
+      const dists = group.map((p) => p[distKey]);
+      console.log(
+        `${metric} ${label}: min=${Math.min(...dists).toFixed(4)} max=${Math.max(...dists).toFixed(4)}`
+      );
+    }
+    console.log("");
+
+    const spec = sweepSpec[metric];
+    const thresholds: number[] = [];
+    for (let t = spec.start; t <= spec.end + 1e-9; t += spec.step) {
+      thresholds.push(Math.round(t * 100) / 100);
+    }
 
     for (const threshold of thresholds) {
       let tp = 0,
@@ -267,7 +290,7 @@ async function main() {
   // 6. Print results
   printEnvironmentPreamble(
     `${labeledEmbeddings.length} embeddings from ${persons.length} identities`,
-    `${pairs.length} pairs, threshold sweep 0.30–0.70`
+    `${pairs.length} pairs, sweep L2 0.30–0.90 / Cosine 0.02–0.30`
   );
 
   for (const metric of ["L2", "Cosine"] as const) {

@@ -1,0 +1,13 @@
+-- Repair migration — discovered during Day 7 (containerize) work.
+--
+-- `event.isPublic` was added to the Prisma schema via `prisma db push` and
+-- was never captured in a migration. On a FRESH database,
+-- `prisma migrate deploy` therefore died at
+-- 20260911000000_set_isPublic_default_false with:
+--   ERROR: column "isPublic" of relation "event" does not exist (42703)
+--
+-- This sorts before that migration and (re)creates the column exactly as the
+-- schema declares it (`@default(false)` — Day 1's private-by-default fix).
+-- IF NOT EXISTS keeps it idempotent for databases (like the original dev DB)
+-- that already received the column out-of-band through db push.
+ALTER TABLE "event" ADD COLUMN IF NOT EXISTS "isPublic" BOOLEAN NOT NULL DEFAULT false;

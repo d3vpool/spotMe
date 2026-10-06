@@ -18,6 +18,7 @@
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client.js";
+import bcrypt from "bcrypt";
 import "dotenv/config";
 
 // ---------------------------------------------------------------------------
@@ -113,13 +114,17 @@ async function seed() {
   console.log(`Seeding ${EMBEDDING_COUNT.toLocaleString()} embeddings...\n`);
 
   // 1. Upsert bench user
+  // Password must be a real bcrypt hash: /user/login compares with
+  // bcrypt.compare(), so a plaintext value here makes bench logins 401
+  // (this is why bench:upload could never complete before).
+  const benchPasswordHash = await bcrypt.hash("bench_password_hash_not_real", 10);
   const user = await prisma.user.upsert({
     where: { email: BENCH_USER_EMAIL },
-    update: {},
+    update: { password: benchPasswordHash },
     create: {
       email: BENCH_USER_EMAIL,
       firstName: "Bench",
-      password: "bench_password_hash_not_real",
+      password: benchPasswordHash,
     },
   });
   console.log(`  User: id=${user.id} (${user.email})`);
@@ -139,7 +144,7 @@ async function seed() {
   console.log(`  Event: id=${event.id} ("${event.title}")`);
 
   // 3. Create images (1 embedding per image)
-  const CHUNK_SIZE = 500;
+  const CHUNK_SIZE = 2000;
   let imagesCreated = 0;
 
   // Insert images in chunks

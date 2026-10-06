@@ -7,12 +7,22 @@ import { env } from "../config/env.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const logDir = path.join(__dirname, "../../../logs");
+// Resolve logs relative to the working directory (backend/ for all npm
+// scripts and the container's WORKDIR) — NOT relative to this module. The
+// old module-relative path (../../../logs) escaped the backend directory
+// entirely (repo root in dev, root-owned /app/logs in the container) and
+// crashed the process with EACCES at startup — request logging must never
+// take the server down.
+const logDir = path.join(process.cwd(), "logs");
 const logFile = path.join(logDir, "requests.log");
 
-// Ensure logs directory exists
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir, { recursive: true });
+// Ensure logs directory exists (best-effort — never crash at import time)
+try {
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+  }
+} catch (err) {
+  console.warn(`[requestTimer] Could not create log dir ${logDir}:`, (err as Error).message);
 }
 
 /**
@@ -40,8 +50,12 @@ export function requestTimer(req: Request, res: Response, next: NextFunction): v
 
     const line = JSON.stringify(entry);
 
-    // Write to log file
-    fs.appendFileSync(logFile, line + "\n");
+    // Write to log file (best-effort — a logging failure must not fail the request)
+    try {
+      fs.appendFileSync(logFile, line + "\n");
+    } catch (err) {
+      console.warn("[requestTimer] Failed to write log line:", (err as Error).message);
+    }
 
     // Console in development
     if (env.NODE_ENV !== "production") {

@@ -13,7 +13,6 @@ import { Lightbox } from '@components/ui/Lightbox';
 import { CameraCapture } from '@components/ui/CameraCapture';
 import { useToast } from '../contexts/ToastContext';
 import { Camera, Upload, Share2, Pencil, Trash2, Globe, Lock, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { HudTag } from '@components/ui/HudTag';
 import { Scanline } from '@components/ui/Scanline';
 
 export const EventDetails: React.FC = () => {
@@ -150,8 +149,8 @@ export const EventDetails: React.FC = () => {
     setSaving(true);
     try {
       await eventService.updateEvent(eventId, {
-        newTitle: editTitle,
-        newDescription: editDescription,
+        title: editTitle,
+        description: editDescription,
       });
       showToast('Event updated!', 'success');
       setEditOpen(false);

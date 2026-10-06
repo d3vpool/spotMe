@@ -28,7 +28,7 @@ export const eventService = {
     return response.data;
   },
 
-  updateEvent: async (eventId: string, data: { newTitle?: string; newDescription?: string }) => {
+  updateEvent: async (eventId: string, data: { title?: string; description?: string }) => {
     // response.data is unwrapped → { updatedEvent: ... }
     const response = await api.patch(`/events/${eventId}`, data);
     return response.data;
@@ -109,8 +109,14 @@ export const eventService = {
   },
 
   importFromDrive: async (eventId: string, driveUrl: string) => {
-    // response.data is unwrapped → { imported, skipped, totalFound }
-    const response = await api.post<{ imported: number; skipped: number; totalFound: number }>(
+    // response.data is unwrapped → { imported, skipped, totalFound, batchId? }
+    // (batchId present when the import was queued for background processing)
+    const response = await api.post<{
+      imported: number;
+      skipped: number;
+      totalFound: number;
+      batchId?: string | null;
+    }>(
       `/events/${eventId}/images/import-drive`,
       { driveUrl }
     );

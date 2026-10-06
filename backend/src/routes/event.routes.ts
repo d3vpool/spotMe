@@ -1,41 +1,128 @@
 import express, { type Request, type Response } from "express";
 import { authCheck } from "../middlewares/authMiddleware.js";
-import { createEvent, deleteEventFromId, getAllEvents, getEventFromId, getEventFromShareToken, searchFaces, searchFacesPublic, toggleEventVisibility, updateEventFromId, uploadImage, deleteImage, importFromDrive, getUploadStatus } from "../controllers/event.controllers.js";
+import {
+  createEvent,
+  deleteEventFromId,
+  getAllEvents,
+  getEventFromId,
+  getEventFromShareToken,
+  searchFaces,
+  searchFacesPublic,
+  toggleEventVisibility,
+  updateEventFromId,
+  uploadImage,
+  deleteImage,
+  importFromDrive,
+  getUploadStatus,
+} from "../controllers/event.controllers.js";
 import { upload } from "../middlewares/upload.middleware.js";
+import {
+  validateInput,
+  validateParams,
+  createEventSchema,
+  updateEventSchema,
+  visibilitySchema,
+  importDriveSchema,
+  eventIdParamSchema,
+  imageIdParamSchema,
+  shareTokenParamSchema,
+  batchIdParamSchema,
+} from "../middlewares/inputValidation.js";
+import { searchLimiter, uploadLimiter } from "../middlewares/rateLimiter.js";
 
 const router = express.Router();
 
-router.post("/", authCheck, upload.single("coverImage"), createEvent);
+// ── Create event ──────────────────────────────────────────────────────────
+router.post(
+  "/",
+  authCheck,
+  upload.single("coverImage"),
+  validateInput(createEventSchema),
+  createEvent,
+);
 
+// ── List events ───────────────────────────────────────────────────────────
 router.get("/", authCheck, getAllEvents);
 
-router.get("/:eventId", authCheck, getEventFromId);
+// ── Get single event ──────────────────────────────────────────────────────
+router.get("/:eventId", authCheck, validateParams(eventIdParamSchema), getEventFromId);
 
-router.delete("/:eventId", authCheck, deleteEventFromId)
+// ── Delete event ──────────────────────────────────────────────────────────
+router.delete("/:eventId", authCheck, validateParams(eventIdParamSchema), deleteEventFromId);
 
-router.patch("/:eventId", authCheck, updateEventFromId)
+// ── Update event ──────────────────────────────────────────────────────────
+router.patch(
+  "/:eventId",
+  authCheck,
+  validateParams(eventIdParamSchema),
+  validateInput(updateEventSchema),
+  updateEventFromId,
+);
 
-router.patch("/:eventId/visibility", authCheck, toggleEventVisibility)
+// ── Toggle visibility ─────────────────────────────────────────────────────
+router.patch(
+  "/:eventId/visibility",
+  authCheck,
+  validateParams(eventIdParamSchema),
+  validateInput(visibilitySchema),
+  toggleEventVisibility,
+);
 
-//upload images
-router.post("/:eventId/images", authCheck, upload.array('EventImages'), uploadImage)
+// ── Upload images ─────────────────────────────────────────────────────────
+router.post(
+  "/:eventId/images",
+  authCheck,
+  validateParams(eventIdParamSchema),
+  uploadLimiter,
+  upload.array("EventImages"),
+  uploadImage,
+);
 
-//import from Google Drive
-router.post("/:eventId/images/import-drive", authCheck, importFromDrive)
+// ── Import from Google Drive ──────────────────────────────────────────────
+router.post(
+  "/:eventId/images/import-drive",
+  authCheck,
+  validateParams(eventIdParamSchema),
+  uploadLimiter,
+  validateInput(importDriveSchema),
+  importFromDrive,
+);
 
-//upload batch status
-router.get("/:eventId/upload-status/:batchId", authCheck, getUploadStatus)
+// ── Upload batch status ───────────────────────────────────────────────────
+router.get(
+  "/:eventId/upload-status/:batchId",
+  authCheck,
+  validateParams(batchIdParamSchema),
+  getUploadStatus,
+);
 
-//delete individual image
-router.delete("/:eventId/images/:imageId", authCheck, deleteImage)
+// ── Delete individual image ───────────────────────────────────────────────
+router.delete(
+  "/:eventId/images/:imageId",
+  authCheck,
+  validateParams(imageIdParamSchema),
+  deleteImage,
+);
 
-//upload selfie
-router.post("/:eventId/search", authCheck, upload.single('Selfie'), searchFaces);
+// ── Search (authenticated) ────────────────────────────────────────────────
+router.post(
+  "/:eventId/search",
+  authCheck,
+  validateParams(eventIdParamSchema),
+  searchLimiter,
+  upload.single("Selfie"),
+  searchFaces,
+);
 
+// ── Public share ──────────────────────────────────────────────────────────
+router.get("/share/:shareToken", validateParams(shareTokenParamSchema), getEventFromShareToken);
 
-router.get("/share/:shareToken", getEventFromShareToken)
-
-
-router.post("/share/:shareToken/search", upload.single('Selfie'), searchFacesPublic);
+router.post(
+  "/share/:shareToken/search",
+  validateParams(shareTokenParamSchema),
+  searchLimiter,
+  upload.single("Selfie"),
+  searchFacesPublic,
+);
 
 export default router;

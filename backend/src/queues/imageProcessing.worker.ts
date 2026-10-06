@@ -2,10 +2,8 @@ import { Worker } from "bullmq";
 import { env } from "../config/env.js";
 import { prisma } from "../db/db.js";
 import { detectEveryFace } from "../services/face.service.js";
-import {
-    IMAGE_PROCESSING_QUEUE,
-    type ImageProcessingJobData,
-} from "./imageProcessing.queue.js";
+import { IMAGE_PROCESSING_QUEUE, type ImageProcessingJobData } from "./imageProcessing.queue.js";
+import { isFinalAttempt } from "./retryPolicy.js";
 
 /**
  * Start the image processing worker.
@@ -17,56 +15,64 @@ import {
  * shares the same machine).
  */
 export function startImageProcessingWorker(): Worker<ImageProcessingJobData> {
-    const worker = new Worker<ImageProcessingJobData>(
-        IMAGE_PROCESSING_QUEUE,
-        async (job) => {
-            const { imageId, filePath, batchId } = job.data;
+  const worker = new Worker<ImageProcessingJobData>(
+    IMAGE_PROCESSING_QUEUE,
+    async (job) => {
+      const { imageId, filePath, batchId } = job.data;
 
-            console.log(
-                `[Worker] Processing image ${imageId} (batch ${batchId})`
-            );
+      console.log(`[Worker] Processing image ${imageId} (batch ${batchId})`);
 
-            await detectEveryFace(filePath, imageId);
+      await detectEveryFace(filePath, imageId);
 
-            // Atomically increment completed counter (Prisma atomic increment)
-            await prisma.uploadBatch.update({
-                where: { id: batchId },
-                data: { completed: { increment: 1 } },
-            });
+      // Atomically increment completed counter (Prisma atomic increment)
+      await prisma.uploadBatch.update({
+        where: { id: batchId },
+        data: { completed: { increment: 1 } },
+      });
 
-            await checkBatchComplete(batchId);
-            console.log(`[Worker] Done processing image ${imageId}`);
-        },
-        {
-            connection: { url: env.REDIS_URL },
-            concurrency: 2,
-        }
+      await checkBatchComplete(batchId);
+      console.log(`[Worker] Done processing image ${imageId}`);
+    },
+    {
+      connection: { url: env.REDIS_URL },
+      concurrency: 2,
+    },
+  );
+
+  // NOTE: BullMQ emits `failed` on EVERY failed attempt, including ones that
+  // will be retried — it does NOT wait until retries are exhausted (verified
+  // empirically in the Day 7 container test: one bad file with attempts:2
+  // produced failed=2 and a premature batch flip after attempt 1). Only count
+  // the failure once the attempt that just failed was the last allowed one.
+  worker.on("failed", async (job, err) => {
+    if (!job) return;
+    const { batchId, imageId } = job.data;
+    console.error(
+      `[Worker] Job ${job.id} for image ${imageId} failed after ${job.attemptsMade} attempt(s):`,
+      err.message,
     );
 
-    // Only fires after ALL retry attempts are exhausted — not per-attempt.
-    // This is where we count permanent failures.
-    worker.on("failed", async (job, err) => {
-        if (!job) return;
-        const { batchId, imageId } = job.data;
-        console.error(
-            `[Worker] Job ${job.id} for image ${imageId} failed after ${job.attemptsMade} attempt(s):`,
-            err.message
-        );
+    if (!isFinalAttempt(job)) {
+      console.log(
+        `[Worker] Job ${job.id} for image ${imageId} will be retried (attempt ${job.attemptsMade} of ${job.opts.attempts ?? 1})`,
+      );
+      return;
+    }
 
-        // Atomically increment failed counter (Prisma atomic increment)
-        await prisma.uploadBatch.update({
-            where: { id: batchId },
-            data: { failed: { increment: 1 } },
-        });
-
-        await checkBatchComplete(batchId);
+    // Atomically increment failed counter (Prisma atomic increment)
+    await prisma.uploadBatch.update({
+      where: { id: batchId },
+      data: { failed: { increment: 1 } },
     });
 
-    worker.on("ready", () => {
-        console.log("[Worker] Image processing worker ready, listening for jobs...");
-    });
+    await checkBatchComplete(batchId);
+  });
 
-    return worker;
+  worker.on("ready", () => {
+    console.log("[Worker] Image processing worker ready, listening for jobs...");
+  });
+
+  return worker;
 }
 
 /**
@@ -76,21 +82,21 @@ export function startImageProcessingWorker(): Worker<ImageProcessingJobData> {
  * will see completed + failed = totalImages and win the status flip.
  */
 async function checkBatchComplete(batchId: string): Promise<void> {
-    const batch = await prisma.uploadBatch.findUnique({
-        where: { id: batchId },
-        select: { totalImages: true, completed: true, failed: true, status: true },
+  const batch = await prisma.uploadBatch.findUnique({
+    where: { id: batchId },
+    select: { totalImages: true, completed: true, failed: true, status: true },
+  });
+
+  if (!batch || batch.status !== "processing") return;
+
+  if (batch.completed + batch.failed >= batch.totalImages) {
+    const newStatus = batch.failed > 0 ? "completed_with_errors" : "completed";
+    await prisma.uploadBatch.update({
+      where: { id: batchId },
+      data: { status: newStatus },
     });
-
-    if (!batch || batch.status !== "processing") return;
-
-    if (batch.completed + batch.failed >= batch.totalImages) {
-        const newStatus = batch.failed > 0 ? "completed_with_errors" : "completed";
-        await prisma.uploadBatch.update({
-            where: { id: batchId },
-            data: { status: newStatus },
-        });
-        console.log(
-            `[Worker] Batch ${batchId} finished: ${newStatus} (${batch.completed} ok, ${batch.failed} failed)`
-        );
-    }
+    console.log(
+      `[Worker] Batch ${batchId} finished: ${newStatus} (${batch.completed} ok, ${batch.failed} failed)`,
+    );
+  }
 }

@@ -47,6 +47,9 @@ folders are different people (negative pairs).
 
 ## `test-upload.jpg` — Upload Benchmark Image
 
-A small image used by `bench-upload.ts`. If absent, the script creates a
-tiny synthetic JPEG (1x1 pixel). For more realistic upload timing, replace
-this with an actual photo (500KB-2MB range).
+A small image used by `bench-upload.ts`. The committed file is a 22-byte
+JPEG header (valid magic bytes, **no image data**) — `canvas.loadImage`
+cannot decode it, so the bench E2E numbers measure the worker's
+decode-failure + retry path, NOT face inference (see METRICS.md). Replace
+it with an actual photo (500KB–2MB) for realistic processing timing; if
+absent, the script creates an equivalent synthetic header.

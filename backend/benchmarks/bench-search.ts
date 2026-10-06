@@ -131,7 +131,8 @@ async function benchHttp(): Promise<number[]> {
     process.exit(1);
   }
 
-  const { token } = (await loginRes.json()) as { token: string };
+  // Day 1 envelope standardization: responses are { success, data: {...} }.
+  const { token } = (await loginRes.json()) as { data: { token: string } };
 
   // Step 2: Get bench event ID
   const eventsRes = await fetch("http://localhost:3000/events", {
@@ -144,7 +145,7 @@ async function benchHttp(): Promise<number[]> {
   }
 
   const { events } = (await eventsRes.json()) as {
-    events: { id: number; title: string }[];
+    data: { events: { id: number; title: string }[] };
   };
 
   const benchEvent = events.find((e) => e.title === "__BENCH_SEED__");

@@ -40,7 +40,7 @@ const __dirname = path.dirname(__filename);
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.BENCH_BASE_URL || "http://localhost:3000";
 const BATCH_SIZES = [1, 10, 50];
 const ITERATIONS = 3; // repeat each batch size for stability
 const WARMUP_COUNT = 1;
@@ -113,8 +113,11 @@ async function createEvent(token: string): Promise<number> {
     process.exit(1);
   }
 
-  const envelope = (await res.json()) as { data: { id: number } };
-  return envelope.data.id;
+  const envelope = (await res.json()) as {
+    data: { event: { id: number } };
+  };
+  // Day 1 envelope standardization: createEvent returns { data: { event } }.
+  return envelope.data.event.id;
 }
 
 async function cleanupEvent(token: string, eventId: number): Promise<void> {
@@ -167,8 +170,9 @@ async function benchBatch(
     });
 
     if (!res.ok) {
+      const body = await res.text();
       console.error(
-        `  Upload failed (batch=${batchSize}, iter=${i}): ${res.status}`
+        `  Upload failed (batch=${batchSize}, iter=${i}): ${res.status} ${body}`
       );
       continue;
     }

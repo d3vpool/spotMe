@@ -1,5 +1,5 @@
 import api from './api';
-import { setToken, removeToken, setUser, removeUser } from '@utils/auth';
+import { setToken, removeToken, removeUser } from '@utils/auth';
 import type { LoginPayload, RegisterPayload, AuthResponse } from '../types';
 
 export const authService = {

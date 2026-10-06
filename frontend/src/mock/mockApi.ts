@@ -8,7 +8,7 @@ const users = [
   { id: 'u1', name: 'John Doe', email: 'test@example.com', password: 'password' }
 ];
 
-let events = [
+const events = [
   {
     id: 'e1',
     title: 'Summer Festival 2024',

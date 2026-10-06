@@ -9,8 +9,6 @@ import { FaceHighlightImage } from '@components/ui/FaceHighlightImage';
 import { useToast } from '../contexts/ToastContext';
 import { Camera, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Reticle } from '@components/ui/Reticle';
-import { Scanline } from '@components/ui/Scanline';
-import { HudTag } from '@components/ui/HudTag';
 import { CameraCapture } from '@components/ui/CameraCapture';
 
 interface PublicEventData {
@@ -137,6 +135,11 @@ export const PublicEvent: React.FC = () => {
                 )}
               </div>
             </div>
+
+            <p className="text-xs text-gray-500 mt-3">
+              Only search photos of people who have consented to being in them.
+              Demo instances may wipe data periodically.
+            </p>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Find My Photos */}

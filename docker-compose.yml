@@ -1,22 +1,68 @@
+# Full local stack: docker compose up --build
+#   app (API + worker, one container) + Postgres (pgvector) + Redis
+#
+# Dev workflow (run API/worker on the host instead) is documented in README:
+#   docker compose up postgres redis     # infra only
+#   cd backend && npm run dev            # API
+#   cd backend && npm run worker         # worker
+#   cd frontend && npm run dev           # Vite dev server
+
 services:
   postgres:
     image: pgvector/pgvector:pg16
     ports:
-      - "5432:5432"
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: spotme
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d spotme"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
 
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "${REDIS_HOST_PORT:-6379}:6379"
     volumes:
       - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  app:
+    build: .
+    image: spotme-app
+    ports:
+      - "${APP_HOST_PORT:-3000}:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/spotme
+      REDIS_URL: redis://redis:6379
+      # Same origin in production — the SPA is served by this same server.
+      FRONTEND_URL: http://localhost:${APP_HOST_PORT:-3000}
+      # Lets the entrypoint mint an ephemeral dev JWT secret so a clean clone
+      # boots without secrets. NEVER set this outside local compose.
+      DEV_AUTO_GENERATE_SECRETS: "true"
+      # Placeholder — set a real key to use the Google Drive import feature
+      # (get one: Google Cloud Console → enable Drive API → create API key).
+      GOOGLE_DRIVE_API_KEY: ${GOOGLE_DRIVE_API_KEY:-local-dev-drive-key-not-configured}
+      # JWT_SECRET intentionally omitted: the entrypoint generates a random
+      # one per boot rather than shipping a forgeable default.
+    volumes:
+      - uploads_data:/app/backend/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
 volumes:
   pgdata:
   redisdata:
+  uploads_data:

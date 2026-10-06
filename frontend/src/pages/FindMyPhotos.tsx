@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Camera, ChevronDown } from 'lucide-react';
 import { Reticle } from '@components/ui/Reticle';
-import { Scanline } from '@components/ui/Scanline';
-import { HudTag } from '@components/ui/HudTag';
 import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
 import { FileUploadBox } from '@components/ui/FileUploadBox';
@@ -63,6 +61,10 @@ export function FindMyPhotos() {
         <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">Find My Photos</h1>
         <p className="text-gray-400">
           Choose an event, upload a selfie, and we'll find every photo you appear in.
+        </p>
+        <p className="text-xs text-gray-500 mt-2">
+          Search only events you belong to — and only with a selfie of someone
+          who has agreed to be searched. Demo instances may wipe data periodically.
         </p>
       </div>
 

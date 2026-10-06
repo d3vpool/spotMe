@@ -151,6 +151,10 @@ export function UploadPhotos() {
         <p className="text-gray-400">
           Select an event and upload photos in bulk. Our AI will process them automatically.
         </p>
+        <p className="text-xs text-gray-500 mt-2">
+          Only upload photos of people who have consented to being in them.
+          Demo instances may wipe data periodically.
+        </p>
       </div>
 
       {uploadStatus === 'processing' ? (

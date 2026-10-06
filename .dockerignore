@@ -1,0 +1,27 @@
+# Build context hygiene — keep secrets, deps and bulky data out of the image.
+
+**/node_modules
+**/dist
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Uploaded files & logs (runtime data, never baked in)
+backend/uploads
+backend/logs
+logs
+
+# Benchmark/fixture data (not needed to run the app)
+backend/benchmarks/fixtures
+backend/test
+
+# Repo/VCS/docs noise
+.git
+.github
+.freebuff
+*.md
+!README.md
+
+# Local override files for docker-compose (if any)
+docker-compose.override.yml

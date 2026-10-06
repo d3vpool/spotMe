@@ -1,0 +1,47 @@
+# Fly.io configuration — see DEPLOY.md for the full walkthrough.
+#
+# Usage:  flyctl launch --copy-config   (picks this file up as-is)
+# or edit `app`/`primary_region` below to your values and run `flyctl deploy`.
+
+app = "spotme-demo"       # ← change to your unique app name
+primary_region = "iad"    # ← change to a region near you
+
+# Built from the repo-root Dockerfile (flyctl detects it automatically).
+[build]
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  # Set after you know your URL (see DEPLOY.md step 5):
+  #   flyctl secrets set FRONTEND_URL=https://<app>.fly.dev
+  #   flyctl secrets set PUBLIC_URL=https://<app>.fly.dev
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "90s"
+    method = "GET"
+    path = "/health"
+
+[[vm]]
+  # Resource sizing — MEASURED 2026-09-23 in the built container (METRICS.md →
+  # Scale): API peak 381 MB + worker peak 371 MB (VmHWM) ≈ 752 MB worst case;
+  # 2 GB = 2.7× headroom for inference spikes. NOTE: tfjs-node is currently
+  # NOT loaded (dead dependency — audit finding); re-measure if wiring it in.
+  # Smallest free-tier sizes (256–512 MB) will OOM once a search runs during
+  # an upload.
+  size = "shared-cpu-2x"
+  memory = "2gb"
+
+[[mounts]]
+  # Persistent volume for locally-stored uploads (required — the app has no
+  # object-storage backend).
+  source = "uploads"
+  destination = "/app/backend/uploads"

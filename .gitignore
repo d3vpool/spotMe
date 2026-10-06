@@ -3,3 +3,11 @@ node_modules
 dist
 build
 .freebuff/
+# request-timer log output (legacy root-level dir + backend/logs)
+logs/
+# real face photos for the local-only pipeline test (never commit faces)
+backend/test/fixtures-local/
+# seed photos passed to scripts/seed-demo.ts --photos=
+seed-photos/
+# benchmark face fixtures (licensing/privacy — results live in METRICS.md, not raw photos)
+backend/benchmarks/fixtures/faces/

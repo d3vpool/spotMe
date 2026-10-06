@@ -2,6 +2,9 @@ node_modules
 # Keep environment variables out of version control
 .env
 
-/generated/prisma
+# NOTE (Post-Day-7 audit): the generated Prisma client lives at src/generated/
+# and is tracked on purpose — Docker and CI both regenerate over it
+# (`npx prisma generate`), so the committed copy can never drift silently.
 uploads/
 logs/
+benchmarks/fixtures/faces/

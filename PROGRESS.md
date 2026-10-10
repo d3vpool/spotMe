@@ -2,6 +2,17 @@
 
 Cross-agent progress log. Read the latest entry first to pick up where work left off.
 
+## 2026-10-04c - Buffy (Freebuff) — Fix CI 500: create `uploads/` before Multer writes to it
+
+> **Status: COMPLETE — root cause found, fixed in app code, verified from a clean clone.** CI run for `286369d` failed one test (`security.test.ts` "rejects a .txt file renamed to .jpg with 400": got 500). Root cause confirmed by reproduction: `backend/uploads/` is gitignored, so it doesn't exist on a fresh checkout, and Multer's `diskStorage` does NOT create its destination directory → `ENOENT` → global error handler → generic 500. This was also a production bug (fresh deploy / wiped volume fails every upload with 500).
+
+- Changed:
+  - `backend/src/middlewares/upload.middleware.ts`: `UPLOADS_DIR = path.resolve("uploads")` (same resolution as `express.static` in `app.ts`); `fs.mkdirSync(UPLOADS_DIR, { recursive: true })` at module load, and the diskStorage `destination` callback re-ensures the dir and propagates a real mkdir error to the error handler instead of silently 500-ing later.
+- Verified:
+  - Pre-fix: `git clone --local` to /tmp (no gitignored files) → test fails with exactly the CI error (500 vs 400). Post-fix, same clean clone → 2/2 pass and `uploads/` auto-created.
+  - Full backend battery with `uploads/` deleted: tsc clean, lint 0 errors (34 pre-existing warnings), Prettier clean, **48 passed / 1 skipped (49)**.
+- Other gitignored-dependency audit (task item 4): `logs/` already created at import by `requestTimer.ts`; `benchmarks/fixtures/faces/` handled gracefully by `bench-accuracy.ts` (prints setup instructions); `test/fixtures-local/selfie.jpg` intentionally `skipIf`-guarded; Drive-import path in `event.controllers.ts` writes `uploads/…` but imports `upload.middleware.js` first, so module-load mkdir covers it; `scripts/seed-demo.ts` already mkdirs. Docker was already consistent (`Dockerfile` `mkdir -p /app/backend/uploads` + entrypoint chown) — the app-level fix makes non-Docker fresh checkouts safe too.
+
 ## 2026-10-04b - Buffy (Freebuff) — Threshold decision: 0.55 (zero-FP) over F1-optimal 0.60
 
 > **Status: COMPLETE — `FACE_MATCH_DISTANCE_THRESHOLD` is now 0.55.** After

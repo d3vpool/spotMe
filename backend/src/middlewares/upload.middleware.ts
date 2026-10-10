@@ -1,10 +1,27 @@
 import multer from "multer";
 import { fileTypeFromFile } from "file-type";
 import fs from "fs";
+import path from "path";
+
+// CWD-relative, same as express.static(path.resolve("uploads")) in app.ts
+// (both resolve to backend/uploads when the server runs from backend/).
+const UPLOADS_DIR = path.resolve("uploads");
+
+// uploads/ is gitignored, so it does NOT exist on a fresh checkout or a fresh
+// deploy — and Multer's diskStorage does NOT create its destination directory
+// (ENOENT → global 500 instead of 400, and every upload fails in production).
+// Ensure it exists once at module load; the destination callback re-ensures it
+// cheaply in case the directory was removed while the process was running.
+fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    try {
+      fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+      cb(null, UPLOADS_DIR);
+    } catch (err) {
+      cb(err as Error, UPLOADS_DIR);
+    }
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);

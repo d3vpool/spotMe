@@ -46,6 +46,7 @@ See DECISIONS.md for full records. Observable from the repository:
 - Express route handlers stay thin; business logic lives in `backend/src/controllers/`, shared ML logic in `backend/src/services/`.
 - Response envelopes are inconsistent across endpoints — many return `{ message, ... }` or bare objects; do not assume a shared envelope.
 - Backend endpoints validate event ownership by querying `event.createdBy === res.locals.userId` before acting.
+- Commit messages are a single line. Never add Co-Authored-By or any other attribution trailer.
 
 ## Folder Structure Overview
 
